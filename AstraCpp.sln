@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AstraCppTest", "AstraCppTest\AstraCppTest.vcxproj", "{DCE0876D-4E62-4418-BF31-EDE316CAAFDE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AstraCppDemo", "AstraCppDemo\AstraCppDemo.vcxproj", "{A4FE3A56-C16F-4FA3-AADF-AEAA64013719}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7738FB9F-5668-427B-A213-26C97767EBA5} = {7738FB9F-5668-427B-A213-26C97767EBA5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
