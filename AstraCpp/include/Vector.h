@@ -10,6 +10,7 @@ class Vector {
     Vector(int size);
     ~Vector();
     int getSize() const;
+    void print() const;
 
 };
 }

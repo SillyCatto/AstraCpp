@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Vector.h"
 #include <stdexcept>
+#include <iostream>
 
 using namespace astra;
 
@@ -18,4 +19,15 @@ Vector::~Vector() {
 
 int Vector::getSize() const { 
     return size; 
+}
+
+void Vector::print() const {
+    std::cout << "[";
+    for (int i = 0; i < size; i++) {
+        std::cout << values[i];
+        if (i < size - 1) {
+            std::cout << ", ";
+        }
+    }
+    std::cout << "]" << std::endl;
 }
