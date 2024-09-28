@@ -3,6 +3,12 @@
 namespace astra {
 class Vector {
   private:
+    int size;
+    double* values;
+
   public:
+    Vector(int size);
+    ~Vector();
+
 };
 }
