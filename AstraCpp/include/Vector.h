@@ -8,7 +8,7 @@ class Vector {
 
   public:
     Vector(int size);
-    Vector(const double values[]);
+    Vector(const double values[], int size);
     ~Vector();
     int getSize() const;
     void print() const;
