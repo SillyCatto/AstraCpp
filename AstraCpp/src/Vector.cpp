@@ -13,6 +13,19 @@ Vector::Vector(int size) {
     this->values = new double[size];
 }
 
+Vector::Vector(const double values[]) {
+    this->size = size;
+
+    if (size < 0) {
+        throw std::invalid_argument("Size must be non-negative");
+    }
+   
+    this->values = new double[size];
+    for (int i = 0; i < size; i++) {
+        this->values[i] = values[i];
+    }
+}
+
 Vector::~Vector() { 
     delete[] values; 
 }
