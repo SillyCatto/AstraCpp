@@ -49,3 +49,15 @@ void Vector::print() const {
     }
     std::cout << "]" << std::endl;
 }
+
+double Vector::operator*(const Vector& other) const {
+    if (this->size != other.size) {
+        throw std::invalid_argument(
+            "Vectors must be of the same size for dot product.");
+    }
+    double result = 0;
+    for (int i = 0; i < size; ++i) {
+        result += this->values[i] * other.values[i];
+    }
+    return result;
+}
