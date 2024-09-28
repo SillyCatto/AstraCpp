@@ -15,3 +15,7 @@ Vector::Vector(int size) {
 Vector::~Vector() { 
     delete[] values; 
 }
+
+int Vector::getSize() const { 
+    return size; 
+}
