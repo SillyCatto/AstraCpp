@@ -95,3 +95,21 @@ Vector Vector::operator+(const Vector& other) const {
     }
     return result;
 }
+
+Vector Vector::operator-(const Vector& other) const {
+    if (this->size != other.size) {
+        throw std::invalid_argument("Vectors must be of the same size for subtraction.");
+    }
+    Vector result(size);
+    for (int i = 0; i < size; ++i) {
+        result.values[i] = this->values[i] - other.values[i];
+    }
+    return result;
+}
+
+double Vector::operator[](int index) const {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of range.");
+    }
+    return values[index];
+}
