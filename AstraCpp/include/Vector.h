@@ -17,5 +17,6 @@ class Vector {
     void print() const;
 
     double operator*(const Vector& other) const;
+    Vector operator+(const Vector& other) const;
 };
 }
