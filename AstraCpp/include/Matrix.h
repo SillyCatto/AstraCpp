@@ -12,6 +12,8 @@ class Matrix {
     Matrix(int r, int c);
     ~Matrix();
 
+    Matrix& operator<<(double val);
+    Matrix& operator,(double val);
     double& operator()(int i, int j);
 
     int get_row() const;

@@ -15,6 +15,18 @@ Matrix::Matrix(int r, int c)
 
 Matrix::~Matrix() { delete[] values; }
 
+Matrix& Matrix::operator<<(double val) {
+    if (current_index < (rows * cols)) {
+        values[current_index++] = val;
+    }
+    else {
+        throw std::out_of_range("Too many elements for matrix");
+    }
+    return *this;
+}
+
+Matrix &Matrix::operator,(double val) { return (*this << val); }
+
 double& Matrix::operator()(int i, int j) { 
     if (i >= rows || i < 0 || j >= cols || j < 0) {
         throw std::out_of_range("Matrix index out of range");
