@@ -37,6 +37,8 @@ int Vector::get_size() const {
     return size; 
 }
 
+bool astra::Vector::is_null() const { return (size == 0); }
+
 void Vector::print() const {
     std::cout << "[";
     for (int i = 0; i < size; i++) {

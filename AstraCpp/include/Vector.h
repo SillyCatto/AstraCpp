@@ -12,6 +12,7 @@ class Vector {
     ~Vector();
 
     int get_size() const;
+    bool is_null() const;
     void print() const;
 
     double operator*(const Vector& other) const;
