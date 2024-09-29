@@ -60,6 +60,18 @@ void Vector::print() const {
     std::cout << "]" << std::endl;
 }
 
+Vector& Vector::operator<<(double val) {
+    if (current_index < size) {
+        values[current_index++] = val;
+    }
+    else {
+        throw std::out_of_range("Too many elements for vector");
+    }
+    return *this;
+}
+
+Vector &Vector::operator,(double val) { return (*this << val); }
+
 double Vector::operator*(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
