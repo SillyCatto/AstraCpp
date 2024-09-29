@@ -12,6 +12,6 @@ class Vector {
     ~Vector();
     int getSize() const;
     void print() const;
-
+    double operator*(const Vector& other) const;
 };
 }
