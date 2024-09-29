@@ -94,3 +94,10 @@ Vector Vector::operator-(const Vector& other) const {
     }
     return result;
 }
+
+double Vector::operator[](int index) const {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of range.");
+    }
+    return values[index];
+}
