@@ -6,9 +6,17 @@
 int main() {
     double arr[] = {5.5, 6.6, 7.7};
 
-    astra::Vector vec(arr, 3);
+    astra::Vector v1(arr, 3);
 
-    vec.print();
+    v1.print();
+
+    std::cout << "\n\n";
+
+    astra::Vector v2(3);
+
+    v2 << 3, 5, 7;
+
+    v2.print();
 
     std::cout << "\n\n";
 
