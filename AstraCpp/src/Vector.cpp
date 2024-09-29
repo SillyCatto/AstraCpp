@@ -33,9 +33,11 @@ Vector::~Vector() {
     delete[] values; 
 }
 
-int Vector::getSize() const { 
+int Vector::get_size() const { 
     return size; 
 }
+
+bool astra::Vector::is_null() const { return (size == 0); }
 
 void Vector::print() const {
     std::cout << "[";
@@ -46,4 +48,16 @@ void Vector::print() const {
         }
     }
     std::cout << "]" << std::endl;
+}
+
+double Vector::operator*(const Vector& other) const {
+    if (this->size != other.size) {
+        throw std::invalid_argument(
+            "Vectors must be of the same size for dot product.");
+    }
+    double result = 0;
+    for (int i = 0; i < size; ++i) {
+        result += this->values[i] * other.values[i];
+    }
+    return result;
 }
