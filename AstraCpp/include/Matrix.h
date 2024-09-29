@@ -11,6 +11,8 @@ class Matrix {
     Matrix(int r, int c);
     ~Matrix();
 
+    double& operator()(int i, int j);
+
     int get_row() const;
     int get_col() const;
 };
