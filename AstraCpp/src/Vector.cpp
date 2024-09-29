@@ -33,9 +33,11 @@ Vector::~Vector() {
     delete[] values; 
 }
 
-int Vector::getSize() const { 
+int Vector::get_size() const { 
     return size; 
 }
+
+bool astra::Vector::is_null() const { return (size == 0); }
 
 void Vector::print() const {
     std::cout << "[";
