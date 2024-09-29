@@ -35,4 +35,9 @@ TEST_F(VectorTest, invalid_size_input) {
     EXPECT_EQ(v.get_size(), 0);
 }
 
+TEST_F(VectorTest, test_null_vector) {
+    Vector v(-5);
+    EXPECT_EQ(v.is_null(), true);
+}
+
 } // namespace astra
