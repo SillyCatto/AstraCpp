@@ -9,6 +9,7 @@ class Vector {
   public:
     Vector(int size);
     Vector(const double values[], int size);
+    Vector(const Vector& other);
     ~Vector();
 
     int get_size() const;
@@ -16,5 +17,6 @@ class Vector {
     void print() const;
 
     double operator*(const Vector& other) const;
+    Vector operator+(const Vector& other) const;
 };
 }
