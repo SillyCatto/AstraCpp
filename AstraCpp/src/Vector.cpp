@@ -29,6 +29,16 @@ Vector::Vector(const double values[], int size) {
     }
 }
 
+Vector::Vector(const Vector& other) {
+    this->size = other.size;
+    this->values = new double[size];
+
+    for (int i = 0; i < size; ++i) {
+        this->values[i] = other.values[i];
+    }
+
+}
+
 Vector::~Vector() { 
     delete[] values; 
 }
