@@ -20,13 +20,19 @@ class VectorTest : public ::testing::Test {
 
 TEST_F(VectorTest, size_initialization) {
     Vector v(5);
-    EXPECT_EQ(v.getSize(), 5);
+    EXPECT_EQ(v.get_size(), 5);
 }
 
 TEST_F(VectorTest, array_initialization) {
     double vals[] = {1.0, 2.0, 3.0};
     Vector v(vals, 3);
-    EXPECT_EQ(v.getSize(), 3);
+    EXPECT_EQ(v.get_size(), 3);
+}
+
+
+TEST_F(VectorTest, invalid_size_input) {
+    Vector v(-5);
+    EXPECT_EQ(v.get_size(), 0);
 }
 
 } // namespace astra
