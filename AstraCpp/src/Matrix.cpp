@@ -15,7 +15,12 @@ Matrix::Matrix(int r, int c)
 
 Matrix::~Matrix() { delete[] values; }
 
-double& Matrix::operator()(int i, int j) { return values[i * cols + j]; }
+double& Matrix::operator()(int i, int j) { 
+    if (i >= rows || i < 0 || j >= cols || j < 0) {
+        throw std::out_of_range("Matrix index out of range");
+    }
+    return values[i * cols + j];
+}
 
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
