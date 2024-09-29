@@ -18,5 +18,6 @@ class Vector {
 
     double operator*(const Vector& other) const;
     Vector operator+(const Vector& other) const;
+    Vector operator-(const Vector& other) const;
 };
 }
