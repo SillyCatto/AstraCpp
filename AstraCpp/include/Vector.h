@@ -10,8 +10,10 @@ class Vector {
     Vector(int size);
     Vector(const double values[], int size);
     ~Vector();
-    int getSize() const;
+
+    int get_size() const;
     void print() const;
+
     double operator*(const Vector& other) const;
 };
 }

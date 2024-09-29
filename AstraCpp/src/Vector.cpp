@@ -33,7 +33,7 @@ Vector::~Vector() {
     delete[] values; 
 }
 
-int Vector::getSize() const { 
+int Vector::get_size() const { 
     return size; 
 }
 
