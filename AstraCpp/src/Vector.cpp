@@ -7,16 +7,16 @@ using namespace astra;
 
 
 Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
-    if (size < 0) {
-        throw std::invalid_argument("Vector size cannot be negative");
+    if (size <= 0) {
+        throw std::invalid_argument("Vector size must be positive");
     }
     this->values = new double[size];
 }
 
 Vector::Vector(const double values[], int size)
-    : size(size), current_index(size) {
-    if (size < 0) {
-        throw std::invalid_argument("Size cannot be negative");
+    : size(size), current_index(size), values(nullptr) {
+    if (size <= 0) {
+        throw std::invalid_argument("Vector size must be positive");
     }
     this->values = new double[size];
 
@@ -25,25 +25,25 @@ Vector::Vector(const double values[], int size)
     }
 }
 
-Vector::Vector(const Vector& other) {
-    this->size = other.size;
-    this->values = new double[size];
+Vector::Vector(const Vector& other)
+    : size(other.size), current_index(other.current_index), values(nullptr) {
 
-    for (int i = 0; i < size; ++i) {
-        this->values[i] = other.values[i];
+    if (size > 0) {
+        this->values = new double[size];
+        for (int i = 0; i < size; ++i) {
+            this->values[i] = other.values[i];
+        }
     }
-
 }
 
 Vector::~Vector() { 
-    delete[] values; 
+    delete[] values;
+    values = nullptr;
 }
 
 int Vector::get_size() const { 
     return size; 
 }
-
-bool astra::Vector::is_null() const { return (size == 0); }
 
 void Vector::print() const {
     std::cout << "[";
@@ -71,7 +71,7 @@ Vector &Vector::operator,(double val) { return (*this << val); }
 double Vector::operator*(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
-            "Vectors must be of the same size for dot product.");
+            "Vectors must be of same size for dot product");
     }
     double result = 0;
     for (int i = 0; i < size; ++i) {
@@ -83,9 +83,11 @@ double Vector::operator*(const Vector& other) const {
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
-            "Vectors must be of the same size for addition.");
+            "Vectors must be of same size for addition");
     }
+
     Vector result(size);
+
     for (int i = 0; i < size; ++i) {
         result.values[i] = this->values[i] + other.values[i];
     }
@@ -94,9 +96,10 @@ Vector Vector::operator+(const Vector& other) const {
 
 Vector Vector::operator-(const Vector& other) const {
     if (this->size != other.size) {
-        throw std::invalid_argument("Vectors must be of the same size for subtraction.");
+        throw std::invalid_argument("Vectors must be of same size for subtraction");
     }
     Vector result(size);
+
     for (int i = 0; i < size; ++i) {
         result.values[i] = this->values[i] - other.values[i];
     }
