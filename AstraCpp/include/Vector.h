@@ -14,7 +14,6 @@ class Vector {
     ~Vector();
 
     int get_size() const;
-    bool is_null() const;
     void print() const;
 
     Vector& operator<<(double val);
