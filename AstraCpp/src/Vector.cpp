@@ -5,23 +5,19 @@
 
 using namespace astra;
 
-Vector::Vector(int size) {
+
+Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     if (size < 0) {
-        this->size = 0;
-        this->values = nullptr;
+        throw std::invalid_argument("Vector size cannot be negative");
     }
-    else {
-    this->size = size;
     this->values = new double[size];
-    }
 }
 
-Vector::Vector(const double values[], int size) {
+Vector::Vector(const double values[], int size)
+    : size(size), current_index(size) {
     if (size < 0) {
         throw std::invalid_argument("Size cannot be negative");
     }
-
-    this->size = size;
     this->values = new double[size];
 
     for (int i = 0; i < size; ++i) {
