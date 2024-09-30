@@ -4,6 +4,7 @@
 #include "../AstraCpp/include/Matrix.h"
 
 int main() {
+    // ----------VECTOR----------
     double arr[] = {5.5, 6.6, 7.7};
 
     astra::Vector v1(arr, 3);
@@ -20,6 +21,8 @@ int main() {
 
     std::cout << "\n\n";
 
+
+    // ----------MATRIX----------
     astra::Matrix m(2, 2);
 
     /*m(0, 0) = 1;
