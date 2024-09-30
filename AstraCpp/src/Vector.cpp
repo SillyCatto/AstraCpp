@@ -5,23 +5,19 @@
 
 using namespace astra;
 
-Vector::Vector(int size) {
-    if (size < 0) {
-        this->size = 0;
-        this->values = nullptr;
+
+Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
+    if (size <= 0) {
+        throw std::invalid_argument("[ERROR] vector size must be positive");
     }
-    else {
-    this->size = size;
     this->values = new double[size];
-    }
 }
 
-Vector::Vector(const double values[], int size) {
-    if (size < 0) {
-        throw std::invalid_argument("Size cannot be negative");
+Vector::Vector(const double values[], int size)
+    : size(size), current_index(size), values(nullptr) {
+    if (size <= 0) {
+        throw std::invalid_argument("[ERROR] vector size must be positive");
     }
-
-    this->size = size;
     this->values = new double[size];
 
     for (int i = 0; i < size; ++i) {
@@ -29,25 +25,25 @@ Vector::Vector(const double values[], int size) {
     }
 }
 
-Vector::Vector(const Vector& other) {
-    this->size = other.size;
-    this->values = new double[size];
+Vector::Vector(const Vector& other)
+    : size(other.size), current_index(other.current_index), values(nullptr) {
 
-    for (int i = 0; i < size; ++i) {
-        this->values[i] = other.values[i];
+    if (size > 0) {
+        this->values = new double[size];
+        for (int i = 0; i < size; ++i) {
+            this->values[i] = other.values[i];
+        }
     }
-
 }
 
 Vector::~Vector() { 
-    delete[] values; 
+    delete[] values;
+    values = nullptr;
 }
 
 int Vector::get_size() const { 
     return size; 
 }
-
-bool astra::Vector::is_null() const { return (size == 0); }
 
 void Vector::print() const {
     std::cout << "[";
@@ -60,10 +56,22 @@ void Vector::print() const {
     std::cout << "]" << std::endl;
 }
 
+Vector& Vector::operator<<(double val) {
+    if (current_index < size) {
+        values[current_index++] = val;
+    }
+    else {
+        throw std::out_of_range("[ERROR]  too many elements for vector");
+    }
+    return *this;
+}
+
+Vector &Vector::operator,(double val) { return (*this << val); }
+
 double Vector::operator*(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
-            "Vectors must be of the same size for dot product.");
+            "[ERROR]  vectors must be same size for dot product");
     }
     double result = 0;
     for (int i = 0; i < size; ++i) {
@@ -75,9 +83,11 @@ double Vector::operator*(const Vector& other) const {
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
-            "Vectors must be of the same size for addition.");
+            "[ERROR]  vectors must be same size for addition");
     }
+
     Vector result(size);
+
     for (int i = 0; i < size; ++i) {
         result.values[i] = this->values[i] + other.values[i];
     }
@@ -86,9 +96,10 @@ Vector Vector::operator+(const Vector& other) const {
 
 Vector Vector::operator-(const Vector& other) const {
     if (this->size != other.size) {
-        throw std::invalid_argument("Vectors must be of the same size for subtraction.");
+        throw std::invalid_argument("[ERROR]  vectors must be same size for subtraction");
     }
     Vector result(size);
+
     for (int i = 0; i < size; ++i) {
         result.values[i] = this->values[i] - other.values[i];
     }
@@ -97,7 +108,7 @@ Vector Vector::operator-(const Vector& other) const {
 
 double Vector::operator[](int index) const {
     if (index < 0 || index >= size) {
-        throw std::out_of_range("Index out of range.");
+        throw std::out_of_range("[ERROR]  vector index out of range");
     }
     return values[index];
 }
