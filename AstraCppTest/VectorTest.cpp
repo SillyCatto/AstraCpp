@@ -72,4 +72,12 @@ TEST_F(VectorTest, insert_out_of_range) {
     EXPECT_THROW(v << 3, std::out_of_range);
 }
 
+TEST_F(VectorTest, index_out_of_range) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    EXPECT_THROW(v[3], std::out_of_range);
+    EXPECT_THROW(v[-1], std::out_of_range);
+}
+
 } // namespace astra
