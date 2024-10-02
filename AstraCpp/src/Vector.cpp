@@ -68,14 +68,14 @@ Vector& Vector::operator<<(double val) {
 
 Vector &Vector::operator,(double val) { return (*this << val); }
 
-double Vector::operator*(const Vector& other) const {
+Vector Vector::operator*(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
             "[ERROR]  vectors must be same size for dot product");
     }
-    double result = 0;
+    Vector result(size);
     for (int i = 0; i < size; ++i) {
-        result += this->values[i] * other.values[i];
+        result.values[i] = this->values[i] * other.values[i];
     }
     return result;
 }
