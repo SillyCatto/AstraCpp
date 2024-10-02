@@ -129,11 +129,10 @@ TEST_F(VectorTest, vector_dot) {
     Vector v1(arr1, 3);
     Vector v2(arr2, 3);
 
-    Vector result = v1 * v2;
+    double result = v1 * v2;
 
-    EXPECT_EQ(result[0], 4.0);
-    EXPECT_EQ(result[1], 10.0);
-    EXPECT_EQ(result[2], 18.0);
+    EXPECT_EQ(result, 32.0);
+    
 }
 
 TEST_F(VectorTest, vector_dot_invalid_size) {
