@@ -8,7 +8,7 @@ Matrix::Matrix(int r, int c)
     : rows(r), cols(c), current_index(0), values(nullptr) {
 
     if (rows <= 0 || cols <= 0) {
-        throw std::invalid_argument("Matrix dimension must be positive");
+        throw std::invalid_argument("[ERROR]  matrix dimension must be positive");
     }
     values = new double[r * c];
 }
@@ -20,7 +20,7 @@ Matrix& Matrix::operator<<(double val) {
         values[current_index++] = val;
     }
     else {
-        throw std::out_of_range("Too many elements for matrix");
+        throw std::out_of_range("[ERROR]  too many elements for matrix");
     }
     return *this;
 }
@@ -29,7 +29,7 @@ Matrix &Matrix::operator,(double val) { return (*this << val); }
 
 double& Matrix::operator()(int i, int j) { 
     if (i >= rows || i < 0 || j >= cols || j < 0) {
-        throw std::out_of_range("Matrix index out of range");
+        throw std::out_of_range("[ERROR]  matrix index out of range");
     }
     return values[i * cols + j];
 }
