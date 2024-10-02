@@ -56,4 +56,50 @@ TEST_F(VectorTest, comma_initializer) {
     EXPECT_EQ(v[2], 5);
 }
 
+TEST_F(VectorTest, access_elements) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    EXPECT_EQ(v[0], 1.0);
+    EXPECT_EQ(v[1], 2.0);
+    EXPECT_EQ(v[2], 3.0);
+}
+
+TEST_F(VectorTest, insert_out_of_range) {
+    Vector v(2);
+    v << 1 << 2;
+
+    EXPECT_THROW(v << 3, std::out_of_range);
+}
+
+TEST_F(VectorTest, index_out_of_range) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    EXPECT_THROW(v[3], std::out_of_range);
+    EXPECT_THROW(v[-1], std::out_of_range);
+}
+
+TEST_F(VectorTest, vector_addition) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    Vector result = v1 + v2;
+
+    EXPECT_EQ(result[0], 5.0);
+    EXPECT_EQ(result[1], 7.0);
+    EXPECT_EQ(result[2], 9.0);
+}
+
+TEST_F(VectorTest, vector_addition_invalid_size) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(v1 + v2, std::invalid_argument);
+}
+
 } // namespace astra
