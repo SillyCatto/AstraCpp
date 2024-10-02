@@ -65,4 +65,11 @@ TEST_F(VectorTest, access_elements) {
     EXPECT_EQ(v[2], 3.0);
 }
 
+TEST_F(VectorTest, insert_out_of_range) {
+    Vector v(2);
+    v << 1 << 2;
+
+    EXPECT_THROW(v << 3, std::out_of_range);
+}
+
 } // namespace astra
