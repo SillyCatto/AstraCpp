@@ -93,4 +93,13 @@ TEST_F(VectorTest, vector_addition) {
     EXPECT_EQ(result[2], 9.0);
 }
 
+TEST_F(VectorTest, vector_addition_invalid_size) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(v1 + v2, std::invalid_argument);
+}
+
 } // namespace astra
