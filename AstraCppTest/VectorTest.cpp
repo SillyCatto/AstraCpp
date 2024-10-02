@@ -102,4 +102,19 @@ TEST_F(VectorTest, vector_addition_invalid_size) {
     EXPECT_THROW(v1 + v2, std::invalid_argument);
 }
 
-} // namespace astra
+TEST_F(VectorTest, vector_subtraction) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    Vector result = v1 - v2;
+
+    EXPECT_EQ(result[0], -3.0);
+    EXPECT_EQ(result[1], -3.0);
+    EXPECT_EQ(result[2], -3.0);
+
+} 
+
+
+// namespace astra
