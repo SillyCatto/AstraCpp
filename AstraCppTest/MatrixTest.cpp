@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "Matrix.h"
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 
 namespace astra {
 
