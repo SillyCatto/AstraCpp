@@ -27,4 +27,14 @@ TEST_F(MatrixTest, invalid_matrix_creation) {
     EXPECT_THROW(Matrix(0, 0), std::invalid_argument);
 }
 
+TEST_F(MatrixTest, comma_initializer) {
+    Matrix m(2, 2);
+    m << 1.0, 2.0, 3.0, 4.0;
+
+    EXPECT_EQ(m(0, 0), 1.0);
+    EXPECT_EQ(m(0, 1), 2.0);
+    EXPECT_EQ(m(1, 0), 3.0);
+    EXPECT_EQ(m(1, 1), 4.0);
+}
+
 } // namespace astra
