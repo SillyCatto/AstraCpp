@@ -80,4 +80,17 @@ TEST_F(VectorTest, index_out_of_range) {
     EXPECT_THROW(v[-1], std::out_of_range);
 }
 
+TEST_F(VectorTest, vector_addition) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    Vector result = v1 + v2;
+
+    EXPECT_EQ(result[0], 5.0);
+    EXPECT_EQ(result[1], 7.0);
+    EXPECT_EQ(result[2], 9.0);
+}
+
 } // namespace astra
