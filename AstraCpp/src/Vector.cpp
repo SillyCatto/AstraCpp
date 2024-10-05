@@ -127,3 +127,19 @@ Vector Vector::operator^(const Vector& other) const {
         this->values[0] * other.values[1] - this->values[1] * other.values[0];
     return result;
 }
+
+Vector& Vector::operator=(const Vector& other) {  
+    if (this == &other) {
+        return *this;
+    }
+
+    delete[] values;
+
+    size = other.size;
+    values = new double[size];
+    for (int i = 0; i < size; ++i) {
+        values[i] = other.values[i];
+    }
+
+    return *this;
+}

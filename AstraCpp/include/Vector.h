@@ -23,5 +23,6 @@ class Vector {
     Vector operator-(const Vector& other) const;
     double operator[](int index) const;
     Vector operator^(const Vector& other) const;
+    Vector& operator=(const Vector& other);
 };
 }
