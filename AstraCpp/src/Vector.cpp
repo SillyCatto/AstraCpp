@@ -8,7 +8,7 @@ using namespace astra;
 
 Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     if (size <= 0) {
-        throw std::invalid_argument("[ERROR] vector size must be positive");
+        throw std::invalid_argument("[ERROR]  vector size must be positive");
     }
     this->values = new double[size];
 }
@@ -16,7 +16,7 @@ Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
 Vector::Vector(const double values[], int size)
     : size(size), current_index(size), values(nullptr) {
     if (size <= 0) {
-        throw std::invalid_argument("[ERROR] vector size must be positive");
+        throw std::invalid_argument("[ERROR]  vector size must be positive");
     }
     this->values = new double[size];
 

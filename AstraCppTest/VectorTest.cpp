@@ -8,7 +8,6 @@ namespace astra {
 // Test fixture class for Vector
 class VectorTest : public ::testing::Test {
   protected:
-
     void SetUp() override {}
 
     void TearDown() override {}
@@ -47,7 +46,7 @@ TEST_F(VectorTest, copy_constructor) {
     EXPECT_EQ(v2[2], 3.0);
 }
 
-TEST_F(VectorTest, comma_initializer) { 
+TEST_F(VectorTest, comma_initializer) {
     Vector v(3);
     v << 1, 3, 5;
 
@@ -102,6 +101,50 @@ TEST_F(VectorTest, vector_addition_invalid_size) {
     EXPECT_THROW(v1 + v2, std::invalid_argument);
 }
 
+
+TEST_F(VectorTest, vector_subtraction) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    Vector result = v1 - v2;
+
+    EXPECT_EQ(result[0], -3.0);
+    EXPECT_EQ(result[1], -3.0);
+    EXPECT_EQ(result[2], -3.0);
+}
+
+TEST_F(VectorTest, vector_subtraction_invalid_size) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(v1 - v2, std::invalid_argument);
+}
+
+TEST_F(VectorTest, vector_dot) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = v1 * v2;
+
+    EXPECT_EQ(result, 32.0);
+    
+}
+
+TEST_F(VectorTest, vector_dot_invalid_size) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(v1 * v2, std::invalid_argument);
+}
+  
 TEST_F(VectorTest, copy_assignment_deep_copy) {
     double arr1[] = {1.0, 2.0, 3.0};
     double arr2[] = {4.0, 5.0, 6.0};
