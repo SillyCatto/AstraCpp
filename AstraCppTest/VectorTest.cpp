@@ -116,4 +116,15 @@ TEST_F(VectorTest, copy_assignment_deep_copy) {
     EXPECT_EQ(v1[2], 6.0);
 }
 
+TEST_F(VectorTest, copy_assignment_self_assignment) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    v = v; 
+
+    EXPECT_EQ(v[0], 1.0);
+    EXPECT_EQ(v[1], 2.0);
+    EXPECT_EQ(v[2], 3.0);
+}
+
 } // namespace astra
