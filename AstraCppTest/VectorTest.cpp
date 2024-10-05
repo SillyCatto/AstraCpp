@@ -127,4 +127,20 @@ TEST_F(VectorTest, copy_assignment_self_assignment) {
     EXPECT_EQ(v[2], 3.0);
 }
 
+TEST_F(VectorTest, copy_assignment_different_sizes) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0};
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 2);
+
+    v1 = v2;
+
+    EXPECT_EQ(v1.get_size(), 2);
+    EXPECT_EQ(v1[0], 4.0);
+    EXPECT_EQ(v1[1], 5.0);
+
+    EXPECT_THROW(v1[2], std::out_of_range);
+}
+
 } // namespace astra
