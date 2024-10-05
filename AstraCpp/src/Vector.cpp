@@ -112,3 +112,18 @@ double Vector::operator[](int index) const {
     }
     return values[index];
 }
+
+Vector Vector::operator^(const Vector& other) const {
+    if (this->size != 3 || other.size != 3) {
+        throw std::invalid_argument(
+            "Cross product is only defined for 3D vectors.");
+    }
+    Vector result(3);
+    result.values[0] =
+        this->values[1] * other.values[2] - this->values[2] * other.values[1];
+    result.values[1] =
+        this->values[2] * other.values[0] - this->values[0] * other.values[2];
+    result.values[2] =
+        this->values[0] * other.values[1] - this->values[1] * other.values[0];
+    return result;
+}
