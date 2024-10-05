@@ -116,7 +116,7 @@ double Vector::operator[](int index) const {
 Vector Vector::operator^(const Vector& other) const {
     if (this->size != 3 || other.size != 3) {
         throw std::invalid_argument(
-            "Cross product is only defined for 3D vectors.");
+            "[ERROR]  cross product is defined for 3D vectors only");
     }
     Vector result(3);
     result.values[0] =
