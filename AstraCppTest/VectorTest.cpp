@@ -102,4 +102,18 @@ TEST_F(VectorTest, vector_addition_invalid_size) {
     EXPECT_THROW(v1 + v2, std::invalid_argument);
 }
 
+TEST_F(VectorTest, copy_assignment_deep_copy) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    v1 = v2; 
+
+    EXPECT_EQ(v1[0], 4.0);
+    EXPECT_EQ(v1[1], 5.0);
+    EXPECT_EQ(v1[2], 6.0);
+}
+
 } // namespace astra
