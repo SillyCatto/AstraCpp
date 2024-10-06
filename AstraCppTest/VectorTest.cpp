@@ -289,4 +289,14 @@ TEST_F(VectorTest, inequality_operator_valid) {
     EXPECT_TRUE(v1 != v2);
 }
 
+TEST_F(VectorTest, equality_operator_floating_point_precision) {
+    double arr1[] = {1.000000001, 2.000000001, 3.000000001};
+    double arr2[] = {1.0, 2.0, 3.0};
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    EXPECT_TRUE(v1 == v2);
+}
+
 } // namespace astra
