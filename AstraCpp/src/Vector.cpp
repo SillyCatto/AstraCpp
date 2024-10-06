@@ -10,7 +10,7 @@ using namespace astra;
 
 Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     if (size <= 0) {
-        throw astra::internals::exceptions::invalid_vector_size();
+        throw astra::internals::exceptions::invalid_size("vector");
     }
     this->values = new double[size];
 }
@@ -18,7 +18,7 @@ Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
 Vector::Vector(const double values[], int size)
     : size(size), current_index(size), values(nullptr) {
     if (size <= 0) {
-        throw astra::internals::exceptions::invalid_vector_size();
+        throw astra::internals::exceptions::invalid_size("vector");
     }
     this->values = new double[size];
 
