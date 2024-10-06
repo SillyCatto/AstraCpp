@@ -178,6 +178,16 @@ TEST_F(VectorTest, scalar_division_positive) {
     EXPECT_EQ(result[2], 1.5);
 }
   
+TEST_F(VectorTest, scalar_division_negative) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v / -1;
+
+    EXPECT_EQ(result[0], -1.0);
+    EXPECT_EQ(result[1], -2.0);
+    EXPECT_EQ(result[2], -3.0);
+}
 TEST_F(VectorTest, copy_assignment_deep_copy) {
     double arr1[] = {1.0, 2.0, 3.0};
     double arr2[] = {4.0, 5.0, 6.0};
