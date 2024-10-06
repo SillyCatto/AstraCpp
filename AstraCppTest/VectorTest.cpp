@@ -188,6 +188,14 @@ TEST_F(VectorTest, scalar_division_negative) {
     EXPECT_EQ(result[1], -2.0);
     EXPECT_EQ(result[2], -3.0);
 }
+
+TEST_F(VectorTest, scalar_division_zero) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    EXPECT_THROW(v / 0, std::invalid_argument);
+}
+
 TEST_F(VectorTest, copy_assignment_deep_copy) {
     double arr1[] = {1.0, 2.0, 3.0};
     double arr2[] = {4.0, 5.0, 6.0};
