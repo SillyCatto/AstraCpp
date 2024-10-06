@@ -162,3 +162,15 @@ Vector& Vector::operator=(const Vector& other) {
 
     return *this;
 }
+
+bool Vector::operator==(const Vector& other) const {
+    if (this->size != other.size) {
+        return false;
+    }
+    for (int i = 0; i < size; ++i) {
+        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+            return false;
+        }
+    }
+    return true;
+}
