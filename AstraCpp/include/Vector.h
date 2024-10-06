@@ -20,6 +20,7 @@ class Vector {
     Vector& operator,(double val);
     double operator*(const Vector& other) const;
     Vector operator*(double scalar) const;
+    Vector operator/(double scalar) const;
     Vector operator+(const Vector& other) const;
     Vector operator-(const Vector& other) const;
     double operator[](int index) const;
