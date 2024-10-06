@@ -259,4 +259,15 @@ TEST_F(VectorTest, copy_assignment_different_sizes) {
     EXPECT_THROW(v1[2], std::out_of_range);
 }
 
+TEST_F(VectorTest, equality_operator_valid) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {1.0, 2.0, 3.0};
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    // Both vectors should be equal
+    EXPECT_TRUE(v1 == v2);
+}
+
 } // namespace astra
