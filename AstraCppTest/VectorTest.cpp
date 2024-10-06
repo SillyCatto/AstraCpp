@@ -145,6 +145,19 @@ TEST_F(VectorTest, vector_dot_invalid_size) {
     EXPECT_THROW(v1 * v2, std::invalid_argument);
 }
 
+TEST_F(VectorTest, cross_product) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    Vector result = v1 ^ v2;
+
+    EXPECT_EQ(result[0], 0.0);
+    EXPECT_EQ(result[1], 0.0);
+    EXPECT_EQ(result[2], 1.0);
+}
+
 TEST_F(VectorTest, scalar_multiplication_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
