@@ -174,3 +174,7 @@ bool Vector::operator==(const Vector& other) const {
     }
     return true;
 }
+
+bool Vector::operator!=(const Vector& other) const { 
+    return !(*this == other); 
+}
