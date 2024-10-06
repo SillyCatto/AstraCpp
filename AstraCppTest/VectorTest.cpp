@@ -144,6 +144,17 @@ TEST_F(VectorTest, vector_dot_invalid_size) {
 
     EXPECT_THROW(v1 * v2, std::invalid_argument);
 }
+
+TEST_F(VectorTest, scalar_multiplication_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v * 2;
+
+    EXPECT_EQ(result[0], 2.0);
+    EXPECT_EQ(result[1], 4.0);
+    EXPECT_EQ(result[2], 6.0);
+}
   
 TEST_F(VectorTest, copy_assignment_deep_copy) {
     double arr1[] = {1.0, 2.0, 3.0};
