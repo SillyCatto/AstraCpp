@@ -26,5 +26,6 @@ class Vector {
     double operator[](int index) const;
     Vector operator^(const Vector& other) const;
     Vector& operator=(const Vector& other);
+    bool operator==(const Vector& other) const;
 };
 }
