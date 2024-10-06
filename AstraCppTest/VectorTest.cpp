@@ -158,6 +158,15 @@ TEST_F(VectorTest, cross_product) {
     EXPECT_EQ(result[2], 1.0);
 }
 
+TEST_F(VectorTest, cross_product_invalid_size) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0};
+    Vector v1(arr1, 2);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(v1 ^ v2, std::invalid_argument);
+}
+
 TEST_F(VectorTest, scalar_multiplication_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
