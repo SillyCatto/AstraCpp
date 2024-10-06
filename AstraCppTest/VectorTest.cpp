@@ -279,4 +279,14 @@ TEST_F(VectorTest, equality_operator_different_sizes) {
     EXPECT_FALSE(v1 == v2);
 }
 
+TEST_F(VectorTest, inequality_operator_valid) {
+    double arr1[] = {1.0, 2.0, 3.0};
+    double arr2[] = {4.0, 5.0, 6.0};
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    EXPECT_TRUE(v1 != v2);
+}
+
 } // namespace astra
