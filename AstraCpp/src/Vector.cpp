@@ -82,6 +82,25 @@ double Vector::operator*(const Vector& other) const {
     return result;
 }
 
+Vector Vector::operator*(double scalar) const {
+    Vector result(size);
+    for (int i = 0; i < size; i++) {
+        result.values[i] = this->values[i] * scalar;
+    }
+    return result;
+}
+
+Vector Vector::operator/(double scalar) const {
+    if (scalar == 0) {
+        throw std::invalid_argument("[ERROR]  division by zero");
+    }
+    Vector result(size);
+    for (int i = 0; i < size; i++) {
+        result.values[i] = this->values[i] / scalar;
+    }
+    return result;
+}
+
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {
         throw std::invalid_argument(
@@ -144,4 +163,20 @@ Vector& Vector::operator=(const Vector& other) {
     }
 
     return *this;
+}
+
+bool Vector::operator==(const Vector& other) const {
+    if (this->size != other.size) {
+        return false;
+    }
+    for (int i = 0; i < size; ++i) {
+        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Vector::operator!=(const Vector& other) const { 
+    return !(*this == other); 
 }
