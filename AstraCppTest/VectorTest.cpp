@@ -144,7 +144,80 @@ TEST_F(VectorTest, vector_dot_invalid_size) {
 
     EXPECT_THROW(v1 * v2, std::invalid_argument);
 }
+
+TEST_F(VectorTest, cross_product) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    Vector result = v1 ^ v2;
+
+    EXPECT_EQ(result[0], 0.0);
+    EXPECT_EQ(result[1], 0.0);
+    EXPECT_EQ(result[2], 1.0);
+}
+
+TEST_F(VectorTest, cross_product_invalid_size) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0};
+    Vector v1(arr1, 2);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(v1 ^ v2, std::invalid_argument);
+}
+
+TEST_F(VectorTest, scalar_multiplication_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v * 2;
+
+    EXPECT_EQ(result[0], 2.0);
+    EXPECT_EQ(result[1], 4.0);
+    EXPECT_EQ(result[2], 6.0);
+}
+
+TEST_F(VectorTest, scalar_multiplication_negative) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v * -2;
+
+    EXPECT_EQ(result[0], -2.0);
+    EXPECT_EQ(result[1], -4.0);
+    EXPECT_EQ(result[2], -6.0);
+}
+
+TEST_F(VectorTest, scalar_division_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v / 2;
+
+    EXPECT_EQ(result[0], 0.5);
+    EXPECT_EQ(result[1], 1.0);
+    EXPECT_EQ(result[2], 1.5);
+}
   
+TEST_F(VectorTest, scalar_division_negative) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v / -1;
+
+    EXPECT_EQ(result[0], -1.0);
+    EXPECT_EQ(result[1], -2.0);
+    EXPECT_EQ(result[2], -3.0);
+}
+
+TEST_F(VectorTest, scalar_division_zero) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    EXPECT_THROW(v / 0, std::invalid_argument);
+}
+
 TEST_F(VectorTest, copy_assignment_deep_copy) {
     double arr1[] = {1.0, 2.0, 3.0};
     double arr2[] = {4.0, 5.0, 6.0};
