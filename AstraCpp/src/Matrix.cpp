@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Matrix.h"
+#include "Exceptions.h"
 #include <stdexcept>
 
 using namespace astra;
@@ -8,7 +9,7 @@ Matrix::Matrix(int r, int c)
     : rows(r), cols(c), current_index(0), values(nullptr) {
 
     if (rows <= 0 || cols <= 0) {
-        throw std::invalid_argument("[ERROR]  matrix dimension must be positive");
+        throw astra::internals::exceptions::invalid_size();
     }
     values = new double[r * c];
 }
