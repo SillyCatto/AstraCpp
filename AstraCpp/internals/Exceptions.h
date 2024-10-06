@@ -9,11 +9,9 @@ class invalid_size : public std::exception {
     std::string msg;
 
   public:
-    invalid_size(const std::string& type, 
-                 const char* file = __FILE__, int line = __LINE__) {
+    invalid_size(const std::string& type) {
         msg = "[ASTRA] invalid size for " + type +
-                  " initialization. (File: " + file +
-                  ", Line: " + std::to_string(line) + ")";
+                  " initialization";
     }
 
     const char* what() const override { return msg.c_str(); }
