@@ -51,15 +51,16 @@ int Vector::get_size() const {
     return size; 
 }
 
-void Vector::print() const {
-    std::cout << "[";
-    for (int i = 0; i < size; i++) {
-        std::cout << values[i];
-        if (i < size - 1) {
-            std::cout << ", ";
+std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
+    ost << "[";
+    for (int i = 0; i < v.size; ++i) {
+        ost << v.values[i];
+        if (i < v.size - 1) {
+            ost << ", ";
         }
     }
-    std::cout << "]" << std::endl;
+    ost << "]";
+    return ost;
 }
 
 Vector& Vector::operator<<(double val) {
@@ -184,3 +185,4 @@ bool Vector::operator==(const Vector& other) const {
 bool Vector::operator!=(const Vector& other) const { 
     return !(*this == other); 
 }
+
