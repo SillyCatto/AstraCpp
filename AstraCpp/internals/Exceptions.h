@@ -30,4 +30,11 @@ class zero_division : public std::exception {
         return "[ASTRA]  division by zero";
     }
 };
+
+class vector_size_mismatch : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  vector size mismatch for the operation";
+    }
+};
 }  // namespace astra::internals::exceptions
