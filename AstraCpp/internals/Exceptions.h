@@ -15,4 +15,9 @@ class index_out_of_range : public std::exception {
         return "[ASTRA]  index out of range";
     }
 };
+
+class init_out_of_range : public std::exception {
+  public:
+    const char* what() const override { return "[ASTRA]  too many elements initialized"; }
+};
 }  // namespace astra::internals::exceptions
