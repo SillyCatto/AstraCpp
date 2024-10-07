@@ -13,6 +13,10 @@ Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
         throw astra::internals::exceptions::invalid_size();
     }
     this->values = new double[size];
+
+    for (int i = 0; i < size; ++i) {
+        this->values[i] = 0;
+    }
 }
 
 Vector::Vector(const double values[], int size)

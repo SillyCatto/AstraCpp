@@ -12,6 +12,7 @@ int main() {
     std::cout << "\n\n";
 
     astra::Vector v2(3);
+    v2.print();
     v2 << 3, 5, 7;
     v2.print();
 
