@@ -3,6 +3,8 @@
 #include "Matrix.h"
 #include "gtest/gtest.h"
 
+#include "Exceptions.h"
+
 namespace astra {
 
 // Test fixture for Matrix class
@@ -22,9 +24,9 @@ TEST_F(MatrixTest, valid_matrix_creation) {
 
 
 TEST_F(MatrixTest, invalid_matrix_creation) {
-    EXPECT_THROW(Matrix(-2, 3), std::invalid_argument);
-    EXPECT_THROW(Matrix(2, 0), std::invalid_argument);
-    EXPECT_THROW(Matrix(0, 0), std::invalid_argument);
+    EXPECT_THROW(Matrix(-2, 3), astra::internals::exceptions::invalid_size);
+    EXPECT_THROW(Matrix(2, 0), astra::internals::exceptions::invalid_size);
+    EXPECT_THROW(Matrix(0, 0), astra::internals::exceptions::invalid_size);
 }
 
 TEST_F(MatrixTest, comma_initializer) {
