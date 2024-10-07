@@ -68,7 +68,7 @@ Vector& Vector::operator<<(double val) {
         values[current_index++] = val;
     }
     else {
-        throw std::out_of_range("[ERROR]  too many elements for vector");
+        throw astra::internals::exceptions::init_out_of_range();
     }
     return *this;
 }
@@ -97,7 +97,7 @@ Vector Vector::operator*(double scalar) const {
 
 Vector Vector::operator/(double scalar) const {
     if (scalar == 0) {
-        throw std::invalid_argument("[ERROR]  division by zero");
+        throw astra::internals::exceptions::zero_division();
     }
     Vector result(size);
     for (int i = 0; i < size; i++) {
