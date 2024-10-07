@@ -13,6 +13,10 @@ Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
         throw astra::internals::exceptions::invalid_size();
     }
     this->values = new double[size];
+
+    for (int i = 0; i < size; ++i) {
+        this->values[i] = 0;
+    }
 }
 
 Vector::Vector(const double values[], int size)
@@ -47,15 +51,16 @@ int Vector::get_size() const {
     return size; 
 }
 
-void Vector::print() const {
-    std::cout << "[";
-    for (int i = 0; i < size; i++) {
-        std::cout << values[i];
-        if (i < size - 1) {
-            std::cout << ", ";
+std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
+    ost << "[";
+    for (int i = 0; i < v.size; ++i) {
+        ost << v.values[i];
+        if (i < v.size - 1) {
+            ost << ", ";
         }
     }
-    std::cout << "]" << std::endl;
+    ost << "]";
+    return ost;
 }
 
 Vector& Vector::operator<<(double val) {
@@ -63,7 +68,7 @@ Vector& Vector::operator<<(double val) {
         values[current_index++] = val;
     }
     else {
-        throw std::out_of_range("[ERROR]  too many elements for vector");
+        throw astra::internals::exceptions::init_out_of_range();
     }
     return *this;
 }
@@ -72,8 +77,7 @@ Vector &Vector::operator,(double val) { return (*this << val); }
 
 double Vector::operator*(const Vector& other) const {
     if (this->size != other.size) {
-        throw std::invalid_argument(
-            "[ERROR]  vectors must be same size for dot product");
+        throw astra::internals::exceptions::vector_size_mismatch();
     }
     double result = 0;
     for (int i = 0; i < size; ++i) {
@@ -92,7 +96,7 @@ Vector Vector::operator*(double scalar) const {
 
 Vector Vector::operator/(double scalar) const {
     if (scalar == 0) {
-        throw std::invalid_argument("[ERROR]  division by zero");
+        throw astra::internals::exceptions::zero_division();
     }
     Vector result(size);
     for (int i = 0; i < size; i++) {
@@ -103,8 +107,7 @@ Vector Vector::operator/(double scalar) const {
 
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {
-        throw std::invalid_argument(
-            "[ERROR]  vectors must be same size for addition");
+        throw astra::internals::exceptions::vector_size_mismatch();
     }
 
     Vector result(size);
@@ -117,7 +120,7 @@ Vector Vector::operator+(const Vector& other) const {
 
 Vector Vector::operator-(const Vector& other) const {
     if (this->size != other.size) {
-        throw std::invalid_argument("[ERROR]  vectors must be same size for subtraction");
+        throw astra::internals::exceptions::vector_size_mismatch();
     }
     Vector result(size);
 
@@ -129,7 +132,7 @@ Vector Vector::operator-(const Vector& other) const {
 
 double Vector::operator[](int index) const {
     if (index < 0 || index >= size) {
-        throw std::out_of_range("[ERROR]  vector index out of range");
+        throw astra::internals::exceptions::index_out_of_range();
     }
     return values[index];
 }
@@ -180,3 +183,4 @@ bool Vector::operator==(const Vector& other) const {
 bool Vector::operator!=(const Vector& other) const { 
     return !(*this == other); 
 }
+

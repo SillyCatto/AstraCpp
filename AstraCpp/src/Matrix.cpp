@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "Exceptions.h"
 #include <stdexcept>
+#include "Exceptions.h"
 
 using namespace astra;
 
@@ -21,7 +22,7 @@ Matrix& Matrix::operator<<(double val) {
         values[current_index++] = val;
     }
     else {
-        throw std::out_of_range("[ERROR]  too many elements for matrix");
+        throw astra::internals::exceptions::init_out_of_range();
     }
     return *this;
 }
@@ -30,7 +31,7 @@ Matrix &Matrix::operator,(double val) { return (*this << val); }
 
 double& Matrix::operator()(int i, int j) { 
     if (i >= rows || i < 0 || j >= cols || j < 0) {
-        throw std::out_of_range("[ERROR]  matrix index out of range");
+        throw astra::internals::exceptions::index_out_of_range();
     }
     return values[i * cols + j];
 }

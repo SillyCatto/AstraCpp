@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 namespace astra {
 class Vector {
@@ -14,7 +15,8 @@ class Vector {
     ~Vector();
 
     int get_size() const;
-    void print() const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 
     Vector& operator<<(double val);
     Vector& operator,(double val);
