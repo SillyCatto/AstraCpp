@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Exceptions.h"
+#include "MathUtils.h"
 
 using namespace astra;
 
@@ -173,7 +174,7 @@ bool Vector::operator==(const Vector& other) const {
         return false;
     }
     for (int i = 0; i < size; ++i) {
-        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+        if (astra::internals::mathutils::abs(this->values[i] - other.values[i]) > 1e-9) {
             return false;
         }
     }
