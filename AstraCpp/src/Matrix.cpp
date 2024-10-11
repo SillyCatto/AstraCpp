@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Matrix.h"
 #include "Exceptions.h"
-#include <stdexcept>
-#include "Exceptions.h"
+
+#include <iomanip>
 
 using namespace astra;
 
@@ -60,3 +60,17 @@ Matrix Matrix::operator-(const Matrix& other) const {
 
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
+
+std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
+    for (int i = 0; i < mat.rows; ++i) {
+        os << "[ ";
+        for (int j = 0; j < mat.cols; ++j) {
+            os << std::setw(8)
+               << mat.values[i * mat.cols + j];
+            if (j < mat.cols - 1)
+                os << ", ";
+        }
+        os << " ]" << std::endl;
+    }
+    return os;
+}

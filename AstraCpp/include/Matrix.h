@@ -21,5 +21,8 @@ class Matrix {
 
     int get_row() const;
     int get_col() const;
+
+
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
 };
 } // namespace astra
