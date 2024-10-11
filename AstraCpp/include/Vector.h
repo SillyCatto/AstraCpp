@@ -163,9 +163,20 @@ class Vector {
      *     magnitude = sqrt(v1^2 + v2^2 + ... + vn^2)
      *
      * @return The magnitude (length) of the vector as a double.
-     * @throws astra::internals::exceptions::invalid_argument if the vector is empty or uninitialized.
      */
     double magnitude() const;
+
+    /**
+     * @brief Calculates the angle between two vectors in degrees.
+     * @param v1 The first vector.
+     * @param v2 The second vector.
+     * @return The angle between the two vectors in degrees.
+     * @throws astra::internals::exceptions::vector_size_mismatch if the sizes
+     * of the two vectors don't match.
+     * @throws astra::internals::exceptions::invalid_argument if any of the
+     * vectors has zero magnitude.
+     */
+    double angle(const Vector& v1, const Vector& v2);
 
     /**
      * @brief Overloads the stream insertion operator for printing the vector.
