@@ -57,14 +57,6 @@ class Vector {
     int get_size() const;
 
     /**
-     * @brief Overloads the stream insertion operator for printing the vector.
-     * @param os The output stream.
-     * @param vec The vector to output.
-     * @return The output stream with the vector representation.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
-
-    /**
      * @brief Adds a value to the vector via insertion operator for chaining.
      * @param val The value to add.
      * @return Reference to the updated vector.
@@ -160,5 +152,13 @@ class Vector {
      * @return True if vectors are not equal, false otherwise.
      */
     bool operator!=(const Vector& other) const;
+
+    /**
+     * @brief Overloads the stream insertion operator for printing the vector.
+     * @param os The output stream.
+     * @param vec The vector to output.
+     * @return The output stream with the vector representation.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 };
 }

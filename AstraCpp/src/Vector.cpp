@@ -51,18 +51,6 @@ int Vector::get_size() const {
     return size; 
 }
 
-std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
-    ost << "[";
-    for (int i = 0; i < v.size; ++i) {
-        ost << v.values[i];
-        if (i < v.size - 1) {
-            ost << ", ";
-        }
-    }
-    ost << "]";
-    return ost;
-}
-
 Vector& Vector::operator<<(double val) {
     if (current_index < size) {
         values[current_index++] = val;
@@ -181,5 +169,17 @@ bool Vector::operator==(const Vector& other) const {
 
 bool Vector::operator!=(const Vector& other) const { 
     return !(*this == other); 
+}
+
+std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
+    ost << "[";
+    for (int i = 0; i < v.size; ++i) {
+        ost << v.values[i];
+        if (i < v.size - 1) {
+            ost << ", ";
+        }
+    }
+    ost << "]";
+    return ost;
 }
 
