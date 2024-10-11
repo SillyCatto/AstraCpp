@@ -37,4 +37,11 @@ class vector_size_mismatch : public std::exception {
         return "[ASTRA]  vector size mismatch for the operation";
     }
 };
+
+class matrix_size_mismatch : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  matrix size mismatch for the operation";
+    }
+};
 }  // namespace astra::internals::exceptions
