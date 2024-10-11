@@ -325,4 +325,10 @@ TEST_F(VectorTest, magnitude_large_vector) {
     EXPECT_DOUBLE_EQ(v.magnitude(), 3.0);
 }
 
+TEST_F(VectorTest, magnitude_negative_components) {
+    double arr[] = {-3.0, -4.0}; 
+    Vector v(arr, 2);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+}
+
 } // namespace astra
