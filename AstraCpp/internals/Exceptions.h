@@ -38,6 +38,13 @@ class vector_size_mismatch : public std::exception {
     }
 };
 
+class cross_product_size_error : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  cross product is defined for 3D vectors only";
+    }
+};
+
 class matrix_size_mismatch : public std::exception {
   public:
     const char* what() const override {
