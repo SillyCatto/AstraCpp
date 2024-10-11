@@ -16,6 +16,9 @@ class Matrix {
     Matrix& operator,(double val);
     double& operator()(int i, int j);
 
+    Matrix operator+(const Matrix& other) const;
+    Matrix operator-(const Matrix& other) const;
+
     int get_row() const;
     int get_col() const;
 };
