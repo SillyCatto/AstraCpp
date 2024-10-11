@@ -35,8 +35,7 @@ int main() {
          4, 5;
 
     
-    std::cout << m(0, 0) << " " << m(0, 1) << "\n"
-              << m(1, 0) << " " << m(1, 1) << "\n";
+    std::cout << m;
 
     std::cin.get();
 

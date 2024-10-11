@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "Exceptions.h"
 
+#include <iostream>
 #include <iomanip>
 
 using namespace astra;
