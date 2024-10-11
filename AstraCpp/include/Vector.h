@@ -9,9 +9,31 @@ class Vector {
     double* values;
 
   public:
+    /**
+     * @brief Constructs a vector of a specified size, initializing all elements
+     * to zero.
+     * @param size The size of the vector.
+     * @throws astra::internals::exceptions::invalid_size if size is <= 0.
+     */
     Vector(int size);
+
+    /**
+     * @brief Constructs a vector from an array of values.
+     * @param values An array of values to initialize the vector.
+     * @param size The size of the array and the vector.
+     * @throws astra::internals::exceptions::invalid_size if size is <= 0.
+     */
     Vector(const double values[], int size);
+
+    /**
+     * @brief Copy constructor for deep copying another vector.
+     * @param other The vector to copy from.
+     */
     Vector(const Vector& other);
+
+    /**
+     * @brief Destructor to free dynamically allocated memory.
+     */
     ~Vector();
 
     int get_size() const;
