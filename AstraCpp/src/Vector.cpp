@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Vector.h"
-#include <stdexcept>
+#include "Exceptions.h"
+
 #include <iostream>
 
-#include "Exceptions.h"
 
 using namespace astra;
 
@@ -139,8 +139,7 @@ double Vector::operator[](int index) const {
 
 Vector Vector::operator^(const Vector& other) const {
     if (this->size != 3 || other.size != 3) {
-        throw std::invalid_argument(
-            "[ERROR]  cross product is defined for 3D vectors only");
+        throw astra::internals::exceptions::cross_product_size_error();
     }
     Vector result(3);
     result.values[0] =
