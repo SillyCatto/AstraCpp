@@ -173,6 +173,14 @@ bool Vector::operator!=(const Vector& other) const {
     return !(*this == other); 
 }
 
+double Vector::magnitude() const {
+    double sum_of_squares = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum_of_squares += values[i] * values[i];
+    }
+    return astra::internals::mathutils::sqrt(sum_of_squares);
+}
+
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
@@ -184,4 +192,5 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "]";
     return ost;
 }
+
 

@@ -154,6 +154,20 @@ class Vector {
     bool operator!=(const Vector& other) const;
 
     /**
+     * @brief Computes the magnitude (length) of the vector.
+     *
+     * The magnitude of a vector is defined as the square root of the sum of the
+     * squares of its components. For a vector v = [v1, v2, ..., vn], the
+     * magnitude is calculated as:
+     *
+     *     magnitude = sqrt(v1^2 + v2^2 + ... + vn^2)
+     *
+     * @return The magnitude (length) of the vector as a double.
+     * @throws astra::internals::exceptions::invalid_argument if the vector is empty or uninitialized.
+     */
+    double Vector::magnitude() const;
+
+    /**
      * @brief Overloads the stream insertion operator for printing the vector.
      * @param os The output stream.
      * @param vec The vector to output.
