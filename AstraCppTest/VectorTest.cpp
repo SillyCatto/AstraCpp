@@ -301,4 +301,10 @@ TEST_F(VectorTest, equality_operator_floating_point_precision) {
     EXPECT_TRUE(v1 == v2);
 }
 
+TEST_F(VectorTest, magnitude_normal_vector) {
+    double arr[] = {3.0, 4.0};
+    Vector v(arr, 2);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+}
+
 } // namespace astra
