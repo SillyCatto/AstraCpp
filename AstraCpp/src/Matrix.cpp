@@ -58,6 +58,26 @@ Matrix Matrix::operator-(const Matrix& other) const {
     return result;
 }
 
+Matrix Matrix::operator*(double scalar) const {
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = values[i] * scalar;
+    }
+    return result;
+}
+
+Matrix Matrix::operator/(double scalar) const {
+    if (scalar == 0) {
+        throw astra::internals::exceptions::zero_division();
+    }
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = values[i] / scalar;
+    }
+    return result;
+}
+
+
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
 
@@ -65,7 +85,7 @@ std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
     for (int i = 0; i < mat.rows; ++i) {
         os << "[ ";
         for (int j = 0; j < mat.cols; ++j) {
-            os << std::setw(8)
+            os << std::setw(10)
                << mat.values[i * mat.cols + j];
             if (j < mat.cols - 1)
                 os << ", ";
