@@ -166,7 +166,7 @@ TEST_F(VectorTest, cross_product_invalid_size) {
     Vector v1(arr1, 2);
     Vector v2(arr2, 2);
 
-    EXPECT_THROW(v1 ^ v2, std::invalid_argument);
+    EXPECT_THROW(v1 ^ v2, astra::internals::exceptions::cross_product_size_error);
 }
 
 TEST_F(VectorTest, scalar_multiplication_positive) {
