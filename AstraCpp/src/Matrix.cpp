@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "Matrix.h"
 #include "Exceptions.h"
-#include <stdexcept>
-#include "Exceptions.h"
+
+#include <iostream>
+#include <iomanip>
 
 using namespace astra;
 
@@ -36,5 +37,61 @@ double& Matrix::operator()(int i, int j) {
     return values[i * cols + j];
 }
 
+Matrix Matrix::operator+(const Matrix& other) const {
+    if (rows != other.rows || cols != other.cols) {
+        throw astra::internals::exceptions::matrix_size_mismatch();
+    }
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = values[i] + other.values[i];
+    }
+    return result;
+}
+
+Matrix Matrix::operator-(const Matrix& other) const {
+    if (rows != other.rows || cols != other.cols) {
+        throw astra::internals::exceptions::matrix_size_mismatch();
+    }
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = values[i] - other.values[i];
+    }
+    return result;
+}
+
+Matrix Matrix::operator*(double scalar) const {
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = values[i] * scalar;
+    }
+    return result;
+}
+
+Matrix Matrix::operator/(double scalar) const {
+    if (scalar == 0) {
+        throw astra::internals::exceptions::zero_division();
+    }
+    Matrix result(rows, cols);
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = values[i] / scalar;
+    }
+    return result;
+}
+
+
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
+
+std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
+    for (int i = 0; i < mat.rows; ++i) {
+        os << "[ ";
+        for (int j = 0; j < mat.cols; ++j) {
+            os << std::setw(10)
+               << mat.values[i * mat.cols + j];
+            if (j < mat.cols - 1)
+                os << ", ";
+        }
+        os << " ]" << std::endl;
+    }
+    return os;
+}

@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "Vector.h"
-#include <stdexcept>
+#include "Exceptions.h"
+#include "MathUtils.h"
+
 #include <iostream>
 
-#include "Exceptions.h"
 
 using namespace astra;
 
@@ -49,18 +50,6 @@ Vector::~Vector() {
 
 int Vector::get_size() const { 
     return size; 
-}
-
-std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
-    ost << "[";
-    for (int i = 0; i < v.size; ++i) {
-        ost << v.values[i];
-        if (i < v.size - 1) {
-            ost << ", ";
-        }
-    }
-    ost << "]";
-    return ost;
 }
 
 Vector& Vector::operator<<(double val) {
@@ -139,8 +128,7 @@ double Vector::operator[](int index) const {
 
 Vector Vector::operator^(const Vector& other) const {
     if (this->size != 3 || other.size != 3) {
-        throw std::invalid_argument(
-            "[ERROR]  cross product is defined for 3D vectors only");
+        throw astra::internals::exceptions::cross_product_size_error();
     }
     Vector result(3);
     result.values[0] =
@@ -173,7 +161,8 @@ bool Vector::operator==(const Vector& other) const {
         return false;
     }
     for (int i = 0; i < size; ++i) {
-        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+        if (astra::internals::mathutils::abs(this->values[i] - other.values[i]) >
+            1e-8) {
             return false;
         }
     }
@@ -182,5 +171,17 @@ bool Vector::operator==(const Vector& other) const {
 
 bool Vector::operator!=(const Vector& other) const { 
     return !(*this == other); 
+}
+
+std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
+    ost << "[";
+    for (int i = 0; i < v.size; ++i) {
+        ost << v.values[i];
+        if (i < v.size - 1) {
+            ost << ", ";
+        }
+    }
+    ost << "]";
+    return ost;
 }
 
