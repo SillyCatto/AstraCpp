@@ -1,4 +1,5 @@
 #pragma once
+#include "Exception.h"
 
 namespace astra::internals::mathutils {
 
@@ -6,7 +7,7 @@ namespace astra::internals::mathutils {
 
 	inline double sqrt(double n) {
         if (n < 0) {
-            throw std::invalid_argument("Cannot compute the square root of a negative number");
+            throw astra::internals::exceptions::invalid_argument("Cannot compute the square root of a negative number");
         }
         if (n == 0) {
             return 0;
