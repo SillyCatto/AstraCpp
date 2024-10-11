@@ -165,7 +165,7 @@ class Vector {
      * @return The magnitude (length) of the vector as a double.
      * @throws astra::internals::exceptions::invalid_argument if the vector is empty or uninitialized.
      */
-    double Vector::magnitude() const;
+    double magnitude() const;
 
     /**
      * @brief Overloads the stream insertion operator for printing the vector.

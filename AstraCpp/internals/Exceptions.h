@@ -58,4 +58,11 @@ class invalid_argument : public std::exception {
         return "[ASTRA]  invalid argument provided";
     }
 };
+
+class vector_empty_or_uninitialized : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA] Vector is empty or uninitialized";
+    }
+};
 }  // namespace astra::internals::exceptions

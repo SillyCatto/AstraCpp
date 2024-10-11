@@ -174,6 +174,10 @@ bool Vector::operator!=(const Vector& other) const {
 }
 
 double Vector::magnitude() const {
+    if (size == 0 || values == nullptr) {
+        throw astra::internals::exceptions::vector_empty_or_uninitialized();
+    }
+
     double sum_of_squares = 0.0;
     for (int i = 0; i < size; ++i) {
         sum_of_squares += values[i] * values[i];
