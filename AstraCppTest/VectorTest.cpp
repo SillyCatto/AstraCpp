@@ -308,9 +308,21 @@ TEST_F(VectorTest, magnitude_normal_vector) {
 }
 
 TEST_F(VectorTest, magnitude_zero_vector) {
-    double arr[] = {0.0, 0.0, 0.0}; // Zero vector, magnitude should be 0
+    double arr[] = {0.0, 0.0, 0.0}; 
     Vector v(arr, 3);
     EXPECT_DOUBLE_EQ(v.magnitude(), 0.0);
+}
+
+TEST_F(VectorTest, magnitude_single_element_vector) {
+    double arr[] = {5.0}; 
+    Vector v(arr, 1);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+}
+
+TEST_F(VectorTest, magnitude_large_vector) {
+    double arr[] = {1.0, 2.0, 2.0}; 
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 3.0);
 }
 
 } // namespace astra
