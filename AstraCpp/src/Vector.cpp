@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Vector.h"
 #include "Exceptions.h"
+#include "MathUtils.h"
 
 #include <iostream>
 
@@ -160,7 +161,8 @@ bool Vector::operator==(const Vector& other) const {
         return false;
     }
     for (int i = 0; i < size; ++i) {
-        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+        if (astra::internals::mathutils::abs(this->values[i] - other.values[i]) >
+            1e-8) {
             return false;
         }
     }
