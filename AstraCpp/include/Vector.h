@@ -114,7 +114,7 @@ class Vector {
      */
     Vector operator-(const Vector& other) const;
 
-    /**
+     /**
      * @brief Accesses an element at a specified index.
      * @param index The index of the element.
      * @return The value at the specified index.
@@ -123,7 +123,7 @@ class Vector {
      */
     double operator[](int index) const;
 
-    /**
+     /**
      * @brief Calculates the cross product of a 3d vector with another 3d vector.
      * @param other The vector to calculate the cross product with.
      * @return A new vector as the cross product result.
@@ -131,14 +131,14 @@ class Vector {
      */
     Vector operator^(const Vector& other) const;
 
-    /**
+     /**
      * @brief Assigns another vector to this vector (deep copy).
      * @param other The vector to assign from.
      * @return Reference to this vector after assignment.
      */
     Vector& operator=(const Vector& other);
 
-    /**
+     /**
      * @brief Checks if this vector is equal to another vector.
      * @param other The vector to compare with.
      * @return True if vectors are equal, false otherwise.
@@ -146,14 +146,14 @@ class Vector {
 
     bool operator==(const Vector& other) const;
 
-    /**
+     /**
      * @brief Checks if this vector is not equal to another vector.
      * @param other The vector to compare with.
      * @return True if vectors are not equal, false otherwise.
      */
     bool operator!=(const Vector& other) const;
 
-    /**
+     /**
      * @brief Computes the magnitude (length) of the vector.
      *
      * The magnitude of a vector is defined as the square root of the sum of the
@@ -166,25 +166,33 @@ class Vector {
      */
     double magnitude() const;
 
-    /**
+     /**
      * @brief Overloads the stream insertion operator for printing the vector.
      * @param os The output stream.
      * @param vec The vector to output.
      * @return The output stream with the vector representation.
      */
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+
+
+     /**
+     * @brief Calculates the angle between two vectors in degrees.
+     * @param v1 The first vector.
+     * @param v2 The second vector.
+     * @return The angle between the two vectors in degrees.
+     * @throws astra::internals::exceptions::vector_size_mismatch if the sizes
+     * of the two vectors don't match.
+     * @throws astra::internals::exceptions::invalid_argument if any of the
+     * vectors has zero magnitude.
+     */
+    double angle(const Vector& v1, const Vector& v2);
+
+     /**
+     * @brief Computes the sum of all elements in the vector.
+     * @return The sum of all elements in the vector.
+     */
+    double sum() const;
+
 };
 
-/**
- * @brief Calculates the angle between two vectors in degrees.
- * @param v1 The first vector.
- * @param v2 The second vector.
- * @return The angle between the two vectors in degrees.
- * @throws astra::internals::exceptions::vector_size_mismatch if the sizes
- * of the two vectors don't match.
- * @throws astra::internals::exceptions::invalid_argument if any of the
- * vectors has zero magnitude.
- */
-double angle(const Vector& v1, const Vector& v2);
-
-}
+} // namespace astra

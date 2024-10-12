@@ -180,6 +180,14 @@ double Vector::magnitude() const {
     return astra::internals::mathutils::sqrt(sum_of_squares);
 }
 
+double astra::Vector::sum() const { 
+	double sum = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum += values[i];
+    }
+    return sum;
+}
+
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
