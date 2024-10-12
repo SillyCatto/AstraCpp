@@ -411,4 +411,11 @@ TEST_F(VectorTest, normalize_normal_vector) {
     EXPECT_DOUBLE_EQ(result[1], 0.8);
 }
 
+TEST_F(VectorTest, normalize_invalid_vector) {
+    double arr[] = {0.0, 0.0};
+    Vector v(arr, 2);
+
+    EXPECT_THROW(v.normalize(), astra::internals::exceptions::zero_division);
+}
+
 } // namespace astra
