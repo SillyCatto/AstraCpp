@@ -383,5 +383,11 @@ TEST_F(VectorTest, avg_positive) {
     EXPECT_DOUBLE_EQ(v.avg(), 2.0);
 }
 
+TEST_F(VectorTest, avg_negative) {
+    double arr[] = {-1.0, -2.0, -3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.avg(), -2.0);
+}
+
 
 } // namespace astra
