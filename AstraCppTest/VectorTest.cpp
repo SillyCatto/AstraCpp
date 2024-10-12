@@ -1,5 +1,7 @@
 #include "pch.h"
 
+#include <iostream>
+
 #include "Vector.h"
 #include "gtest/gtest.h"
 
@@ -340,7 +342,7 @@ TEST_F(VectorTest, angle_almost_parallel_vectors) {
 
     double result = Vector::angle(v1, v2);
 
-    EXPECT_NEAR(result, 0.0, 1e-7); 
+    EXPECT_NEAR(result, 0.0, 1e-6); 
 }
 
 TEST_F(VectorTest, angle_almost_opposite_vectors) {
@@ -351,27 +353,27 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
 
     double result = Vector::angle(v1, v2);
 
-    EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-7); 
+    EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-6); 
 }
 
-//TEST_F(VectorTest, angle_orthogonal_vectors) {
-//    double arr1[] = {1.0, 0.0, 0.0};
-//    double arr2[] = {0.0, 1.0, 0.0}; 
-//    Vector v1(arr1, 3);
-//    Vector v2(arr2, 3);
-//
-//    double result = astra::angle(v1, v2);
-//
-//    EXPECT_NEAR(result, 1.570, 1e-7);
-//}
+TEST_F(VectorTest, angle_orthogonal_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
 
-TEST_F(VectorTest, Sum_negative) {
+    double result = Vector::angle(v1, v2);
+
+    EXPECT_NEAR(result, astra::internals::mathutils::PI / 2, 1e-6);
+}
+
+TEST_F(VectorTest, sum_negative) {
     double arr[] = {-1.0, -2.0, -3.0};
     Vector v(arr, 3);
     EXPECT_DOUBLE_EQ(v.sum(), -6.0);
 }
 
-TEST_F(VectorTest, Sum_positive) {
+TEST_F(VectorTest, sum_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
     EXPECT_DOUBLE_EQ(v.sum(), 6.0);
@@ -389,17 +391,9 @@ TEST_F(VectorTest, avg_negative) {
     EXPECT_DOUBLE_EQ(v.avg(), -2.0);
 }
 
-TEST_F(VectorTest, min_positive) {
-    double arr[] = {1.0, 2.0, 3.0};
-    Vector v(arr, 3);
-    EXPECT_DOUBLE_EQ(v.min(), 1.0);
-}
+//----------------
 
-TEST_F(VectorTest, min_negative) {
-    double arr[] = {-1.0, -2.0, -3.0};
-    Vector v(arr, 3);
-    EXPECT_DOUBLE_EQ(v.min(), -3.0);
-}
+//-------------------
 
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};

@@ -205,6 +205,12 @@ class Vector {
     double min() const;
 
     /**
+     * @brief Computes the max of all elements in the vector.
+     * @return The max of all elements in the vector.
+     */
+    double max() const;
+
+    /**
      * @brief Normalizes the vector.
      * @return A new normalized vector.
      * @throws astra::internals::exceptions::zero_division if the vector has
