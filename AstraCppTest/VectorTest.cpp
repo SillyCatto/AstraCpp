@@ -331,16 +331,15 @@ TEST_F(VectorTest, magnitude_negative_components) {
     EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
 }
 
-TEST_F(VectorTest, angle_orthogonal_vectors) {
-    double arr1[] = {1.0, 0.0, 0.0}; 
-    double arr2[] = {0.0, 1.0, 0.0}; 
-
+TEST_F(VectorTest, angle_almost_parallel_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.9999999, 0.0, 0.0};
     Vector v1(arr1, 3);
     Vector v2(arr2, 3);
 
-    double angle_degrees = angle(v1, v2) * (180.0 / 3.14159265358979323846);
+    double result = astra::angle(v1, v2);
 
-    EXPECT_DOUBLE_EQ(angle_degrees, 90.0);
+    EXPECT_NEAR(result, 0.0, 1e-7); 
 }
 
 } // namespace astra

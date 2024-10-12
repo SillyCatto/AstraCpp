@@ -192,7 +192,7 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     return ost;
 }
 
-double angle(const Vector& v1, const Vector& v2) {
+double astra::angle(const Vector& v1, const Vector& v2) {
     if (v1.get_size() != v2.get_size()) {
         throw astra::internals::exceptions::vector_size_mismatch();
     }
