@@ -192,6 +192,12 @@ class Vector {
      */
     double sum() const;
 
+    /**
+     * @brief Computes the avg of all elements in the vector.
+     * @return The mean of all elements in the vector.
+     */
+    double avg() const;
+
 
 };
 

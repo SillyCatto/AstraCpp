@@ -188,6 +188,10 @@ double astra::Vector::sum() const {
     return sum;
 }
 
+double Vector::avg() const { 
+	return sum() / size;
+}
+
 
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
