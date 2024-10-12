@@ -29,6 +29,14 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
+    inline unsigned long long factorial(int n) {
+         unsigned long long fact = 1;
+         for (int i = 2; i <= n; ++i) {
+             fact *= i;
+         }
+         return fact;
+     }
+
      inline double cos(double x) {
         double term = 1;      
         double result = term; 
