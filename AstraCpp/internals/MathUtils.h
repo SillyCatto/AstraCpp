@@ -29,7 +29,20 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
-    double acos(double x) {
+     inline double cos(double x) {
+        double term = 1;      
+        double result = term; 
+        int sign = -1;        
+
+        for (int i = 2; i <= 18; i += 2) {
+            term = (x * x) / factorial(i); 
+            result += sign * term;         
+            sign *= -1; 
+        }
+        return result;
+     }
+
+    inline double acos(double x) {
          if (x < -1.0 || x > 1.0) {
             throw astra::internals::exceptions::invalid_argument();
          }
@@ -43,7 +56,7 @@ namespace astra::internals::mathutils {
          double fx, dfx;
 
          while (true) {
-             fx = std::cos(guess) - x;
+             fx = cos(guess) - x;
 
              dfx = -std::sin(guess);
 
