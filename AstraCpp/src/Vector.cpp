@@ -180,6 +180,36 @@ double Vector::magnitude() const {
     return astra::internals::mathutils::sqrt(sum_of_squares);
 }
 
+double astra::Vector::sum() const {
+    double sum = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum += values[i];
+    }
+    return sum;
+}
+
+double Vector::avg() const { 
+	return sum() / size; 
+}
+
+double astra::Vector::min() const {
+    double min = values[0];
+    for (int i = 1; i < size; ++i) {
+        if (values[i] < min) {
+            min = values[i];
+        }
+    }
+    return min;
+}
+
+Vector astra::Vector::normalize() const { 
+	double mag = magnitude();
+    if (mag == 0) {
+        throw astra::internals::exceptions::zero_division();
+    }
+    return *this / mag;
+}
+
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
@@ -192,7 +222,7 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     return ost;
 }
 
-double astra::angle(const Vector& v1, const Vector& v2) {
+double Vector::angle(const Vector& v1, const Vector& v2) {
     if (v1.get_size() != v2.get_size()) {
         throw astra::internals::exceptions::vector_size_mismatch();
     }
@@ -219,5 +249,7 @@ double astra::angle(const Vector& v1, const Vector& v2) {
 
     return angle_radians;
 }
+
+
 
 
