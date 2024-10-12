@@ -204,7 +204,13 @@ class Vector {
      */
     double min() const;
 
-
+    /**
+     * @brief Normalizes the vector.
+     * @return A new normalized vector.
+     * @throws astra::internals::exceptions::zero_division if the vector has
+     * zero magnitude.
+     */
+    Vector normalize() const;
 };
 
 

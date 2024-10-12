@@ -202,6 +202,14 @@ double astra::Vector::min() const {
     return min;
 }
 
+Vector astra::Vector::normalize() const { 
+	double mag = magnitude();
+    if (mag == 0) {
+        throw astra::internals::exceptions::zero_division();
+    }
+    return *this / mag;
+}
+
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
