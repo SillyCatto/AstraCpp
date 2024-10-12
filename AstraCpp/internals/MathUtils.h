@@ -38,7 +38,7 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
-    double deg_to_rad(double degree) { return degree * PI / 180.0; }
+    //double deg_to_rad(double degree) { return degree * PI / 180.0; }
 
     inline unsigned long long factorial(int n) {
          unsigned long long fact = 1;
@@ -143,7 +143,7 @@ namespace astra::internals::mathutils {
         return arcsin;
     }
 
-    double arccos_rad(double x) {
+    inline double arccos_rad(double x) {
         if (x > 1 || x < -1)
             throw astra::internals::exceptions::invalid_argument();
         return PI / 2 - arcsin_rad(x);

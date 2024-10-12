@@ -45,6 +45,13 @@ class cross_product_size_error : public std::exception {
     }
 };
 
+class null_vector : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  the vector is null";
+    }
+};
+
 class matrix_size_mismatch : public std::exception {
   public:
     const char* what() const override {

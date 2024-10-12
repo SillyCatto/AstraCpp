@@ -245,7 +245,7 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
     if (cos_theta < -1.0)
         cos_theta = -1.0;
 
-    double angle_radians = astra::internals::mathutils::acos(cos_theta);
+    double angle_radians = astra::internals::mathutils::arccos_rad(cos_theta);
 
     return angle_radians;
 }
