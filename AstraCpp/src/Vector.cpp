@@ -3,6 +3,7 @@
 #include "Exceptions.h"
 #include "MathUtils.h"
 
+#include <cmath>
 #include <iostream>
 
 
@@ -222,6 +223,7 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     return ost;
 }
 
+
 double Vector::angle(const Vector& v1, const Vector& v2) {
     if (v1.get_size() != v2.get_size()) {
         throw astra::internals::exceptions::vector_size_mismatch();
@@ -231,25 +233,17 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
     double mag_v2 = v2.magnitude();
 
     if (mag_v1 == 0 || mag_v2 == 0) {
-        throw astra::internals::exceptions::invalid_argument();
+        throw astra::internals::exceptions::null_vector();
     }
 
     double dot_product = v1 * v2;
 
     double cos_theta = dot_product / (mag_v1 * mag_v2);
 
-    cos_theta = astra::internals::mathutils::clamp(cos_theta, -1.0, 1.0); 
+    cos_theta = astra::internals::mathutils::clamp(cos_theta, -1.0, 1.0);
 
-    if (cos_theta > 1.0)
-        cos_theta = 1.0;
-    if (cos_theta < -1.0)
-        cos_theta = -1.0;
-
-    double angle_radians = astra::internals::mathutils::arccos_rad(cos_theta);
+    double angle_radians = std::acos(cos_theta);
 
     return angle_radians;
 }
-
-
-
 

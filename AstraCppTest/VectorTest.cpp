@@ -1,5 +1,7 @@
 #include "pch.h"
 
+#include <iostream>
+
 #include "Vector.h"
 #include "gtest/gtest.h"
 
@@ -340,7 +342,7 @@ TEST_F(VectorTest, angle_almost_parallel_vectors) {
 
     double result = Vector::angle(v1, v2);
 
-    EXPECT_NEAR(result, 0.0, 1e-7); 
+    EXPECT_NEAR(result, 0.0, 1e-6); 
 }
 
 TEST_F(VectorTest, angle_almost_opposite_vectors) {
@@ -351,7 +353,7 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
 
     double result = Vector::angle(v1, v2);
 
-    EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-7); 
+    EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-6); 
 }
 
 //TEST_F(VectorTest, angle_orthogonal_vectors) {

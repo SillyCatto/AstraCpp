@@ -38,7 +38,7 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
-    //double deg_to_rad(double degree) { return degree * PI / 180.0; }
+    inline double deg_to_rad(double degree) { return degree * PI / 180.0; }
 
     inline unsigned long long factorial(int n) {
          unsigned long long fact = 1;
@@ -93,60 +93,6 @@ namespace astra::internals::mathutils {
 
         double res = x - quotient * y;
         return res;
-    }
-
-    inline double sin_rad(double angleRadian) {
-        angleRadian = fmod(angleRadian, 2 * PI); // normalize the angle
-        double sine = 0;
-        double term = angleRadian;
-        int sign = 1;
-
-        for (int i = 1; i <= 20; i += 2) {
-            sine += sign * term;
-            sign = -sign;
-            term *= (angleRadian * angleRadian) /
-                    ((i + 1) * (i + 2)); // calculate the next term
-        }
-        return sine;
-    }
-
-
-     inline double cos_rad(double angleRadian) {
-        angleRadian = fmod(angleRadian, 2 * PI); // Normalize the angle
-        double cosine = 1;
-        double term = 1;
-        int sign = -1;
-
-        for (int i = 2; i <= 20; i += 2) {
-            term *= (angleRadian * angleRadian) /
-                    ((i - 1) * i); // Calculate the next term
-            cosine += sign * term;
-            sign = -sign;
-        }
-
-        return cosine;
-    }
-
-    inline double arcsin_rad(double x) {
-        if (x > 1 || x < -1)
-            throw astra::internals::exceptions::invalid_argument();
-        if (x == 1)
-            return PI / 2;
-        if (x == -1)
-            return -PI / 2;
-
-        double arcsin = 0;
-        for (int i = 0; i < 20; i++) {
-            arcsin += factorial(2 * i) * pow(x, 2 * i + 1) /
-                      (pow(4, i) * pow(factorial(i), 2) * (2 * i + 1));
-        }
-        return arcsin;
-    }
-
-    inline double arccos_rad(double x) {
-        if (x > 1 || x < -1)
-            throw astra::internals::exceptions::invalid_argument();
-        return PI / 2 - arcsin_rad(x);
     }
 
 } // namespace astra::internals::mathutils
