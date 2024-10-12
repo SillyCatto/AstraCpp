@@ -194,10 +194,6 @@ double Vector::avg() const {
 }
 
 double astra::Vector::min() const {
-    if (size <= 0) {
-        throw astra::internals::exceptions::invalid_size();
-    }
-
     double min = values[0];
     for (int i = 1; i < size; ++i) {
         if (values[i] < min) {
@@ -208,10 +204,6 @@ double astra::Vector::min() const {
 }
 
 double astra::Vector::max() const {
-    if (size <= 0) {
-        throw astra::internals::exceptions::invalid_size();
-    }
-
     double max = values[0];
     for (int i = 1; i < size; ++i) {
         if (values[i] > max) {
