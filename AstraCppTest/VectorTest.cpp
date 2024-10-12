@@ -291,15 +291,56 @@ TEST_F(VectorTest, inequality_operator_valid) {
     EXPECT_TRUE(v1 != v2);
 }
 
-// TODO: recheck
-//TEST_F(VectorTest, equality_operator_floating_point_precision) {
-//    double arr1[] = {1.000000001, 2.000000001, 3.000000001};
-//    double arr2[] = {1.0, 2.0, 3.0};
-//
-//    Vector v1(arr1, 3);
-//    Vector v2(arr2, 3);
-//
-//    EXPECT_TRUE(v1 == v2);
-//}
+TEST_F(VectorTest, equality_operator_floating_point_precision) {
+    double arr1[] = {1.000000001, 2.000000001, 3.000000001};
+    double arr2[] = {1.0, 2.0, 3.0};
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    EXPECT_TRUE(v1 == v2);
+}
+
+TEST_F(VectorTest, magnitude_normal_vector) {
+    double arr[] = {3.0, 4.0};
+    Vector v(arr, 2);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+}
+
+TEST_F(VectorTest, magnitude_zero_vector) {
+    double arr[] = {0.0, 0.0, 0.0}; 
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 0.0);
+}
+
+TEST_F(VectorTest, magnitude_single_element_vector) {
+    double arr[] = {5.0}; 
+    Vector v(arr, 1);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+}
+
+TEST_F(VectorTest, magnitude_large_vector) {
+    double arr[] = {1.0, 2.0, 2.0}; 
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 3.0);
+}
+
+TEST_F(VectorTest, magnitude_negative_components) {
+    double arr[] = {-3.0, -4.0}; 
+    Vector v(arr, 2);
+    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+}
+
+TEST_F(VectorTest, angle_orthogonal_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0}; 
+    double arr2[] = {0.0, 1.0, 0.0}; 
+
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double angle_degrees = angle(v1, v2) * (180.0 / 3.14159265358979323846);
+
+    EXPECT_DOUBLE_EQ(angle_degrees, 90.0);
+}
 
 } // namespace astra

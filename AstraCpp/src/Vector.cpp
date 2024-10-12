@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "Vector.h"
 #include "Exceptions.h"
+#include "MathUtils.h"
 
 #include <iostream>
 
 
 using namespace astra;
-
 
 Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     if (size <= 0) {
@@ -160,7 +160,8 @@ bool Vector::operator==(const Vector& other) const {
         return false;
     }
     for (int i = 0; i < size; ++i) {
-        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+        if (astra::internals::mathutils::abs(this->values[i] - other.values[i]) >
+            1e-8) {
             return false;
         }
     }
@@ -169,6 +170,14 @@ bool Vector::operator==(const Vector& other) const {
 
 bool Vector::operator!=(const Vector& other) const { 
     return !(*this == other); 
+}
+
+double Vector::magnitude() const {
+    double sum_of_squares = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum_of_squares += values[i] * values[i];
+    }
+    return astra::internals::mathutils::sqrt(sum_of_squares);
 }
 
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
@@ -182,4 +191,31 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "]";
     return ost;
 }
+
+double angle(const Vector& v1, const Vector& v2) {
+    if (v1.get_size() != v2.get_size()) {
+        throw astra::internals::exceptions::vector_size_mismatch();
+    }
+
+    double mag_v1 = v1.magnitude();
+    double mag_v2 = v2.magnitude();
+
+    if (mag_v1 == 0 || mag_v2 == 0) {
+        throw astra::internals::exceptions::invalid_argument();
+    }
+
+    double dot_product = v1 * v2;
+
+    double cos_theta = dot_product / (mag_v1 * mag_v2);
+
+    if (cos_theta > 1.0)
+        cos_theta = 1.0;
+    if (cos_theta < -1.0)
+        cos_theta = -1.0;
+
+    double angle_radians = astra::internals::mathutils::acos(cos_theta);
+
+    return angle_radians;
+}
+
 
