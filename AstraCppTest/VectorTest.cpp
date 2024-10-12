@@ -377,6 +377,11 @@ TEST_F(VectorTest, Sum_positive) {
     EXPECT_DOUBLE_EQ(v.sum(), 6.0);
 }
 
+TEST_F(VectorTest, avg_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.avg(), 2.0);
+}
 
 
 } // namespace astra
