@@ -338,9 +338,15 @@ TEST_F(VectorTest, angle_orthogonal_vectors) {
     Vector v1(arr1, 3);
     Vector v2(arr2, 3);
 
-    double angle_degrees = angle(v1, v2) * (180.0 / 3.14159265358979323846);
+    double angle_degrees = Vector::angle(v1, v2) * (180.0 / 3.14159265358979323846);
 
     EXPECT_DOUBLE_EQ(angle_degrees, 90.0);
+}
+
+TEST_F(VectorTest, Sum_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.sum(), 6.0);
 }
 
 } // namespace astra
