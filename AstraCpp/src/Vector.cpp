@@ -189,9 +189,18 @@ double astra::Vector::sum() const {
 }
 
 double Vector::avg() const { 
-	return sum() / size;
+	return sum() / size; 
 }
 
+double astra::Vector::min() const {
+    double min = values[0];
+    for (int i = 1; i < size; ++i) {
+        if (values[i] < min) {
+            min = values[i];
+        }
+    }
+    return min;
+}
 
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";

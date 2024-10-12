@@ -198,6 +198,12 @@ class Vector {
      */
     double avg() const;
 
+    /**
+     * @brief Computes the min of all elements in the vector.
+     * @return The min of all elements in the vector.
+     */
+    double min() const;
+
 
 };
 
