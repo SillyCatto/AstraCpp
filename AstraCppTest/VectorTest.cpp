@@ -365,13 +365,13 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
 //    EXPECT_NEAR(result, 1.570, 1e-7);
 //}
 
-TEST_F(VectorTest, Sum_negative) {
+TEST_F(VectorTest, sum_negative) {
     double arr[] = {-1.0, -2.0, -3.0};
     Vector v(arr, 3);
     EXPECT_DOUBLE_EQ(v.sum(), -6.0);
 }
 
-TEST_F(VectorTest, Sum_positive) {
+TEST_F(VectorTest, sum_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
     EXPECT_DOUBLE_EQ(v.sum(), 6.0);

@@ -1,10 +1,11 @@
 #pragma once
+
 #include "Exceptions.h"
 
 namespace astra::internals::mathutils {
     
     const double PI = 3.14159265358979323846;
-    const double EPSILON = 1e-9; 
+    const double EPSILON = 1e-6; 
 
 	inline double abs(double x) { return (x < 0) ? -x : x; }
 
@@ -16,7 +17,7 @@ namespace astra::internals::mathutils {
             return 0;
         }
             
-        double tolerance = 1e-9;
+        double tolerance = EPSILON;
         double guess = n;
         double previous_guess;
 
@@ -29,23 +30,7 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
-    inline double fmax(double a, double b) {
-         if (a > b) {
-             return a;
-         }
-         return b;
-     }
-
-    inline double fmin(double a, double b) {
-         if (a < b) {
-             return a;
-         }
-         return b;
-     }
-
-    inline double clamp(double value, double min, double max) {
-         return fmax(min, fmin(max, value));
-     }
+    double deg_to_rad(double degree) { return degree * PI / 180.0; }
 
     inline unsigned long long factorial(int n) {
          unsigned long long fact = 1;
@@ -55,61 +40,99 @@ namespace astra::internals::mathutils {
          return fact;
      }
 
-    inline double sin(double x) {
-         double term = x;      
-         double result = term; 
-         int sign = -1;        
-
-         for (int i = 3; i <= 19; i += 2) {
-             term = (x * x * x) / factorial(i); 
-             result += sign * term;             
-             sign *= -1; 
-         }
-         return result;
-     }
-
-     inline double cos(double x) {
-        double term = 1;      
-        double result = term; 
-        int sign = -1;        
-
-        for (int i = 2; i <= 18; i += 2) {
-            term = (x * x) / factorial(i); 
-            result += sign * term;         
-            sign *= -1; 
-        }
-        return result;
-     }
-
-    inline double acos(double x) {
-         if (x < -1.0 || x > 1.0) {
-            throw astra::internals::exceptions::invalid_argument();
+    inline double pow(double base, int exponent) {
+         if (exponent == 0) {
+             return 1.0;
          }
 
-         if (astra::internals::mathutils::abs(x - 1.0) < EPSILON)
-             return 0.0; 
-         if (astra::internals::mathutils::abs(x + 1.0) < EPSILON)
-             return PI; 
+         if (base == 0.0 && exponent < 0) {
+             throw astra ::internals::exceptions::zero_division();
+         }
 
-         double guess = PI / 4;
-         double fx, dfx;
+         double res = 1.0;
+         int abs_exp = (exponent > 0) ? exponent : -exponent;
 
-         while (true) {
-             fx = cos(guess) - x;
-
-             dfx = -sin(guess);
-
-             double next_guess = guess - fx / dfx;
-
-             if (astra::internals::mathutils::abs(next_guess - guess) <
-                 EPSILON) {
-                 break;
+         while (abs_exp > 0) {
+             if (abs_exp % 2 == 1) {
+                 res *= base;
              }
 
-             guess = next_guess;
+             base *= base;
+             abs_exp /= 2;
          }
 
-         return guess;
+         return (exponent < 0) ? 1.0 / res : res;
      }
+
+    inline double trunc(double x) {
+         if (x > 0) {
+            return static_cast<int>(x);
+         }
+         else if (x < 0) {
+             return static_cast<int>(x);
+         }
+         else {
+             return 0.0;
+         }
+    }
+
+    inline double fmod(double x, double y) {
+        if (y == 0.0) {
+            throw astra::internals::exceptions::zero_division();
+        }
+
+        double quotient = trunc(x / y);
+
+        double res = x - quotient * y;
+        return res;
+    }
+
+    inline double sin_rad(double angleRadian) {
+        angleRadian = fmod(angleRadian, 2 * PI); // normalize the angle
+        double sine = 0;
+        double term = angleRadian;
+        int sign = 1;
+
+        for (int i = 1; i <= 20; i += 2) {
+            sine += sign * term;
+            sign = -sign;
+            term *= (angleRadian * angleRadian) /
+                    ((i + 1) * (i + 2)); // calculate the next term
+        }
+        return sine;
+    }
+
+
+     inline double cos_rad(double angleRadian) {
+        angleRadian = fmod(angleRadian, 2 * PI); // Normalize the angle
+        double cosine = 1;
+        double term = 1;
+        int sign = -1;
+
+        for (int i = 2; i <= 20; i += 2) {
+            term *= (angleRadian * angleRadian) /
+                    ((i - 1) * i); // Calculate the next term
+            cosine += sign * term;
+            sign = -sign;
+        }
+
+        return cosine;
+    }
+
+    inline double arcsin_rad(double x) {
+        if (x > 1 || x < -1)
+            throw astra::internals::exceptions::invalid_argument();
+        if (x == 1)
+            return PI / 2;
+        if (x == -1)
+            return -PI / 2;
+
+        double arcsin = 0;
+        for (int i = 0; i < 20; i++) {
+            arcsin += factorial(2 * i) * pow(x, 2 * i + 1) /
+                      (pow(4, i) * pow(factorial(i), 2) * (2 * i + 1));
+        }
+        return arcsin;
+    }
 
 } // namespace astra::internals::mathutils
