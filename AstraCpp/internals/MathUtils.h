@@ -37,6 +37,19 @@ namespace astra::internals::mathutils {
          return fact;
      }
 
+    inline double sin(double x) {
+         double term = x;      
+         double result = term; 
+         int sign = -1;        
+
+         for (int i = 3; i <= 19; i += 2) {
+             term = (x * x * x) / factorial(i); 
+             result += sign * term;             
+             sign *= -1; 
+         }
+         return result;
+     }
+
      inline double cos(double x) {
         double term = 1;      
         double result = term; 
@@ -66,7 +79,7 @@ namespace astra::internals::mathutils {
          while (true) {
              fx = cos(guess) - x;
 
-             dfx = -std::sin(guess);
+             dfx = -sin(guess);
 
              double next_guess = guess - fx / dfx;
 
