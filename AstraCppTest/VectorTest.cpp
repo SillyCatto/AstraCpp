@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 
 #include "Exceptions.h"
+#include "MathUtils.h"
 
 namespace astra {
 
@@ -340,6 +341,17 @@ TEST_F(VectorTest, angle_almost_parallel_vectors) {
     double result = astra::angle(v1, v2);
 
     EXPECT_NEAR(result, 0.0, 1e-7); 
+}
+
+TEST_F(VectorTest, angle_almost_opposite_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {-1.0000001, 0.0, 0.0}; 
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = astra::angle(v1, v2);
+
+    EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-7); 
 }
 
 } // namespace astra
