@@ -29,6 +29,24 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
+    inline double fmax(double a, double b) {
+         if (a > b) {
+             return a;
+         }
+         return b;
+     }
+
+    inline double fmin(double a, double b) {
+         if (a < b) {
+             return a;
+         }
+         return b;
+     }
+
+    inline double clamp(double value, double min, double max) {
+         return fmax(min, fmin(max, value));
+     }
+
     inline unsigned long long factorial(int n) {
          unsigned long long fact = 1;
          for (int i = 2; i <= n; ++i) {
