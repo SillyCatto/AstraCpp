@@ -185,7 +185,7 @@ class Vector {
      * @throws astra::internals::exceptions::invalid_argument if any of the
      * vectors has zero magnitude.
      */
-    double angle(const Vector& v1, const Vector& v2);
+    static double angle(const Vector& v1, const Vector& v2);
 
      /**
      * @brief Computes the sum of all elements in the vector.
