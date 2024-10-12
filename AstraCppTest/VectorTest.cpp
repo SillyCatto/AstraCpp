@@ -348,21 +348,21 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
     double arr2[] = {-1.0000001, 0.0, 0.0}; 
     Vector v1(arr1, 3);
     Vector v2(arr2, 3);
-
+  
     double result = astra::angle(v1, v2);
-
     EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-7); 
 }
 
-//TEST_F(VectorTest, angle_orthogonal_vectors) {
-//    double arr1[] = {1.0, 0.0, 0.0};
-//    double arr2[] = {0.0, 1.0, 0.0}; 
-//    Vector v1(arr1, 3);
-//    Vector v2(arr2, 3);
-//
-//    double result = astra::angle(v1, v2);
-//
-//    EXPECT_NEAR(result, 1.570, 1e-7);
-//}
+TEST_F(VectorTest, Sum_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.sum(), 6.0);
+}
+
+TEST_F(VectorTest, Sum_negative) {
+    double arr[] = {-1.0, -2.0, -3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.sum(), -6.0);
+}
 
 } // namespace astra
