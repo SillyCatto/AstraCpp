@@ -9,6 +9,14 @@ namespace astra::internals::mathutils {
 
 	inline double abs(double x) { return (x < 0) ? -x : x; }
 
+    inline double fmax(double a, double b) { return (a > b) ? a : b; }
+
+    inline double fmin(double a, double b) { return (a < b) ? a : b; }
+
+    inline double clamp(double value, double min, double max) {
+        return fmax(min, fmin(value, max));
+    }
+
 	inline double sqrt(double n) {
         if (n < 0) {
             throw astra::internals::exceptions::invalid_argument();
