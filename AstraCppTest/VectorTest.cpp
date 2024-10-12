@@ -338,7 +338,7 @@ TEST_F(VectorTest, angle_almost_parallel_vectors) {
     Vector v1(arr1, 3);
     Vector v2(arr2, 3);
 
-    double result = astra::angle(v1, v2);
+    double result = Vector::angle(v1, v2);
 
     EXPECT_NEAR(result, 0.0, 1e-7); 
 }
@@ -349,7 +349,7 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
     Vector v1(arr1, 3);
     Vector v2(arr2, 3);
 
-    double result = astra::angle(v1, v2);
+    double result = Vector::angle(v1, v2);
 
     EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-7); 
 }
@@ -364,5 +364,58 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
 //
 //    EXPECT_NEAR(result, 1.570, 1e-7);
 //}
+
+TEST_F(VectorTest, Sum_negative) {
+    double arr[] = {-1.0, -2.0, -3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.sum(), -6.0);
+}
+
+TEST_F(VectorTest, Sum_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.sum(), 6.0);
+}
+
+TEST_F(VectorTest, avg_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.avg(), 2.0);
+}
+
+TEST_F(VectorTest, avg_negative) {
+    double arr[] = {-1.0, -2.0, -3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.avg(), -2.0);
+}
+
+TEST_F(VectorTest, min_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.min(), 1.0);
+}
+
+TEST_F(VectorTest, min_negative) {
+    double arr[] = {-1.0, -2.0, -3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.min(), -3.0);
+}
+
+TEST_F(VectorTest, normalize_normal_vector) {
+    double arr[] = {3.0, 4.0};
+    Vector v(arr, 2);
+    Vector result = v.normalize();
+
+    EXPECT_DOUBLE_EQ(result.magnitude(), 1.0);
+    EXPECT_DOUBLE_EQ(result[0], 0.6);
+    EXPECT_DOUBLE_EQ(result[1], 0.8);
+}
+
+TEST_F(VectorTest, normalize_invalid_vector) {
+    double arr[] = {0.0, 0.0};
+    Vector v(arr, 2);
+
+    EXPECT_THROW(v.normalize(), astra::internals::exceptions::zero_division);
+}
 
 } // namespace astra
