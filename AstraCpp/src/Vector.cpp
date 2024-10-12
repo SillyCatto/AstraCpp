@@ -8,7 +8,6 @@
 
 using namespace astra;
 
-
 Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     if (size <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -173,6 +172,44 @@ bool Vector::operator!=(const Vector& other) const {
     return !(*this == other); 
 }
 
+double Vector::magnitude() const {
+    double sum_of_squares = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum_of_squares += values[i] * values[i];
+    }
+    return astra::internals::mathutils::sqrt(sum_of_squares);
+}
+
+double astra::Vector::sum() const {
+    double sum = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum += values[i];
+    }
+    return sum;
+}
+
+double Vector::avg() const { 
+	return sum() / size; 
+}
+
+double astra::Vector::min() const {
+    double min = values[0];
+    for (int i = 1; i < size; ++i) {
+        if (values[i] < min) {
+            min = values[i];
+        }
+    }
+    return min;
+}
+
+Vector astra::Vector::normalize() const { 
+	double mag = magnitude();
+    if (mag == 0) {
+        throw astra::internals::exceptions::zero_division();
+    }
+    return *this / mag;
+}
+
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
@@ -184,4 +221,35 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "]";
     return ost;
 }
+
+double Vector::angle(const Vector& v1, const Vector& v2) {
+    if (v1.get_size() != v2.get_size()) {
+        throw astra::internals::exceptions::vector_size_mismatch();
+    }
+
+    double mag_v1 = v1.magnitude();
+    double mag_v2 = v2.magnitude();
+
+    if (mag_v1 == 0 || mag_v2 == 0) {
+        throw astra::internals::exceptions::invalid_argument();
+    }
+
+    double dot_product = v1 * v2;
+
+    double cos_theta = dot_product / (mag_v1 * mag_v2);
+
+    cos_theta = astra::internals::mathutils::clamp(cos_theta, -1.0, 1.0); 
+
+    if (cos_theta > 1.0)
+        cos_theta = 1.0;
+    if (cos_theta < -1.0)
+        cos_theta = -1.0;
+
+    double angle_radians = astra::internals::mathutils::acos(cos_theta);
+
+    return angle_radians;
+}
+
+
+
 

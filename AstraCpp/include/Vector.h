@@ -154,11 +154,65 @@ class Vector {
     bool operator!=(const Vector& other) const;
 
     /**
+     * @brief Computes the magnitude (length) of the vector.
+     *
+     * The magnitude of a vector is defined as the square root of the sum of the
+     * squares of its components. For a vector v = [v1, v2, ..., vn], the
+     * magnitude is calculated as:
+     *
+     *     magnitude = sqrt(v1^2 + v2^2 + ... + vn^2)
+     *
+     * @return The magnitude (length) of the vector as a double.
+     */
+    double magnitude() const;
+
+    /**
      * @brief Overloads the stream insertion operator for printing the vector.
      * @param os The output stream.
      * @param vec The vector to output.
      * @return The output stream with the vector representation.
      */
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+
+    /**
+     * @brief Calculates the angle between two vectors in degrees.
+     * @param v1 The first vector.
+     * @param v2 The second vector.
+     * @return The angle between the two vectors in degrees.
+     * @throws astra::internals::exceptions::vector_size_mismatch if the sizes
+     * of the two vectors don't match.
+     * @throws astra::internals::exceptions::invalid_argument if any of the
+     * vectors has zero magnitude.
+     */
+    static double angle(const Vector& v1, const Vector& v2);
+
+    /**
+     * @brief Computes the sum of all elements in the vector.
+     * @return The sum of all elements in the vector.
+     */
+    double sum() const;
+
+    /**
+     * @brief Computes the avg of all elements in the vector.
+     * @return The mean of all elements in the vector.
+     */
+    double avg() const;
+
+    /**
+     * @brief Computes the min of all elements in the vector.
+     * @return The min of all elements in the vector.
+     */
+    double min() const;
+
+    /**
+     * @brief Normalizes the vector.
+     * @return A new normalized vector.
+     * @throws astra::internals::exceptions::zero_division if the vector has
+     * zero magnitude.
+     */
+    Vector normalize() const;
 };
+
+
+
 }

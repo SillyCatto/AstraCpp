@@ -51,4 +51,12 @@ class matrix_size_mismatch : public std::exception {
         return "[ASTRA]  matrix size mismatch for the operation";
     }
 };
+
+class invalid_argument : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  invalid argument provided";
+    }
+};
+
 }  // namespace astra::internals::exceptions
