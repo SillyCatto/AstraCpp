@@ -208,6 +208,8 @@ double astra::angle(const Vector& v1, const Vector& v2) {
 
     double cos_theta = dot_product / (mag_v1 * mag_v2);
 
+    cos_theta = astra::internals::mathutils::clamp(cos_theta, -1.0, 1.0); 
+
     if (cos_theta > 1.0)
         cos_theta = 1.0;
     if (cos_theta < -1.0)
