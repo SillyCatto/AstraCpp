@@ -180,6 +180,14 @@ double Vector::magnitude() const {
     return astra::internals::mathutils::sqrt(sum_of_squares);
 }
 
+double astra::Vector::sum() const { 
+	double sum = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum += values[i];
+    }
+    return sum;
+}
+
 std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
@@ -192,7 +200,7 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     return ost;
 }
 
-double astra::angle(const Vector& v1, const Vector& v2) {
+double Vector::angle(const Vector& v1, const Vector& v2) {
     if (v1.get_size() != v2.get_size()) {
         throw astra::internals::exceptions::vector_size_mismatch();
     }
