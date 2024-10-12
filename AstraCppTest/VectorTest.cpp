@@ -401,5 +401,14 @@ TEST_F(VectorTest, min_negative) {
     EXPECT_DOUBLE_EQ(v.min(), -3.0);
 }
 
+TEST_F(VectorTest, normalize_normal_vector) {
+    double arr[] = {3.0, 4.0};
+    Vector v(arr, 2);
+    Vector result = v.normalize();
+
+    EXPECT_DOUBLE_EQ(result.magnitude(), 1.0);
+    EXPECT_DOUBLE_EQ(result[0], 0.6);
+    EXPECT_DOUBLE_EQ(result[1], 0.8);
+}
 
 } // namespace astra
