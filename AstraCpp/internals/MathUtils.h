@@ -143,4 +143,10 @@ namespace astra::internals::mathutils {
         return arcsin;
     }
 
+    double arccos_rad(double x) {
+        if (x > 1 || x < -1)
+            throw astra::internals::exceptions::invalid_argument();
+        return PI / 2 - arcsin_rad(x);
+    }
+
 } // namespace astra::internals::mathutils
