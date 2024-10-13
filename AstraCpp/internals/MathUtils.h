@@ -1,12 +1,21 @@
 #pragma once
+
 #include "Exceptions.h"
 
 namespace astra::internals::mathutils {
     
     const double PI = 3.14159265358979323846;
-    const double EPSILON = 1e-9; 
+    const double EPSILON = 1e-6; 
 
 	inline double abs(double x) { return (x < 0) ? -x : x; }
+
+    inline double fmax(double a, double b) { return (a > b) ? a : b; }
+
+    inline double fmin(double a, double b) { return (a < b) ? a : b; }
+
+    inline double clamp(double value, double min, double max) {
+        return fmax(min, fmin(value, max));
+    }
 
 	inline double sqrt(double n) {
         if (n < 0) {
@@ -16,7 +25,7 @@ namespace astra::internals::mathutils {
             return 0;
         }
             
-        double tolerance = 1e-9;
+        double tolerance = EPSILON;
         double guess = n;
         double previous_guess;
 
@@ -29,23 +38,7 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
-    inline double fmax(double a, double b) {
-         if (a > b) {
-             return a;
-         }
-         return b;
-     }
-
-    inline double fmin(double a, double b) {
-         if (a < b) {
-             return a;
-         }
-         return b;
-     }
-
-    inline double clamp(double value, double min, double max) {
-         return fmax(min, fmin(max, value));
-     }
+    inline double deg_to_rad(double degree) { return degree * PI / 180.0; }
 
     inline unsigned long long factorial(int n) {
          unsigned long long fact = 1;
@@ -55,61 +48,51 @@ namespace astra::internals::mathutils {
          return fact;
      }
 
-    inline double sin(double x) {
-         double term = x;      
-         double result = term; 
-         int sign = -1;        
-
-         for (int i = 3; i <= 19; i += 2) {
-             term = (x * x * x) / factorial(i); 
-             result += sign * term;             
-             sign *= -1; 
-         }
-         return result;
-     }
-
-     inline double cos(double x) {
-        double term = 1;      
-        double result = term; 
-        int sign = -1;        
-
-        for (int i = 2; i <= 18; i += 2) {
-            term = (x * x) / factorial(i); 
-            result += sign * term;         
-            sign *= -1; 
-        }
-        return result;
-     }
-
-    inline double acos(double x) {
-         if (x < -1.0 || x > 1.0) {
-            throw astra::internals::exceptions::invalid_argument();
+    inline double pow(double base, int exponent) {
+         if (exponent == 0) {
+             return 1.0;
          }
 
-         if (astra::internals::mathutils::abs(x - 1.0) < EPSILON)
-             return 0.0; 
-         if (astra::internals::mathutils::abs(x + 1.0) < EPSILON)
-             return PI; 
+         if (base == 0.0 && exponent < 0) {
+             throw astra ::internals::exceptions::zero_division();
+         }
 
-         double guess = PI / 4;
-         double fx, dfx;
+         double res = 1.0;
+         int abs_exp = (exponent > 0) ? exponent : -exponent;
 
-         while (true) {
-             fx = cos(guess) - x;
-
-             dfx = -sin(guess);
-
-             double next_guess = guess - fx / dfx;
-
-             if (astra::internals::mathutils::abs(next_guess - guess) <
-                 EPSILON) {
-                 break;
+         while (abs_exp > 0) {
+             if (abs_exp % 2 == 1) {
+                 res *= base;
              }
 
-             guess = next_guess;
+             base *= base;
+             abs_exp /= 2;
          }
 
-         return guess;
+         return (exponent < 0) ? 1.0 / res : res;
      }
+
+    inline double trunc(double x) {
+         if (x > 0) {
+            return static_cast<int>(x);
+         }
+         else if (x < 0) {
+             return static_cast<int>(x);
+         }
+         else {
+             return 0.0;
+         }
+    }
+
+    inline double fmod(double x, double y) {
+        if (y == 0.0) {
+            throw astra::internals::exceptions::zero_division();
+        }
+
+        double quotient = trunc(x / y);
+
+        double res = x - quotient * y;
+        return res;
+    }
 
 } // namespace astra::internals::mathutils
