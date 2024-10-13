@@ -391,9 +391,12 @@ TEST_F(VectorTest, avg_negative) {
     EXPECT_DOUBLE_EQ(v.avg(), -2.0);
 }
 
-//----------------
+TEST_F(VectorTest, min_single_element) {
+    double arr[] = {5.0};
+    Vector v(arr, 1);
+    EXPECT_EQ(v.min(), 5.0);
+}
 
-//-------------------
 
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};
