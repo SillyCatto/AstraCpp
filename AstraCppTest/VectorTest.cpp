@@ -415,7 +415,11 @@ TEST_F(VectorTest, min_mix_positive_negative) {
     EXPECT_EQ(v.min(), -3.0);
 }
 
-
+TEST_F(VectorTest, min_zeroes) {
+    double arr[] = {0.0, 0.0, 0.0};
+    Vector v(arr, 3);
+    EXPECT_EQ(v.min(), 0.0);
+}
 
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};
