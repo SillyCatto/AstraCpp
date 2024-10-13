@@ -397,6 +397,11 @@ TEST_F(VectorTest, min_single_element) {
     EXPECT_EQ(v.min(), 5.0);
 }
 
+TEST_F(VectorTest, min_multiple_elements) {
+    double arr[] = {3.0, 1.0, 2.0};
+    Vector v(arr, 3);
+    EXPECT_EQ(v.min(), 1.0);
+}
 
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};
