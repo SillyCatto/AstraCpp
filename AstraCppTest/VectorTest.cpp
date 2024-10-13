@@ -457,7 +457,11 @@ TEST_F(VectorTest, max_zeros) {
     EXPECT_EQ(v.max(), 0.0);
 }
 
-
+TEST_F(VectorTest, max_all_elements_same) {
+    double arr[] = {2.0, 2.0, 2.0};
+    Vector v(arr, 3);
+    EXPECT_EQ(v.max(), 2.0);
+}
 
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};
