@@ -403,13 +403,13 @@ TEST_F(VectorTest, min_multiple_elements) {
     EXPECT_EQ(v.min(), 1.0);
 }
 
-
-
 TEST_F(VectorTest, min_negative_values) {
     double arr[] = {-3.0, -1.0, -2.0};
     Vector v(arr, 3);
     EXPECT_EQ(v.min(), -3.0);
 }
+
+
 
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};
