@@ -445,6 +445,14 @@ TEST_F(VectorTest, max_negative_values) {
     EXPECT_EQ(v.max(), -1.0);
 }
 
+TEST_F(VectorTest, max_mix_positive_and_negative) {
+    double arr[] = {-3.0, 1.0, 2.0, -1.0};
+    Vector v(arr, 4);
+    EXPECT_EQ(v.max(), 2.0);
+}
+
+
+
 TEST_F(VectorTest, normalize_normal_vector) {
     double arr[] = {3.0, 4.0};
     Vector v(arr, 2);
