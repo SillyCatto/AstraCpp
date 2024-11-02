@@ -7,17 +7,16 @@ int main() {
     // ----------VECTOR----------
     double arr[] = {5.5, 6.6, 7.7};
     astra::Vector v1(arr, 3);
-    std::cout << v1 << "\n";
-
-    std::cout << "\n\n";
 
     astra::Vector v2(3);
-    std::cout << v2 << "\n";
     v2 << 3, 5, 7;
-    std::cout << v2 << "\n";
 
     astra::Vector v3(3);
-    v3 = v1 + v2;
+
+
+    std::cout << v1 << "\n";
+
+    v3 = v1 / 3;
     std::cout << v3 << "\n";
 
     std::cout << "\n\n";

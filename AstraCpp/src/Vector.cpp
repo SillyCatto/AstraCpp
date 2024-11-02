@@ -75,24 +75,30 @@ double Vector::operator*(const Vector& other) const {
     return result;
 }
 
-Vector Vector::operator*(double scalar) const {
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.values[i] = this->values[i] * scalar;
+
+Vector astra::operator*(const Vector& vec, double scalar) {
+    Vector result(vec.size);
+    for (int i = 0; i < vec.size; i++) {
+        result.values[i] = vec.values[i] * scalar;
     }
     return result;
 }
 
-Vector Vector::operator/(double scalar) const {
+Vector astra::operator*(double scalar, const Vector& vec) {
+    return vec * scalar;
+}
+
+Vector astra::operator/(const Vector& vec, double scalar) {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.values[i] = this->values[i] / scalar;
+    Vector result(vec.size);
+    for (int i = 0; i < vec.size; i++) {
+        result.values[i] = vec.values[i] / scalar;
     }
     return result;
 }
+
 
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {

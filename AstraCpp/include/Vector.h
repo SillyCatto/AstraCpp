@@ -81,21 +81,6 @@ class Vector {
      */
     double operator*(const Vector& other) const;
 
-    /**
-     * @brief Multiplies the vector by a scalar value.
-     * @param scalar The scalar value.
-     * @return A new vector scaled by the scalar.
-     */
-    Vector operator*(double scalar) const;
-
-    /**
-     * @brief Divides the vector by a scalar value.
-     * @param scalar The scalar divisor.
-     * @return A new vector divided by the scalar.
-     * @throws astra::internals::exceptions::zero_division if scalar is zero.
-     */
-    Vector operator/(double scalar) const;
-
      /**
      * @brief Adds this vector to another vector.
      * @param other The vector to add.
@@ -143,7 +128,6 @@ class Vector {
      * @param other The vector to compare with.
      * @return True if vectors are equal, false otherwise.
      */
-
     bool operator==(const Vector& other) const;
 
     /**
@@ -165,14 +149,6 @@ class Vector {
      * @return The magnitude (length) of the vector as a double.
      */
     double magnitude() const;
-
-    /**
-     * @brief Overloads the stream insertion operator for printing the vector.
-     * @param os The output stream.
-     * @param vec The vector to output.
-     * @return The output stream with the vector representation.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 
     /**
      * @brief Calculates the angle between two vectors in degrees.
@@ -217,8 +193,37 @@ class Vector {
      * zero magnitude.
      */
     Vector normalize() const;
+
+
+
+    /**
+     * @brief Multiplies each element of the vector by a scalar.
+     * @param vec The vector to be scaled.
+     * @param scalar The scalar value to multiply with each element of the
+     * vector.
+     * @return A new vector that is the result of scaling the original vector by
+     * the scalar.
+     */
+    friend Vector operator*(const Vector& vec, double scalar);
+    friend Vector operator*(double scalar, const Vector& vec);
+
+    /**
+     * @brief Divides each element of the vector by a scalar.
+     * @param vec The vector to be divided.
+     * @param scalar The scalar value to divide each element of the vector by.
+     * @return A new vector that is the result of dividing the original vector
+     * by the scalar.
+     * @throws astra::internals::exceptions::zero_division if the scalar is
+     * zero.
+     */
+    friend Vector operator/(const Vector& vec, double scalar);
+
+    /**
+     * @brief Overloads the stream insertion operator for printing the vector.
+     * @param os The output stream.
+     * @param vec The vector to output.
+     * @return The output stream with the vector representation.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 };
-
-
-
 }
