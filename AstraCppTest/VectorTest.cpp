@@ -536,6 +536,15 @@ TEST_F(VectorTest, angle_same_vector) {
 
 }
 
+TEST_F(VectorTest, angle_deg_same_vector) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    Vector v1(arr1, 3);
+
+    double result = Vector::angle_deg(v1, v1);
+
+    EXPECT_NEAR(result, 0.0, 1e-6);
+}
+
 TEST_F(VectorTest, sum_negative) {
     double arr[] = {-1.0, -2.0, -3.0};
     Vector v(arr, 3);
