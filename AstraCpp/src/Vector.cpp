@@ -263,3 +263,7 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
     return angle_radians;
 }
 
+double astra::Vector::angle_deg(const Vector& v1, const Vector& v2) {
+    return astra::internals::mathutils::rad_to_deg(angle(v1, v2));
+}
+

@@ -161,6 +161,7 @@ class Vector {
      * vectors has zero magnitude.
      */
     static double angle(const Vector& v1, const Vector& v2);
+    static double angle_deg(const Vector& v1, const Vector& v2);
 
     /**
      * @brief Computes the sum of all elements in the vector.
