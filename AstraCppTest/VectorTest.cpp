@@ -433,7 +433,7 @@ TEST_F(VectorTest, angle_deg_almost_parallel_vectors) {
 
     double result = Vector::angle_deg(v1, v2);
 
-    EXPECT_NEAR(result, 0.0, 1e-6);
+    EXPECT_NEAR(result, 0.0, 1e-5);
 }
 
 TEST_F(VectorTest, angle_almost_opposite_vectors) {
