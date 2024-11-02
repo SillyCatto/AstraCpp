@@ -216,6 +216,18 @@ TEST_F(VectorTest, scalar_vector_multiplication_positive) {
     EXPECT_EQ(result[2], 6.0);
 }
 
+TEST_F(VectorTest, scalar_vector_multiplication_negative) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = -2 * v;
+
+    EXPECT_EQ(result[0], -2.0);
+    EXPECT_EQ(result[1], -4.0);
+    EXPECT_EQ(result[2], -6.0);
+}
+
+
 TEST_F(VectorTest, scalar_division_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
