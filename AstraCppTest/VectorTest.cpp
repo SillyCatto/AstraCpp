@@ -512,6 +512,15 @@ TEST_F(VectorTest, angle_vector_size_mismatch) {
                  astra::internals::exceptions::vector_size_mismatch);
 }
 
+TEST_F(VectorTest, angle_null_vector) {
+    double arr1[] = {0.0, 0.0, 0.0};
+    double arr2[] = {1.0, 0.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    EXPECT_THROW(Vector::angle(v1, v2),
+                 astra::internals::exceptions::null_vector);
+}
 TEST_F(VectorTest, sum_negative) {
     double arr[] = {-1.0, -2.0, -3.0};
     Vector v(arr, 3);
