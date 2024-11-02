@@ -292,6 +292,17 @@ TEST_F(VectorTest, scalar_division_zero) {
     EXPECT_THROW(v / 0, astra::internals::exceptions::zero_division);
 }
 
+TEST_F(VectorTest, scalar_division_double) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v / 2.5;
+
+    EXPECT_EQ(result[0], 0.4);
+    EXPECT_EQ(result[1], 0.8);
+    EXPECT_EQ(result[2], 1.2);
+}
+
 TEST_F(VectorTest, copy_assignment_deep_copy) {
     double arr1[] = {1.0, 2.0, 3.0};
     double arr2[] = {4.0, 5.0, 6.0};
