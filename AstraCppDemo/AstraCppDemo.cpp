@@ -5,19 +5,19 @@
 
 int main() {
     // ----------VECTOR----------
-    double arr[] = {5.5, 6.6, 7.7};
+    double arr[] = {1, 0, 0};
     astra::Vector v1(arr, 3);
-    v1.print();
-
-    std::cout << "\n\n";
 
     astra::Vector v2(3);
-    v2 << 3, 5, 7;
-    v2.print();
+    v2 << 0, 1, 0;
 
     astra::Vector v3(3);
-    v3 = v1 + v2;
-    v3.print();
+
+
+    std::cout << astra::Vector::angle_deg(v1, v2) << "\n";
+
+    v3 = v1 / 3;
+    std::cout << v3 << "\n";
 
     std::cout << "\n\n";
 
@@ -34,8 +34,7 @@ int main() {
          4, 5;
 
     
-    std::cout << m(0, 0) << " " << m(0, 1) << "\n"
-              << m(1, 0) << " " << m(1, 1) << "\n";
+    std::cout << m;
 
     std::cin.get();
 

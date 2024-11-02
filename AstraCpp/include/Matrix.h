@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 namespace astra {
 class Matrix {
@@ -16,7 +17,15 @@ class Matrix {
     Matrix& operator,(double val);
     double& operator()(int i, int j);
 
+    Matrix operator+(const Matrix& other) const;
+    Matrix operator-(const Matrix& other) const;
+    Matrix operator*(double scalar) const;
+    Matrix operator/(double scalar) const;
+
     int get_row() const;
     int get_col() const;
+
+
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
 };
 } // namespace astra
