@@ -480,6 +480,17 @@ TEST_F(VectorTest, angle_deg_orthogonal_vectors) {
     EXPECT_NEAR(result, 90.0, 1e-5);
 }
 
+TEST_F(VectorTest, angle_negative_components) {
+    double arr1[] = {-1.0, 0.0, 0.0};
+    double arr2[] = {0.0, -1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle(v1, v2);
+
+    EXPECT_NEAR(result, astra::internals::mathutils::PI / 2, 1e-6);
+}
+
 TEST_F(VectorTest, sum_negative) {
     double arr[] = {-1.0, -2.0, -3.0};
     Vector v(arr, 3);
