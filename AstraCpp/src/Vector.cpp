@@ -75,24 +75,30 @@ double Vector::operator*(const Vector& other) const {
     return result;
 }
 
-Vector Vector::operator*(double scalar) const {
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.values[i] = this->values[i] * scalar;
+
+Vector astra::operator*(const Vector& vec, double scalar) {
+    Vector result(vec.size);
+    for (int i = 0; i < vec.size; i++) {
+        result.values[i] = vec.values[i] * scalar;
     }
     return result;
 }
 
-Vector Vector::operator/(double scalar) const {
+Vector astra::operator*(double scalar, const Vector& vec) {
+    return vec * scalar;
+}
+
+Vector astra::operator/(const Vector& vec, double scalar) {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }
-    Vector result(size);
-    for (int i = 0; i < size; i++) {
-        result.values[i] = this->values[i] / scalar;
+    Vector result(vec.size);
+    for (int i = 0; i < vec.size; i++) {
+        result.values[i] = vec.values[i] / scalar;
     }
     return result;
 }
+
 
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {
@@ -255,5 +261,9 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
     double angle_radians = std::acos(cos_theta);
 
     return angle_radians;
+}
+
+double astra::Vector::angle_deg(const Vector& v1, const Vector& v2) {
+    return astra::internals::mathutils::rad_to_deg(angle(v1, v2));
 }
 

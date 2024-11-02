@@ -38,7 +38,8 @@ namespace astra::internals::mathutils {
         return guess;
      }
 
-    inline double deg_to_rad(double degree) { return degree * PI / 180.0; }
+    inline double deg_to_rad(double deg) { return deg * PI / 180.0; }
+    inline double rad_to_deg(double rad) { return rad * (180.0 / PI); }
 
     inline unsigned long long factorial(int n) {
          unsigned long long fact = 1;
