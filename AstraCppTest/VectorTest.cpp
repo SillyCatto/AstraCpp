@@ -425,6 +425,17 @@ TEST_F(VectorTest, angle_almost_parallel_vectors) {
     EXPECT_NEAR(result, 0.0, 1e-6); 
 }
 
+TEST_F(VectorTest, angle_deg_almost_parallel_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.9999999, 0.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle_deg(v1, v2);
+
+    EXPECT_NEAR(result, 0.0, 1e-6);
+}
+
 TEST_F(VectorTest, angle_almost_opposite_vectors) {
     double arr1[] = {1.0, 0.0, 0.0};
     double arr2[] = {-1.0000001, 0.0, 0.0}; 
