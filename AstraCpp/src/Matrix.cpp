@@ -67,6 +67,20 @@ Matrix Matrix::operator*(double scalar) const {
     return result;
 }
 
+bool astra::Matrix::operator==(const Matrix& other) const { 
+    if (rows != other.rows && cols != other.cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] != other.values[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 Matrix astra::operator/(const Matrix& mat, double scalar) {
     if (scalar == 0.0) {
         throw astra::internals::exceptions::zero_division();
