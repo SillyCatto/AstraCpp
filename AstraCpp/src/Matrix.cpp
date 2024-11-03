@@ -140,12 +140,11 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
 
-void Matrix::print(int width, int precision) const {
+void Matrix::print(int width) const {
     for (int i = 0; i < rows; ++i) {
         std::cout << "[";
         for (int j = 0; j < cols; ++j) {
-            std::cout << std::setw(width) << std::setprecision(precision)
-                      << values[i * cols + j];
+            std::cout << std::setw(width) << values[i * cols + j];
             if (j < cols - 1)
                 std::cout << ", ";
         }
@@ -158,7 +157,7 @@ std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
     for (int i = 0; i < mat.rows; ++i) {
         os << "[";
         for (int j = 0; j < mat.cols; ++j) {
-            os << std::setw(10)
+            os << std::setw(8)
                << mat.values[i * mat.cols + j];
             if (j < mat.cols - 1)
                 os << ", ";
