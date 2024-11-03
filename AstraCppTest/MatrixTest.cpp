@@ -58,6 +58,21 @@ TEST_F(MatrixTest, MatrixAddition) {
     EXPECT_EQ(result(1, 1), 12);
 }
 
+TEST_F(MatrixTest, MatrixSubtraction) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 5 << 6 << 7 << 8; 
+    matB << 1 << 2 << 3 << 4; 
+
+    Matrix result = matA - matB;
+
+    EXPECT_EQ(result(0, 0), 4);
+    EXPECT_EQ(result(0, 1), 4);
+    EXPECT_EQ(result(1, 0), 4);
+    EXPECT_EQ(result(1, 1), 4);
+}
+
 TEST_F(MatrixTest, ScalarDivision) {
     Matrix mat(2, 2);
     mat << 4.0, 8.0, 12.0, 16.0;
