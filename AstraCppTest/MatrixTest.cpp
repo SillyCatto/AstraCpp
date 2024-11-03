@@ -67,4 +67,16 @@ TEST_F(MatrixTest, ScalarDivisionByOne) {
     EXPECT_DOUBLE_EQ(result(1, 1), 12.0);
 }
 
+TEST_F(MatrixTest, ScalarDivisionFraction) {
+    Matrix mat(2, 2);
+    mat << 2.0, 4.0, 6.0, 8.0;
+
+    Matrix result = mat / 0.5;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 4.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 8.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 12.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 16.0);
+}
+
 } // namespace astra
