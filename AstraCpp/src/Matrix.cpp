@@ -67,6 +67,28 @@ Matrix Matrix::operator*(double scalar) const {
     return result;
 }
 
+Matrix& Matrix::operator=(const Matrix& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    // resize if size dont match
+    if (rows != other.rows || cols != other.cols) {
+        delete[] values;
+        rows = other.rows;
+        cols = other.cols;
+        values = new double[rows * cols];
+    }
+
+    // copy data
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = other.values[i];
+    }
+
+    return *this;
+}
+
+
 bool astra::Matrix::operator==(const Matrix& other) const { 
     if (rows != other.rows && cols != other.cols) {
         return false;
