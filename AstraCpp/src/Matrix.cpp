@@ -71,16 +71,22 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }
-    Matrix result(mat.rows, mat.cols);
-    for (int i = 0; i < mat.rows * mat.cols; ++i) {
-        result.values[i] = mat.values[i] / scalar;
+
+    int rows = mat.get_row();
+    int cols = mat.get_col();
+
+    Matrix result(rows, cols);
+
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = result.values[i] / scalar;
     }
+
     return result;
 }
 
-
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
+
 
 std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
     for (int i = 0; i < mat.rows; ++i) {
