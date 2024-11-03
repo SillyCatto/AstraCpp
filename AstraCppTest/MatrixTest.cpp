@@ -86,4 +86,16 @@ TEST_F(MatrixTest, DivisionByZero) {
     EXPECT_THROW(mat / 0.0, astra::internals::exceptions::zero_division);
 }
 
+TEST_F(MatrixTest, ScalarDivisionNegativeValues) {
+    Matrix mat(2, 2);
+    mat << -10.0, -20.0, 30.0, 40.0;
+
+    Matrix result = mat / 10.0;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), -1.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), -2.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
+}
+
 } // namespace astra
