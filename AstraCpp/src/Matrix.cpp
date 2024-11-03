@@ -28,7 +28,7 @@ Matrix& Matrix::operator<<(double val) {
     return *this;
 }
 
-Matrix &Matrix::operator,(double val) { return (*this << val); }
+Matrix& Matrix::operator,(double val) { return (*this << val); }
 
 double& Matrix::operator()(int i, int j) { 
     if (i >= rows || i < 0 || j >= cols || j < 0) {
@@ -89,7 +89,7 @@ Matrix& Matrix::operator=(const Matrix& other) {
 }
 
 
-bool astra::Matrix::operator==(const Matrix& other) const { 
+bool Matrix::operator==(const Matrix& other) const { 
     if (rows != other.rows && cols != other.cols) {
         return false;
     }
@@ -123,17 +123,30 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
 int Matrix::get_row() const { return rows; }
 int Matrix::get_col() const { return cols; }
 
+void Matrix::print(int width, int precision) const {
+    for (int i = 0; i < rows; ++i) {
+        std::cout << "[";
+        for (int j = 0; j < cols; ++j) {
+            std::cout << std::setw(width) << std::setprecision(precision)
+                      << values[i * cols + j];
+            if (j < cols - 1)
+                std::cout << ", ";
+        }
+        std::cout << "]" << std::endl;
+    }
+}
+
 
 std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
     for (int i = 0; i < mat.rows; ++i) {
-        os << "[ ";
+        os << "[";
         for (int j = 0; j < mat.cols; ++j) {
             os << std::setw(10)
                << mat.values[i * mat.cols + j];
             if (j < mat.cols - 1)
                 os << ", ";
         }
-        os << " ]" << std::endl;
+        os << "]" << std::endl;
     }
     return os;
 }

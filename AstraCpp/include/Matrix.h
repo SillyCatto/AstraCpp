@@ -28,6 +28,8 @@ class Matrix {
     int get_row() const;
     int get_col() const;
 
+    void print(int width = 10, int precision = 6) const;
+
     friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
 };
 } // namespace astra
