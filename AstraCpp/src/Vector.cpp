@@ -20,7 +20,7 @@ Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     }
 }
 
-Vector::Vector(const double values[], int size)
+Vector::Vector(int size, const double values[])
     : size(size), current_index(size), values(nullptr) {
     if (size <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -88,13 +88,13 @@ Vector astra::operator*(double scalar, const Vector& vec) {
     return vec * scalar;
 }
 
-Vector astra::operator/(const Vector& vec, double scalar) {
+Vector Vector::operator/(double scalar) const {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }
-    Vector result(vec.size);
-    for (int i = 0; i < vec.size; i++) {
-        result.values[i] = vec.values[i] / scalar;
+    Vector result(size);
+    for (int i = 0; i < size; i++) {
+        result.values[i] = this->values[i] / scalar;
     }
     return result;
 }
