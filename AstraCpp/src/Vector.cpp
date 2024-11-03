@@ -88,13 +88,13 @@ Vector astra::operator*(double scalar, const Vector& vec) {
     return vec * scalar;
 }
 
-Vector astra::operator/(const Vector& vec, double scalar) {
+Vector Vector::operator/(double scalar) const {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }
-    Vector result(vec.size);
-    for (int i = 0; i < vec.size; i++) {
-        result.values[i] = vec.values[i] / scalar;
+    Vector result(size);
+    for (int i = 0; i < size; i++) {
+        result.values[i] = this->values[i] / scalar;
     }
     return result;
 }

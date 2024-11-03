@@ -100,6 +100,14 @@ class Vector {
     Vector operator-(const Vector& other) const;
 
     /**
+     * @brief Divides the vector by a scalar value.
+     * @param scalar The scalar divisor.
+     * @return A new vector divided by the scalar.
+     * @throws astra::internals::exceptions::zero_division if scalar is zero.
+     */
+    Vector operator/(double scalar) const;
+
+    /**
      * @brief Accesses an element at a specified index.
      * @param index The index of the element.
      * @return The value at the specified index.
@@ -207,17 +215,6 @@ class Vector {
      */
     friend Vector operator*(const Vector& vec, double scalar);
     friend Vector operator*(double scalar, const Vector& vec);
-
-    /**
-     * @brief Divides each element of the vector by a scalar.
-     * @param vec The vector to be divided.
-     * @param scalar The scalar value to divide each element of the vector by.
-     * @return A new vector that is the result of dividing the original vector
-     * by the scalar.
-     * @throws astra::internals::exceptions::zero_division if the scalar is
-     * zero.
-     */
-    friend Vector operator/(const Vector& vec, double scalar);
 
     /**
      * @brief Overloads the stream insertion operator for printing the vector.

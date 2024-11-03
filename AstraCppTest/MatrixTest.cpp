@@ -43,7 +43,7 @@ TEST_F(MatrixTest, comma_initializer) {
     EXPECT_EQ(m(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, MatrixAddition) {
+TEST_F(MatrixTest, matrix_addition) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
@@ -58,7 +58,7 @@ TEST_F(MatrixTest, MatrixAddition) {
     EXPECT_EQ(result(1, 1), 12);
 }
 
-TEST_F(MatrixTest, MatrixAdditionSizeMismatch) {
+TEST_F(MatrixTest, matrix_addition_size_mismatch) {
     Matrix matA(2, 2);
     Matrix matB(3, 3);
 
@@ -67,7 +67,7 @@ TEST_F(MatrixTest, MatrixAdditionSizeMismatch) {
     EXPECT_THROW(matA + matB, astra::internals::exceptions::matrix_size_mismatch);
 }
 
-TEST_F(MatrixTest, MatrixAdditionEmpty) {
+TEST_F(MatrixTest, matrix_addition_empty) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
@@ -82,7 +82,7 @@ TEST_F(MatrixTest, MatrixAdditionEmpty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, MatrixSubtraction) {
+TEST_F(MatrixTest, matrix_subtraction) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
@@ -97,7 +97,7 @@ TEST_F(MatrixTest, MatrixSubtraction) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, MatrixSubtractionSizeMismatch) {
+TEST_F(MatrixTest, matrix_subtraction_size_mismatch) {
     Matrix matA(3, 3);
     Matrix matB(2, 2);
 
@@ -106,7 +106,7 @@ TEST_F(MatrixTest, MatrixSubtractionSizeMismatch) {
     EXPECT_THROW(matA - matB, astra::internals::exceptions::matrix_size_mismatch);
 }
 
-TEST_F(MatrixTest, MatrixSubtractionEmpty) {
+TEST_F(MatrixTest, matrix_subtraction_empty) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
@@ -121,7 +121,7 @@ TEST_F(MatrixTest, MatrixSubtractionEmpty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, ScalarDivision) {
+TEST_F(MatrixTest, scalar_division) {
     Matrix mat(2, 2);
     mat << 4.0, 8.0, 12.0, 16.0;
 
@@ -133,7 +133,7 @@ TEST_F(MatrixTest, ScalarDivision) {
     EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, ScalarDivisionByOne) {
+TEST_F(MatrixTest, scalar_division_by_one) {
     Matrix mat(2, 2);
     mat << 3.0, 6.0, 9.0, 12.0;
 
@@ -145,7 +145,7 @@ TEST_F(MatrixTest, ScalarDivisionByOne) {
     EXPECT_DOUBLE_EQ(result(1, 1), 12.0);
 }
 
-TEST_F(MatrixTest, ScalarDivisionFraction) {
+TEST_F(MatrixTest, scalar_division_fraction) {
     Matrix mat(2, 2);
     mat << 2.0, 4.0, 6.0, 8.0;
 
@@ -157,14 +157,14 @@ TEST_F(MatrixTest, ScalarDivisionFraction) {
     EXPECT_DOUBLE_EQ(result(1, 1), 16.0);
 }
 
-TEST_F(MatrixTest, DivisionByZero) {
+TEST_F(MatrixTest, division_by_zero) {
     Matrix mat(2, 2);
     mat << 5.0, 10.0, 15.0, 20.0;
 
     EXPECT_THROW(mat / 0.0, astra::internals::exceptions::zero_division);
 }
 
-TEST_F(MatrixTest, ScalarDivisionNegativeValues) {
+TEST_F(MatrixTest, scalar_division_negative_values) {
     Matrix mat(2, 2);
     mat << -10.0, -20.0, 30.0, 40.0;
 
@@ -176,7 +176,7 @@ TEST_F(MatrixTest, ScalarDivisionNegativeValues) {
     EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, ScalarDivisionSmallResult) {
+TEST_F(MatrixTest, scalar_division_small_result) {
     Matrix mat(2, 2);
     mat << 1e-6, 2e-6, 3e-6, 4e-6;
 
