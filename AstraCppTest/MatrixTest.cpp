@@ -58,6 +58,16 @@ TEST_F(MatrixTest, MatrixAddition) {
     EXPECT_EQ(result(1, 1), 12);
 }
 
+TEST_F(MatrixTest, MatrixAdditionSizeMismatch) {
+    Matrix matA(2, 2);
+    Matrix matB(3, 3);
+
+    matA << 1 << 2 << 3 << 4; 
+
+    EXPECT_THROW(matA + matB,
+                 astra::internals::exceptions::matrix_size_mismatch);
+}
+
 TEST_F(MatrixTest, MatrixSubtraction) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
