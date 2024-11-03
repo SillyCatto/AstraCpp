@@ -98,4 +98,16 @@ TEST_F(MatrixTest, ScalarDivisionNegativeValues) {
     EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
 }
 
+TEST_F(MatrixTest, ScalarDivisionSmallResult) {
+    Matrix mat(2, 2);
+    mat << 1e-6, 2e-6, 3e-6, 4e-6;
+
+    Matrix result = mat / 1e6;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 1e-12);
+    EXPECT_DOUBLE_EQ(result(0, 1), 2e-12);
+    EXPECT_DOUBLE_EQ(result(1, 0), 3e-12);
+    EXPECT_DOUBLE_EQ(result(1, 1), 4e-12);
+}
+
 } // namespace astra
