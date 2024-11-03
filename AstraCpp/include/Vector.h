@@ -33,11 +33,11 @@ class Vector {
 
     /**
      * @brief Constructs a vector from an array of values.
-     * @param values An array of values to initialize the vector.
      * @param size The size of the array and the vector.
+     * @param values An array of values to initialize the vector.
      * @throws astra::internals::exceptions::invalid_size if size is <= 0.
      */
-    Vector(const double values[], int size);
+    Vector(int size, const double values[]);
 
     /**
      * @brief Copy constructor for deep copying another vector.

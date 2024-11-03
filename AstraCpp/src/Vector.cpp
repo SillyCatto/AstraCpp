@@ -20,7 +20,7 @@ Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     }
 }
 
-Vector::Vector(const double values[], int size)
+Vector::Vector(int size, const double values[])
     : size(size), current_index(size), values(nullptr) {
     if (size <= 0) {
         throw astra::internals::exceptions::invalid_size();
