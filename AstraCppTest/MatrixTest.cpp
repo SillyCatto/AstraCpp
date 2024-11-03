@@ -79,4 +79,11 @@ TEST_F(MatrixTest, ScalarDivisionFraction) {
     EXPECT_DOUBLE_EQ(result(1, 1), 16.0);
 }
 
+TEST_F(MatrixTest, DivisionByZero) {
+    Matrix mat(2, 2);
+    mat << 5.0, 10.0, 15.0, 20.0;
+
+    EXPECT_THROW(mat / 0.0, astra::internals::exceptions::zero_division);
+}
+
 } // namespace astra
