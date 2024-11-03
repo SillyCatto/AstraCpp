@@ -67,13 +67,13 @@ Matrix Matrix::operator*(double scalar) const {
     return result;
 }
 
-Matrix Matrix::operator/(double scalar) const {
+Matrix operator/(const Matrix& mat, double scalar) {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }
-    Matrix result(rows, cols);
-    for (int i = 0; i < rows * cols; ++i) {
-        result.values[i] = values[i] / scalar;
+    Matrix result(mat.rows, mat.cols);
+    for (int i = 0; i < mat.rows * mat.cols; ++i) {
+        result.values[i] = mat.values[i] / scalar;
     }
     return result;
 }

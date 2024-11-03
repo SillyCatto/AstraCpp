@@ -20,7 +20,8 @@ class Matrix {
     Matrix operator+(const Matrix& other) const;
     Matrix operator-(const Matrix& other) const;
     Matrix operator*(double scalar) const;
-    Matrix operator/(double scalar) const;
+    
+    friend Matrix operator/(const Matrix& mat, double scalar);
 
     int get_row() const;
     int get_col() const;
