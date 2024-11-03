@@ -78,7 +78,7 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
     Matrix result(rows, cols);
 
     for (int i = 0; i < rows * cols; ++i) {
-        result.values[i] = result.values[i] / scalar;
+        result.values[i] = mat.values[i] / scalar;
     }
 
     return result;
