@@ -39,4 +39,16 @@ TEST_F(MatrixTest, comma_initializer) {
     EXPECT_EQ(m(1, 1), 4.0);
 }
 
+TEST_F(MatrixTest, ScalarDivision) {
+    Matrix mat(2, 2);
+    mat << 4.0, 8.0, 12.0, 16.0;
+
+    Matrix result = mat / 4.0;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
+}
+
 } // namespace astra
