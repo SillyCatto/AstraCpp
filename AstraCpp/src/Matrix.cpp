@@ -67,7 +67,7 @@ Matrix Matrix::operator*(double scalar) const {
     return result;
 }
 
-Matrix operator/(const Matrix& mat, double scalar) {
+Matrix astra::operator/(const Matrix& mat, double scalar) {
     if (scalar == 0) {
         throw astra::internals::exceptions::zero_division();
     }

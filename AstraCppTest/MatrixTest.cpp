@@ -1,9 +1,13 @@
 #include "pch.h"
 
+#include <iostream>
+
 #include "Matrix.h"
 #include "gtest/gtest.h"
 
 #include "Exceptions.h"
+#include "MathUtils.h"
+
 
 namespace astra {
 
