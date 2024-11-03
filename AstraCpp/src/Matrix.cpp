@@ -13,7 +13,24 @@ Matrix::Matrix(int r, int c)
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
     }
-    values = new double[r * c];
+    this->values = new double[rows * cols];
+
+    for (int i = 0; i < (rows * cols); ++i) {
+        this->values[i] = 0;
+    }
+}
+
+Matrix::Matrix(int r, int c, const double values[])
+    : rows(r), cols(c), current_index(0) {
+
+    if (rows <= 0 || cols <= 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+    this->values = new double[rows * cols];
+
+    for (int i = 0; i < (rows * cols); ++i) {
+        this->values[i] = values[i];
+    }
 }
 
 Matrix::~Matrix() { delete[] values; }

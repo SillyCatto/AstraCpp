@@ -11,6 +11,7 @@ class Matrix {
 
   public:
     Matrix(int r, int c);
+    Matrix(int r, int c, const double values[]);
     ~Matrix();
 
     Matrix& operator<<(double val);
