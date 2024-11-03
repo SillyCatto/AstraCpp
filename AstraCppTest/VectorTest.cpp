@@ -194,6 +194,75 @@ TEST_F(VectorTest, scalar_multiplication_negative) {
     EXPECT_EQ(result[2], -6.0);
 }
 
+TEST_F(VectorTest, scalar_multiplication_zero) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v * 0;
+
+    EXPECT_EQ(result[0], 0.0);
+    EXPECT_EQ(result[1], 0.0);
+    EXPECT_EQ(result[2], 0.0);
+}
+
+TEST_F(VectorTest, scalar_multiplication_double) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v * 2.5;
+
+    EXPECT_EQ(result[0], 2.5);
+    EXPECT_EQ(result[1], 5.0);
+    EXPECT_EQ(result[2], 7.5);
+
+}
+
+TEST_F(VectorTest, scalar_vector_multiplication_positive) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = 2 * v;
+
+    EXPECT_EQ(result[0], 2.0);
+    EXPECT_EQ(result[1], 4.0);
+    EXPECT_EQ(result[2], 6.0);
+}
+
+TEST_F(VectorTest, scalar_vector_multiplication_negative) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = -2 * v;
+
+    EXPECT_EQ(result[0], -2.0);
+    EXPECT_EQ(result[1], -4.0);
+    EXPECT_EQ(result[2], -6.0);
+}
+
+TEST_F(VectorTest, scalar_vector_multiplication_zero) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = 0 * v;
+
+    EXPECT_EQ(result[0], 0.0);
+    EXPECT_EQ(result[1], 0.0);
+    EXPECT_EQ(result[2], 0.0);
+
+}
+
+TEST_F(VectorTest, scalar_vector_multiplication_double) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = 2.5 * v;
+
+    EXPECT_EQ(result[0], 2.5);
+    EXPECT_EQ(result[1], 5.0);
+    EXPECT_EQ(result[2], 7.5);
+
+}
+
 TEST_F(VectorTest, scalar_division_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
@@ -221,6 +290,17 @@ TEST_F(VectorTest, scalar_division_zero) {
     Vector v(arr, 3);
 
     EXPECT_THROW(v / 0, astra::internals::exceptions::zero_division);
+}
+
+TEST_F(VectorTest, scalar_division_double) {
+    double arr[] = {1.0, 2.0, 3.0};
+    Vector v(arr, 3);
+
+    Vector result = v / 2.5;
+
+    EXPECT_EQ(result[0], 0.4);
+    EXPECT_EQ(result[1], 0.8);
+    EXPECT_EQ(result[2], 1.2);
 }
 
 TEST_F(VectorTest, copy_assignment_deep_copy) {
@@ -345,6 +425,17 @@ TEST_F(VectorTest, angle_almost_parallel_vectors) {
     EXPECT_NEAR(result, 0.0, 1e-6); 
 }
 
+TEST_F(VectorTest, angle_deg_almost_parallel_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.9999999, 0.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle_deg(v1, v2);
+
+    EXPECT_NEAR(result, 0.0, 1e-5);
+}
+
 TEST_F(VectorTest, angle_almost_opposite_vectors) {
     double arr1[] = {1.0, 0.0, 0.0};
     double arr2[] = {-1.0000001, 0.0, 0.0}; 
@@ -354,6 +445,17 @@ TEST_F(VectorTest, angle_almost_opposite_vectors) {
     double result = Vector::angle(v1, v2);
 
     EXPECT_NEAR(result, astra::internals::mathutils::PI, 1e-6); 
+}
+
+TEST_F(VectorTest, angle_deg_almost_opposite_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {-1.0000001, 0.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle_deg(v1, v2);
+
+    EXPECT_NEAR(result, 180.0, 1e-5);
 }
 
 TEST_F(VectorTest, angle_orthogonal_vectors) {
@@ -367,6 +469,82 @@ TEST_F(VectorTest, angle_orthogonal_vectors) {
     EXPECT_NEAR(result, astra::internals::mathutils::PI / 2, 1e-6);
 }
 
+TEST_F(VectorTest, angle_deg_orthogonal_vectors) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle_deg(v1, v2);
+
+    EXPECT_NEAR(result, 90.0, 1e-5);
+}
+
+TEST_F(VectorTest, angle_negative_components) {
+    double arr1[] = {-1.0, 0.0, 0.0};
+    double arr2[] = {0.0, -1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle(v1, v2);
+
+    EXPECT_NEAR(result, astra::internals::mathutils::PI / 2, 1e-6);
+
+}
+
+TEST_F(VectorTest, angle_deg_negative_components) {
+    double arr1[] = {-1.0, 0.0, 0.0};
+    double arr2[] = {0.0, -1.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    double result = Vector::angle_deg(v1, v2);
+
+    EXPECT_NEAR(result, 90.0, 1e-5);
+
+}
+
+TEST_F(VectorTest, angle_vector_size_mismatch) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    double arr2[] = {0.0, 1.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 2);
+
+    EXPECT_THROW(Vector::angle(v1, v2),
+                 astra::internals::exceptions::vector_size_mismatch);
+
+}
+
+TEST_F(VectorTest, angle_null_vector) {
+    double arr1[] = {0.0, 0.0, 0.0};
+    double arr2[] = {1.0, 0.0, 0.0};
+    Vector v1(arr1, 3);
+    Vector v2(arr2, 3);
+
+    EXPECT_THROW(Vector::angle(v1, v2),
+                 astra::internals::exceptions::null_vector);
+
+}
+
+TEST_F(VectorTest, angle_same_vector) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    Vector v1(arr1, 3);
+
+    double result = Vector::angle(v1, v1);
+
+    EXPECT_NEAR(result, 0.0, 1e-6);
+
+}
+
+TEST_F(VectorTest, angle_deg_same_vector) {
+    double arr1[] = {1.0, 0.0, 0.0};
+    Vector v1(arr1, 3);
+
+    double result = Vector::angle_deg(v1, v1);
+
+    EXPECT_NEAR(result, 0.0, 1e-6);
+}
+
 TEST_F(VectorTest, sum_negative) {
     double arr[] = {-1.0, -2.0, -3.0};
     Vector v(arr, 3);
@@ -377,6 +555,12 @@ TEST_F(VectorTest, sum_positive) {
     double arr[] = {1.0, 2.0, 3.0};
     Vector v(arr, 3);
     EXPECT_DOUBLE_EQ(v.sum(), 6.0);
+}
+
+TEST_F(VectorTest, sum_zeroes) {
+    double arr[] = {5.0, -2.0, -3.0};
+    Vector v(arr, 3);
+    EXPECT_DOUBLE_EQ(v.sum(), 0.0);
 }
 
 TEST_F(VectorTest, avg_positive) {
