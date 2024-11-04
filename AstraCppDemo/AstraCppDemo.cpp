@@ -32,32 +32,35 @@ int main() {
 
     std::cout << "vec1: " << vec1 << "\n"
               << "vec2: " << vec2 << "\n"
-              << "vec3: " << vec3 << std::endl; 
+              << "vec3: " << vec3 << "\n"; 
 
     astra::Vector additionResult = vec1 + vec2;
-    std::cout << "Addition (vec1 + vec2): " << additionResult << std::endl;
+    std::cout << "Addition (vec1 + vec2): " << additionResult << "\n";
 
     astra::Vector subtractionResult = vec1 - vec2;
-    std::cout << "Subtraction (vec1 - vec2): " << subtractionResult
-              << std::endl;
+    std::cout << "Subtraction (vec1 - vec2): " << subtractionResult << "\n";
 
     astra::Vector scalarMultiplicationResult = vec1 * 2.0;
     std::cout << "Scalar Multiplication (vec1 * 2): "
-              << scalarMultiplicationResult << std::endl;
+              << scalarMultiplicationResult << "\n";
 
     astra::Vector scalarDivisionResult = vec1 / 2.0;
-    std::cout << "Scalar Division (vec1 / 2): " << scalarDivisionResult
-              << std::endl;
+    std::cout << "Scalar Division (vec1 / 2): " << scalarDivisionResult << "\n";
 
     astra::Vector crossProductResult = vec1 ^ vec2;
-    std::cout << "Cross Product (vec1 ^ vec2): " << crossProductResult
-              << std::endl;
+    std::cout << "Cross Product (vec1 ^ vec2): " << crossProductResult << "\n";
 
     double magnitudeVec1 = vec1.magnitude();
-    std::cout << "Magnitude of vec1: " << magnitudeVec1 << std::endl;
+    std::cout << "Magnitude of vec1: " << magnitudeVec1 << "\n";
 
     astra::Vector normalizedVec1 = vec1.normalize();
-    std::cout << "Normalization of vec1: " << normalizedVec1 << std::endl;
+    std::cout << "Normalization of vec1: " << normalizedVec1 << "\n";
+
+    double angleRad = astra::Vector::angle(vec1, vec2);
+    std::cout << "Angle between vec1 and vec2 (radians): " << angleRad << "\n";
+
+    double angleDeg = astra::Vector::angle_deg(vec1, vec2);
+    std::cout << "Angle between vec1 and vec2 (degrees): " << angleDeg << "\n";
 
     // ----------MATRIX----------
     astra::Matrix m(3, 3);
