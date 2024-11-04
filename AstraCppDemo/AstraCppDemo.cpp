@@ -67,7 +67,11 @@ int main() {
     std::cout << "Min of vec1: " << vec1.min() << "\n";
     std::cout << "Max of vec1: " << vec1.max() << "\n";
 
+    std::cout << "vec1 == vec2? " << (vec1 == vec2 ? "Yes" : "No") << "\n";
 
+    astra::Vector vec4(3);
+    vec4 << 5, 6, 7; 
+    std::cout << "vec4 initialized with << and , operators: " << vec4 << "\n";
 
     // ----------MATRIX----------
     astra::Matrix m(3, 3);
