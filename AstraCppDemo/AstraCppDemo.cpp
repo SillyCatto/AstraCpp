@@ -30,9 +30,9 @@ int main() {
     astra::Vector vec3(3);
     vec3 << 1 << 2 << 3;
 
-    std::cout << "Vector1: " << vec1 << "\n"
-              << "Vector2: " << vec2 << "\n"
-              << "Vector3: " << vec3 << std::endl; 
+    std::cout << "vec1: " << vec1 << "\n"
+              << "vec2: " << vec2 << "\n"
+              << "vec3: " << vec3 << std::endl; 
 
     astra::Vector additionResult = vec1 + vec2;
     std::cout << "Addition (vec1 + vec2): " << additionResult << std::endl;
@@ -41,6 +41,17 @@ int main() {
     std::cout << "Subtraction (vec1 - vec2): " << subtractionResult
               << std::endl;
 
+    astra::Vector scalarMultiplicationResult = vec1 * 2.0;
+    std::cout << "Scalar Multiplication (vec1 * 2): "
+              << scalarMultiplicationResult << std::endl;
+
+    astra::Vector scalarDivisionResult = vec1 / 2.0;
+    std::cout << "Scalar Division (vec1 / 2): " << scalarDivisionResult
+              << std::endl;
+
+    astra::Vector crossProductResult = vec1 ^ vec2;
+    std::cout << "Cross Product (vec1 ^ vec2): " << crossProductResult
+              << std::endl;
 
     // ----------MATRIX----------
     astra::Matrix m(3, 3);
