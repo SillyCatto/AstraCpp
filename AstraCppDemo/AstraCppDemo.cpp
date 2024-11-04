@@ -53,6 +53,12 @@ int main() {
     std::cout << "Cross Product (vec1 ^ vec2): " << crossProductResult
               << std::endl;
 
+    double magnitudeVec1 = vec1.magnitude();
+    std::cout << "Magnitude of vec1: " << magnitudeVec1 << std::endl;
+
+    astra::Vector normalizedVec1 = vec1.normalize();
+    std::cout << "Normalization of vec1: " << normalizedVec1 << std::endl;
+
     // ----------MATRIX----------
     astra::Matrix m(3, 3);
 
