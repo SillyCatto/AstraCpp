@@ -62,6 +62,13 @@ int main() {
     double angleDeg = astra::Vector::angle_deg(vec1, vec2);
     std::cout << "Angle between vec1 and vec2 (degrees): " << angleDeg << "\n";
 
+    std::cout << "Sum of vec1: " << vec1.sum() << "\n";
+    std::cout << "Average of vec1: " << vec1.avg() << "\n";
+    std::cout << "Min of vec1: " << vec1.min() << "\n";
+    std::cout << "Max of vec1: " << vec1.max() << "\n";
+
+
+
     // ----------MATRIX----------
     astra::Matrix m(3, 3);
 
