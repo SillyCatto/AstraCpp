@@ -34,7 +34,12 @@ int main() {
               << "Vector2: " << vec2 << "\n"
               << "Vector3: " << vec3 << std::endl; 
 
+    astra::Vector additionResult = vec1 + vec2;
+    std::cout << "Addition (vec1 + vec2): " << additionResult << std::endl;
 
+    astra::Vector subtractionResult = vec1 - vec2;
+    std::cout << "Subtraction (vec1 - vec2): " << subtractionResult
+              << std::endl;
 
 
     // ----------MATRIX----------
