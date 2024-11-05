@@ -99,7 +99,7 @@ Matrix& Matrix::operator=(const Matrix& other) {
 
 
 bool Matrix::operator==(const Matrix& other) const { 
-    if (rows != other.rows && cols != other.cols) {
+    if (rows != other.rows || cols != other.cols) {
         return false;
     }
 

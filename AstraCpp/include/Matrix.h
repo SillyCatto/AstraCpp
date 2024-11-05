@@ -23,7 +23,7 @@ class Matrix {
     Matrix& operator=(const Matrix& other);
     bool operator==(const Matrix& other) const;
 
-    friend Matrix operator*(const Matrix& mat,double scalar); 
+    friend Matrix operator*(const Matrix& mat, double scalar); 
     friend Matrix operator*(double scalar, const Matrix& mat); 
     
     friend Matrix operator/(const Matrix& mat, double scalar);

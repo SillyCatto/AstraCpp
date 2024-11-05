@@ -6,7 +6,8 @@
 int main() {
     // ----------VECTOR----------
 
-    std::cout << "\n\n";
+    std::cout << "VECTOR\n";
+    std::cout << "------\n\n";
 
     double values1[] = {3, 4, 5};
     double values2[] = {1, 2, 3};
@@ -57,15 +58,16 @@ int main() {
     std::cout << "Min of vec1: " << vec1.min() << "\n";
     std::cout << "Max of vec1: " << vec1.max() << "\n";
 
-    std::cout << "vec1 == vec2? " << (vec1 == vec2 ? "Yes" : "No") << "\n";
+    std::cout << "vec1 == vec2? " << (vec1 == vec2 ? "true" : "false") << "\n\n";
 
 
     // ----------MATRIX----------
 
-    std::cin.get();
+    std::cout << "MATRIX\n";
+    std::cout << "------\n\n";
 
     astra::Matrix matA(2, 2);
-    matA << 1.0 << 2.0 << 3.0 << 4.0;
+    matA << 1.0, 2.0, 3.0, 4.0;
     std::cout << "Matrix A:\n" << matA << "\n";
 
     double valuesB[] = {5.0, 6.0, 7.0, 8.0};
@@ -93,7 +95,9 @@ int main() {
               << "\n";
 
     astra::Matrix matH = matA;
-    std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n";
+    std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
+
+    std::cin.get();
 
     return 0;
 }
