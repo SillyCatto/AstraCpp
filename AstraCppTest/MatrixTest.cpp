@@ -143,6 +143,39 @@ TEST_F(MatrixTest, scalar_multiplication_scalar_times_matrix) {
     EXPECT_DOUBLE_EQ(result(1, 1), 12.0);
 }
 
+TEST_F(MatrixTest, scalar_multiplication_negative_scalar) {
+    Matrix mat(2, 2);
+    mat << 1.0, -2.0, 3.0, -4.0;
+    Matrix result = mat * -1.0;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), -1.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), -3.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
+}
+
+TEST_F(MatrixTest, scalar_multiplication_zero_scalar) {
+    Matrix mat(2, 2);
+    mat << 1.0, 2.0, 3.0, 4.0;
+    Matrix result = mat * 0.0;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 0.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 0.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 0.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 0.0);
+}
+
+TEST_F(MatrixTest, scalar_multiplication_one_scalar) {
+    Matrix mat(2, 2);
+    mat << 1.0, 2.0, 3.0, 4.0;
+    Matrix result = mat * 1.0;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 4.0);
+}
+
 TEST_F(MatrixTest, scalar_division) {
     Matrix mat(2, 2);
     mat << 4.0, 8.0, 12.0, 16.0;

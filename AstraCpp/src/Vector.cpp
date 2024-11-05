@@ -167,7 +167,7 @@ bool Vector::operator==(const Vector& other) const {
         return false;
     }
     for (int i = 0; i < size; ++i) {
-        if (std::abs(this->values[i] - other.values[i]) > 1e-9) {
+        if (std::abs(this->values[i] - other.values[i]) > 1e-8) {
             return false;
         }
     }
