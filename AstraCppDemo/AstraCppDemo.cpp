@@ -111,6 +111,13 @@ int main() {
     astra::Matrix matG = matB / 2.0;
     std::cout << "Matrix B / 2.0:\n" << matG << "\n";
 
+    std::cout << "Element at (0, 1) in Matrix A: " << matA(0, 1) << "\n";
+
+    std::cout << "Matrix A == Matrix A: " << ( matA == matA ? "true" : "false" )
+              << "\n";
+
+    astra::Matrix matH = matA;
+    std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n";
 
     return 0;
 }
