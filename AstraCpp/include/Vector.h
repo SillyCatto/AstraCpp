@@ -33,11 +33,11 @@ class Vector {
 
     /**
      * @brief Constructs a vector from an array of values.
-     * @param values An array of values to initialize the vector.
      * @param size The size of the array and the vector.
+     * @param values An array of values to initialize the vector.
      * @throws astra::internals::exceptions::invalid_size if size is <= 0.
      */
-    Vector(const double values[], int size);
+    Vector(int size, const double values[]);
 
     /**
      * @brief Copy constructor for deep copying another vector.
@@ -100,6 +100,14 @@ class Vector {
     Vector operator-(const Vector& other) const;
 
     /**
+     * @brief Divides the vector by a scalar value.
+     * @param scalar The scalar divisor.
+     * @return A new vector divided by the scalar.
+     * @throws astra::internals::exceptions::zero_division if scalar is zero.
+     */
+    Vector operator/(double scalar) const;
+
+    /**
      * @brief Accesses an element at a specified index.
      * @param index The index of the element.
      * @return The value at the specified index.
@@ -151,6 +159,18 @@ class Vector {
     double magnitude() const;
 
     /**
+     * @brief Calculates the angle between two vectors in radians.
+     * @param v1 The first vector.
+     * @param v2 The second vector.
+     * @return The angle between the two vectors in radians.
+     * @throws astra::internals::exceptions::vector_size_mismatch if the sizes
+     * of the two vectors don't match.
+     * @throws astra::internals::exceptions::invalid_argument if any of the
+     * vectors has zero magnitude.
+     */
+    static double angle(const Vector& v1, const Vector& v2);
+
+    /**
      * @brief Calculates the angle between two vectors in degrees.
      * @param v1 The first vector.
      * @param v2 The second vector.
@@ -160,7 +180,6 @@ class Vector {
      * @throws astra::internals::exceptions::invalid_argument if any of the
      * vectors has zero magnitude.
      */
-    static double angle(const Vector& v1, const Vector& v2);
     static double angle_deg(const Vector& v1, const Vector& v2);
 
     /**
@@ -207,17 +226,6 @@ class Vector {
      */
     friend Vector operator*(const Vector& vec, double scalar);
     friend Vector operator*(double scalar, const Vector& vec);
-
-    /**
-     * @brief Divides each element of the vector by a scalar.
-     * @param vec The vector to be divided.
-     * @param scalar The scalar value to divide each element of the vector by.
-     * @return A new vector that is the result of dividing the original vector
-     * by the scalar.
-     * @throws astra::internals::exceptions::zero_division if the scalar is
-     * zero.
-     */
-    friend Vector operator/(const Vector& vec, double scalar);
 
     /**
      * @brief Overloads the stream insertion operator for printing the vector.
