@@ -121,6 +121,28 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
+TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
+    Matrix mat(2, 2);
+    mat << 1.0, 2.0, 3.0, 4.0;
+    Matrix result = mat * 2.0;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 2.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 4.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 6.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 8.0);
+}
+
+TEST_F(MatrixTest, scalar_multiplication_scalar_times_matrix) {
+    Matrix mat(2, 2);
+    mat << 1.0, 2.0, 3.0, 4.0;
+    Matrix result = 3.0 * mat;
+
+    EXPECT_DOUBLE_EQ(result(0, 0), 3.0);
+    EXPECT_DOUBLE_EQ(result(0, 1), 6.0);
+    EXPECT_DOUBLE_EQ(result(1, 0), 9.0);
+    EXPECT_DOUBLE_EQ(result(1, 1), 12.0);
+}
+
 TEST_F(MatrixTest, scalar_division) {
     Matrix mat(2, 2);
     mat << 4.0, 8.0, 12.0, 16.0;

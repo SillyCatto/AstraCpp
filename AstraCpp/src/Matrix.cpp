@@ -76,14 +76,6 @@ Matrix Matrix::operator-(const Matrix& other) const {
     return result;
 }
 
-Matrix Matrix::operator*(double scalar) const {
-    Matrix result(rows, cols);
-    for (int i = 0; i < rows * cols; ++i) {
-        result.values[i] = values[i] * scalar;
-    }
-    return result;
-}
-
 Matrix& Matrix::operator=(const Matrix& other) {
     if (this == &other) {
         return *this;
@@ -119,6 +111,25 @@ bool Matrix::operator==(const Matrix& other) const {
 
     return true;
 }
+
+
+Matrix astra::operator*(const Matrix& mat, double scalar) {
+   
+    int rows = mat.get_row();
+    int cols = mat.get_col();
+
+    Matrix result(rows, cols);
+
+    for (int i = 0; i < rows * cols; ++i) {
+        result.values[i] = mat.values[i] * scalar;
+    }
+    return result;
+}
+
+Matrix astra::operator*(double scalar, const Matrix& mat) {
+    return mat * scalar; 
+}
+
 
 Matrix astra::operator/(const Matrix& mat, double scalar) {
     if (scalar == 0.0) {
