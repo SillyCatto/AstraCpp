@@ -33,6 +33,16 @@ Matrix::Matrix(int r, int c, const double values[])
     }
 }
 
+
+Matrix::Matrix(const Matrix& other)
+    : rows(other.rows), cols(other.cols), current_index(other.current_index),
+      values(new double[other.rows * other.cols]) {
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = other.values[i];
+    }
+}
+
+
 Matrix::~Matrix() { delete[] values; }
 
 Matrix& Matrix::operator<<(double val) {
@@ -99,7 +109,7 @@ Matrix& Matrix::operator=(const Matrix& other) {
 
 
 bool Matrix::operator==(const Matrix& other) const { 
-    if (rows != other.rows && cols != other.cols) {
+    if (rows != other.rows || cols != other.cols) {
         return false;
     }
 
