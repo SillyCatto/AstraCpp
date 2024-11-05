@@ -88,5 +88,13 @@ int main() {
 
     std::cin.get();
 
+    astra::Matrix matA(2, 2);
+    matA << 1.0 << 2.0 << 3.0 << 4.0;
+    std::cout << "Matrix A:\n" << matA << std::endl;
+
+    double valuesB[] = {5.0, 6.0, 7.0, 8.0};
+    astra::Matrix matB(2, 2, valuesB);
+    std::cout << "Matrix B:\n" << matB << std::endl;
+
     return 0;
 }
