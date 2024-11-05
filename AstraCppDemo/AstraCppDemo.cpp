@@ -102,5 +102,15 @@ int main() {
     astra::Matrix matD = matA - matB;
     std::cout << "Matrix A - Matrix B:\n" << matD << "\n";
 
+    astra::Matrix matE = matA * 2.0;
+    std::cout << "Matrix A * 2.0:\n" << matE << "\n";
+
+    astra::Matrix matF = 3.0 * matB;
+    std::cout << "3.0 * Matrix B:\n" << matF << "\n";
+
+    astra::Matrix matG = matB / 2.0;
+    std::cout << "Matrix B / 2.0:\n" << matG << "\n";
+
+
     return 0;
 }
