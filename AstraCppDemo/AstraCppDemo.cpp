@@ -64,5 +64,36 @@ int main() {
 
     std::cin.get();
 
+    astra::Matrix matA(2, 2);
+    matA << 1.0 << 2.0 << 3.0 << 4.0;
+    std::cout << "Matrix A:\n" << matA << "\n";
+
+    double valuesB[] = {5.0, 6.0, 7.0, 8.0};
+    astra::Matrix matB(2, 2, valuesB);
+    std::cout << "Matrix B:\n" << matB << "\n";
+
+    astra::Matrix matC = matA + matB;
+    std::cout << "Matrix A + Matrix B:\n" << matC << "\n";
+
+    astra::Matrix matD = matA - matB;
+    std::cout << "Matrix A - Matrix B:\n" << matD << "\n";
+
+    astra::Matrix matE = matA * 2.0;
+    std::cout << "Matrix A * 2.0:\n" << matE << "\n";
+
+    astra::Matrix matF = 3.0 * matB;
+    std::cout << "3.0 * Matrix B:\n" << matF << "\n";
+
+    astra::Matrix matG = matB / 2.0;
+    std::cout << "Matrix B / 2.0:\n" << matG << "\n";
+
+    std::cout << "Element at (0, 1) in Matrix A: " << matA(0, 1) << "\n";
+
+    std::cout << "Matrix A == Matrix A: " << ( matA == matA ? "true" : "false" )
+              << "\n";
+
+    astra::Matrix matH = matA;
+    std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n";
+
     return 0;
 }
