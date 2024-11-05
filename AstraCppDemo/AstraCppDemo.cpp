@@ -90,11 +90,17 @@ int main() {
 
     astra::Matrix matA(2, 2);
     matA << 1.0 << 2.0 << 3.0 << 4.0;
-    std::cout << "Matrix A:\n" << matA << std::endl;
+    std::cout << "Matrix A:\n" << matA << "\n";
 
     double valuesB[] = {5.0, 6.0, 7.0, 8.0};
     astra::Matrix matB(2, 2, valuesB);
-    std::cout << "Matrix B:\n" << matB << std::endl;
+    std::cout << "Matrix B:\n" << matB << "\n";
+
+    astra::Matrix matC = matA + matB;
+    std::cout << "Matrix A + Matrix B:\n" << matC << "\n";
+
+    astra::Matrix matD = matA - matB;
+    std::cout << "Matrix A - Matrix B:\n" << matD << "\n";
 
     return 0;
 }
