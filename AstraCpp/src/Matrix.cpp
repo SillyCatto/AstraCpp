@@ -144,6 +144,18 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
+double Matrix::avg() const {
+    if (rows == 0 || cols == 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    double sum = 0.0;
+    for (int i = 0; i < rows * cols; ++i) {
+        sum += values[i];
+    }
+    return sum / (rows * cols);
+}
+
 bool Matrix::is_square() const { return rows == cols; }
 
 bool Matrix::is_zero() const {
