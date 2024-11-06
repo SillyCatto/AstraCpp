@@ -25,6 +25,8 @@ class Matrix {
     Matrix& operator=(const Matrix& other);
     bool operator==(const Matrix& other) const;
 
+    void replace(double old_val, double new_val);
+
     static Matrix id(int n);
 
     friend Matrix operator*(const Matrix& mat, double scalar); 

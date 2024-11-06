@@ -136,6 +136,14 @@ bool Matrix::operator==(const Matrix& other) const {
     return true;
 }
 
+void Matrix::replace(double old_val, double new_val) {
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] == old_val) {
+            values[i] = new_val;
+        }
+    }
+}
+
 Matrix Matrix::id(int n) {
     if (n <= 0) {
         throw astra::internals::exceptions::invalid_size();
