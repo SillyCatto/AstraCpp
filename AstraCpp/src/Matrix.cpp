@@ -136,6 +136,19 @@ bool Matrix::operator==(const Matrix& other) const {
     return true;
 }
 
+Matrix Matrix::id(int n) {
+    if (n <= 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    Matrix identity(n, n);
+    for (int i = 0; i < n; ++i) {
+        identity(i, i) = 1.0;
+    }
+
+    return identity;
+}
+
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
