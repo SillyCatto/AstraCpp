@@ -26,6 +26,7 @@ class Matrix {
     bool operator==(const Matrix& other) const;
 
     void replace(double old_val, double new_val);
+    bool is_square() const;
 
     static Matrix id(int n);
 

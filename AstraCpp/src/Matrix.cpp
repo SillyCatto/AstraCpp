@@ -144,6 +144,8 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
+bool Matrix::is_square() const { return rows == cols; }
+
 Matrix Matrix::id(int n) {
     if (n <= 0) {
         throw astra::internals::exceptions::invalid_size();
