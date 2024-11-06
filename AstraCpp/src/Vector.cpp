@@ -43,6 +43,15 @@ Vector::Vector(const Vector& other)
     }
 }
 
+Vector::Vector(std::initializer_list<double> values)
+    : size(values.size()), current_index(values.size()),
+      values(new double[values.size()]) {
+    int i = 0;
+    for (double val : values) {
+        this->values[i++] = val;
+    }
+}
+
 Vector::~Vector() { 
     delete[] values;
     values = nullptr;

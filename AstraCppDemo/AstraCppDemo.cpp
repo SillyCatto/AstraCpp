@@ -15,8 +15,7 @@ int main() {
     astra::Vector vec1(3, values1);
     astra::Vector vec2(3, values2);
 
-    astra::Vector vec3(3);
-    vec3 << 1, 2, 3;
+    astra::Vector vec3{1, 2, 3, 4};
 
     std::cout << "vec1: " << vec1 << "\n"
               << "vec2: " << vec2 << "\n"
