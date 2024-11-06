@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="include\Matrix.h" />
+    <ClInclude Include="include\Solver.h" />
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="internals\Exceptions.h" />
     <ClInclude Include="internals\MathUtils.h" />
@@ -175,6 +176,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Matrix.cpp" />
+    <ClCompile Include="src\Solver.cpp" />
     <ClCompile Include="src\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
