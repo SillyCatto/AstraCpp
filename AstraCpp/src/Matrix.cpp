@@ -33,6 +33,20 @@ Matrix::Matrix(int r, int c, const double values[])
     }
 }
 
+Matrix::Matrix(int r, int c, std::initializer_list<double> values)
+    : rows(r), cols(c), current_index(0), values(new double[r * c]) {
+
+    if (values.size() != static_cast<size_t>(r * c)) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    int i = 0;
+    for (double val : values) {
+        this->values[i++] = val;
+    }
+}
+
+
 
 Matrix::Matrix(const Matrix& other)
     : rows(other.rows), cols(other.cols), current_index(other.current_index),
@@ -120,6 +134,50 @@ bool Matrix::operator==(const Matrix& other) const {
     }
 
     return true;
+}
+
+void Matrix::replace(double old_val, double new_val) {
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] == old_val) {
+            values[i] = new_val;
+        }
+    }
+}
+
+double Matrix::avg() const {
+    if (rows == 0 || cols == 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    double sum = 0.0;
+    for (int i = 0; i < rows * cols; ++i) {
+        sum += values[i];
+    }
+    return sum / (rows * cols);
+}
+
+bool Matrix::is_square() const { return rows == cols; }
+
+bool Matrix::is_zero() const {
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] != 0.0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+Matrix Matrix::id(int n) {
+    if (n <= 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    Matrix identity(n, n);
+    for (int i = 0; i < n; ++i) {
+        identity(i, i) = 1.0;
+    }
+
+    return identity;
 }
 
 

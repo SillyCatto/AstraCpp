@@ -12,6 +12,7 @@ class Matrix {
   public:
     Matrix(int r, int c);
     Matrix(int r, int c, const double values[]);
+    Matrix(int r, int c, std::initializer_list<double> values);
     Matrix(const Matrix& other);
     ~Matrix();
 
@@ -19,18 +20,27 @@ class Matrix {
     Matrix& operator,(double val);
     double& operator()(int i, int j);
 
+    int get_row() const;
+    int get_col() const;
+
     Matrix operator+(const Matrix& other) const;
     Matrix operator-(const Matrix& other) const;
     Matrix& operator=(const Matrix& other);
     bool operator==(const Matrix& other) const;
+
+    void replace(double old_val, double new_val);
+    double avg() const;
+
+    bool is_square() const;
+    bool is_zero() const;
+
+    static Matrix id(int n);
 
     friend Matrix operator*(const Matrix& mat, double scalar); 
     friend Matrix operator*(double scalar, const Matrix& mat); 
     
     friend Matrix operator/(const Matrix& mat, double scalar);
 
-    int get_row() const;
-    int get_col() const;
 
     void print(int width = 7) const;
 

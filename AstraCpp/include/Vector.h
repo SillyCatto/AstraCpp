@@ -45,6 +45,8 @@ class Vector {
      */
     Vector(const Vector& other);
 
+    Vector(std::initializer_list<double> values);
+
     /**
      * @brief Destructor to free dynamically allocated memory.
      */
