@@ -12,6 +12,7 @@ class Matrix {
   public:
     Matrix(int r, int c);
     Matrix(int r, int c, const double values[]);
+    Matrix(int r, int c, std::initializer_list<double> values);
     Matrix(const Matrix& other);
     ~Matrix();
 

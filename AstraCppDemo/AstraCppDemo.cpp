@@ -69,8 +69,13 @@ int main() {
     matA << 1.0, 2.0, 3.0, 4.0;
     std::cout << "Matrix A:\n" << matA << "\n";
 
-    double valuesB[] = {5.0, 6.0, 7.0, 8.0};
-    astra::Matrix matB(2, 2, valuesB);
+    astra::Matrix matB(2, 2, 
+        {
+            5.0, 6.0, 
+            7.0, 8.0
+        }
+    );
+
     std::cout << "Matrix B:\n" << matB << "\n";
 
     astra::Matrix matC = matA + matB;

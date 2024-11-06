@@ -33,6 +33,20 @@ Matrix::Matrix(int r, int c, const double values[])
     }
 }
 
+Matrix::Matrix(int r, int c, std::initializer_list<double> values)
+    : rows(r), cols(c), current_index(0), values(new double[r * c]) {
+
+    if (values.size() != static_cast<size_t>(r * c)) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    int i = 0;
+    for (double val : values) {
+        this->values[i++] = val;
+    }
+}
+
+
 
 Matrix::Matrix(const Matrix& other)
     : rows(other.rows), cols(other.cols), current_index(other.current_index),
