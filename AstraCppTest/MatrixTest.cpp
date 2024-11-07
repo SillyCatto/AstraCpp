@@ -533,4 +533,25 @@ TEST_F(MatrixTest, is_zero_false) {
     EXPECT_FALSE(mat.is_zero());
 }
 
+TEST_F(MatrixTest, identity_pos) { 
+    Matrix mat = Matrix::id(3); 
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 1);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 2), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 1);
+    EXPECT_DOUBLE_EQ(mat(1, 2), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 2), 1);
+
+}
+
+TEST_F(MatrixTest, identity_zero) {
+    EXPECT_THROW(Matrix::id(0), astra::internals::exceptions::invalid_size);
+}
+
+
+
 } // namespace astra
