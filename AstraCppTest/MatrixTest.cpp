@@ -435,4 +435,11 @@ TEST_F(MatrixTest, matrix_avg_positive) {
     EXPECT_DOUBLE_EQ(mat.avg(), 2.5);
 }
 
+TEST_F(MatrixTest, matrix_avg_negative) {
+    Matrix mat(2, 2);
+    mat << -1 << -2 << -3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.avg(), -2.5);
+}
+
 } // namespace astra
