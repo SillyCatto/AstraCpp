@@ -27,6 +27,7 @@ class Matrix {
     Matrix operator-(const Matrix& other) const;
     Matrix& operator=(const Matrix& other);
     bool operator==(const Matrix& other) const;
+    bool operator!=(const Matrix& other) const;
 
     void replace(double old_val, double new_val);
 
@@ -43,7 +44,11 @@ class Matrix {
 
     static Matrix id(int n);
 
-    void transpose(); 
+    void transpose();
+    void row_swap(int i, int j);
+
+    void clear();
+    void fill(double val);
 
     friend Matrix operator*(const Matrix& mat, double scalar); 
     friend Matrix operator*(double scalar, const Matrix& mat); 

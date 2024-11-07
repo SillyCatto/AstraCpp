@@ -121,7 +121,7 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, TransposeSquareMatrix) {
+TEST_F(MatrixTest, Transpose_Square_Matrix) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();
 
@@ -133,7 +133,7 @@ TEST_F(MatrixTest, TransposeSquareMatrix) {
     EXPECT_EQ(mat(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, TransposeNonSquareMatrixInPlace) {
+TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
     Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
     mat.transpose();
 
@@ -145,6 +145,55 @@ TEST_F(MatrixTest, TransposeNonSquareMatrixInPlace) {
     EXPECT_EQ(mat(1, 1), 5.0);
     EXPECT_EQ(mat(2, 0), 3.0);
     EXPECT_EQ(mat(2, 1), 6.0);
+}
+
+TEST_F(MatrixTest, row_swap_square) { 
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    mat.row_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 3);
+    EXPECT_EQ(mat(0, 1), 4);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+}
+
+TEST_F(MatrixTest, row_swap_not_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    mat.row_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 4);
+    EXPECT_EQ(mat(0, 1), 5);
+    EXPECT_EQ(mat(0, 2), 6);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+    EXPECT_EQ(mat(1, 2), 3);
+    
+}
+
+TEST_F(MatrixTest, row_swap_not_square_test) {
+    Matrix mat(3, 2);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    mat.row_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 3);
+    EXPECT_EQ(mat(0, 1), 4);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+    EXPECT_EQ(mat(2, 0), 5);
+    EXPECT_EQ(mat(2, 1), 6);
+}
+TEST_F(MatrixTest, row_swap_not_square_greater) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.row_swap(2, 1),
+                 astra::internals::exceptions::index_out_of_range);
+
 }
 
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
@@ -268,5 +317,345 @@ TEST_F(MatrixTest, scalar_division_small_result) {
     EXPECT_DOUBLE_EQ(result(1, 0), 3e-12);
     EXPECT_DOUBLE_EQ(result(1, 1), 4e-12);
 }
+
+TEST_F(MatrixTest, get_row_test) {
+    Matrix mat(2, 3);
+    EXPECT_EQ(mat.get_row(), 2);
+}
+
+TEST_F(MatrixTest, get_col_test) {
+    Matrix mat(2, 3);
+    EXPECT_EQ(mat.get_col(), 3);
+}
+
+TEST_F(MatrixTest, matrix_assignment_equal) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB = matA;
+
+    EXPECT_EQ(matB(0, 0), 1);
+    EXPECT_EQ(matB(0, 1), 2);
+    EXPECT_EQ(matB(1, 0), 3);
+    EXPECT_EQ(matB(1, 1), 4);
+}
+
+TEST_F(MatrixTest, matrix_assignment_different_size) {
+    Matrix matA(2, 2);
+    Matrix matB(3, 3);
+
+    matA << 1 << 2 << 3 << 4;
+
+    matB = matA;
+
+    EXPECT_EQ(matB(0, 0), 1);
+    EXPECT_EQ(matB(0, 1), 2);
+    EXPECT_EQ(matB(1, 0), 3);
+    EXPECT_EQ(matB(1, 1), 4);
+}
+
+TEST_F(MatrixTest, matrix_equality) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_TRUE(matA == matB);
+}
+
+TEST_F(MatrixTest, matrix_equality_false) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 6;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_FALSE(matA == matB);
+}
+
+TEST_F(MatrixTest, matrix_equality_diff_size) {
+    Matrix matA(2, 3);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 6 << 5 << 7;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_FALSE(matA == matB);
+}
+
+TEST_F(MatrixTest, matrix_inequality_true) {
+    Matrix matA(2, 3);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 6 << 5 << 7;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_TRUE(matA != matB);
+}
+
+TEST_F(MatrixTest, matrix_inequality_false) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_FALSE(matA != matB);
+}
+
+
+TEST_F(MatrixTest, matrix_replace) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    mat.replace(2, 5);
+
+    EXPECT_EQ(mat(0, 0), 1);
+    EXPECT_EQ(mat(0, 1), 5);
+    EXPECT_EQ(mat(1, 0), 3);
+    EXPECT_EQ(mat(1, 1), 4);
+}
+
+TEST_F(MatrixTest, matrix_replace_all) { 
+    Matrix mat(2, 2);
+    mat << 4 << 4 << 4 << 4;
+    
+    mat.replace(4, 9);
+
+    EXPECT_EQ(mat(0, 0), 9);
+    EXPECT_EQ(mat(0, 1), 9);
+    EXPECT_EQ(mat(1, 0), 9);
+    EXPECT_EQ(mat(1, 1), 9);
+}
+
+TEST_F(MatrixTest, matrix_sum_positive) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.sum(), 10);
+}
+
+TEST_F(MatrixTest, matrix_sum_negative) {
+    Matrix mat(2, 2);
+    mat << -1 << -2 << -3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.sum(), -10);
+}
+
+TEST_F(MatrixTest, matrix_sum_zero) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << -6;
+
+    EXPECT_DOUBLE_EQ(mat.sum(), 0);
+}
+
+TEST_F(MatrixTest, matrix_sum_large) {
+    Matrix mat(2, 2);
+    mat << 1e6 << 2e6 << 3e6 << 4e6;
+
+    EXPECT_DOUBLE_EQ(mat.sum(), 10e6);
+}
+
+TEST_F(MatrixTest, matrix_prod_positive) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.prod(), 24);
+}
+
+TEST_F(MatrixTest, matrix_prod_negative) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.prod(), -24);
+}
+
+TEST_F(MatrixTest, matrix_prod_zero) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 0;
+
+    EXPECT_DOUBLE_EQ(mat.prod(), 0);
+}
+
+TEST_F(MatrixTest, matrix_prod_large) {
+    Matrix mat(2, 2);
+    mat << 1e6 << 2e6 << 3e6 << 4e6;
+
+    EXPECT_DOUBLE_EQ(mat.prod(), 24e24);
+}
+
+TEST_F(MatrixTest, matrix_principal_prod_square) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.principal_prod(), 4);
+}
+
+TEST_F(MatrixTest, matrix_principal_prod_non_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.principal_prod(),
+                 astra::internals::exceptions::invalid_argument);
+}
+
+TEST_F(MatrixTest, matrix_principal_prod_singleton) { 
+    Matrix mat(1, 1); 
+    mat << 5;
+
+    EXPECT_DOUBLE_EQ(mat.principal_prod(), 5);
+}
+
+TEST_F(MatrixTest, matrix_avg_positive) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.avg(), 2.5);
+}
+
+TEST_F(MatrixTest, matrix_avg_negative) {
+    Matrix mat(2, 2);
+    mat << -1 << -2 << -3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.avg(), -2.5);
+}
+
+TEST_F(MatrixTest, matrix_avg_zero) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << -6;
+
+    EXPECT_DOUBLE_EQ(mat.avg(), 0);
+}
+
+TEST_F(MatrixTest, matrix_avg_singleton) {
+    Matrix mat(1, 1);
+    mat << -6;
+
+    EXPECT_DOUBLE_EQ(mat.avg(), -6);
+}
+
+TEST_F(MatrixTest, matrix_min_singleton) {
+    Matrix mat(1, 1);
+    mat << -6;
+
+    EXPECT_DOUBLE_EQ(mat.min(), -6);
+}
+
+TEST_F(MatrixTest, matrix_min_zero) {
+    Matrix mat(2, 2);
+    mat << 1 << 0 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.min(), 0);
+}
+
+TEST_F(MatrixTest, matrix_min_same) {
+    Matrix mat(2, 2);
+    mat << 1 << 1 << 1 << 1;
+
+    EXPECT_DOUBLE_EQ(mat.min(), 1);
+}
+
+TEST_F(MatrixTest, matrix_max_same) {
+    Matrix mat(2, 2);
+    mat << 1 << 1 << 1 << 1;
+
+    EXPECT_DOUBLE_EQ(mat.max(), 1);
+}
+
+TEST_F(MatrixTest, matrix_max_singleton) {
+    Matrix mat(1, 1);
+    mat << -6;
+
+    EXPECT_DOUBLE_EQ(mat.max(), -6);
+}
+
+TEST_F(MatrixTest, matrix_max_zero) {
+    Matrix mat(2, 2);
+    mat << -10 << 0 << -45 << -1;
+
+    EXPECT_DOUBLE_EQ(mat.max(), 0);
+}
+
+TEST_F(MatrixTest, matrix_max_positive) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.max(), 4);
+}
+
+TEST_F(MatrixTest, matrix_max_negative) {
+    Matrix mat(2, 2);
+    mat << -1 << -2 << -3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.max(), -1);
+}
+
+TEST_F(MatrixTest, is_square_true) {
+    Matrix mat(2, 2);
+    EXPECT_TRUE(mat.is_square());
+}
+
+TEST_F(MatrixTest, is_square_false) {
+    Matrix mat(2, 1);
+    EXPECT_FALSE(mat.is_square());
+}
+
+TEST_F(MatrixTest, is_zero_true) {
+    Matrix mat(2, 2);
+    EXPECT_TRUE(mat.is_zero());
+}
+
+TEST_F(MatrixTest, is_zero_false) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+    EXPECT_FALSE(mat.is_zero());
+}
+
+TEST_F(MatrixTest, identity_pos) { 
+    Matrix mat = Matrix::id(3); 
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 1);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 2), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 1);
+    EXPECT_DOUBLE_EQ(mat(1, 2), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 2), 1);
+
+}
+
+TEST_F(MatrixTest, identity_zero) {
+    EXPECT_THROW(Matrix::id(0), astra::internals::exceptions::invalid_size);
+}
+
+TEST_F(MatrixTest, clear) { 
+    Matrix mat(2, 2); 
+    mat << 1 << 2 << 3 << 4;
+
+    mat.clear();
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 0);
+}
+
+TEST_F(MatrixTest, fill) {
+    Matrix mat(2, 2);
+    mat.fill(2);
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 2);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 2);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 2);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 2);
+}
+
+
+
+
 
 } // namespace astra
