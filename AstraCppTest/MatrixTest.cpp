@@ -470,5 +470,12 @@ TEST_F(MatrixTest, matrix_min_zero) {
     EXPECT_DOUBLE_EQ(mat.min(), 0);
 }
 
+TEST_F(MatrixTest, matrix_min_same) {
+    Matrix mat(2, 2);
+    mat << 1 << 1 << 1 << 1;
+
+    EXPECT_DOUBLE_EQ(mat.min(), 1);
+}
+
 
 } // namespace astra
