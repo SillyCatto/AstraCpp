@@ -421,4 +421,11 @@ TEST_F(MatrixTest, matrix_principal_prod_non_square) {
                  astra::internals::exceptions::invalid_argument);
 }
 
+TEST_F(MatrixTest, matrix_principal_prod_singleton) { 
+    Matrix mat(1, 1); 
+    mat << 5;
+
+    EXPECT_DOUBLE_EQ(mat.principal_prod(), 5);
+}
+
 } // namespace astra
