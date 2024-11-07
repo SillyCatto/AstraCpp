@@ -620,6 +620,19 @@ TEST_F(MatrixTest, identity_zero) {
     EXPECT_THROW(Matrix::id(0), astra::internals::exceptions::invalid_size);
 }
 
+TEST_F(MatrixTest, clear) { 
+    Matrix mat(2, 2); 
+    mat << 1 << 2 << 3 << 4;
+
+    mat.clear();
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 0);
+}
+
+
 
 
 
