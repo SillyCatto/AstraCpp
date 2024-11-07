@@ -306,4 +306,14 @@ TEST_F(MatrixTest, matrix_assignment_different_size) {
     EXPECT_EQ(matB(1, 1), 4);
 }
 
+TEST_F(MatrixTest, matrix_equality) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_TRUE(matA == matB);
+}
+
 } // namespace astra
