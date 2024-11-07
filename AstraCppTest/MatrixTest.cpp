@@ -357,5 +357,12 @@ TEST_F(MatrixTest, matrix_sum_positive) {
     EXPECT_DOUBLE_EQ(mat.sum(), 10);
 }
 
+TEST_F(MatrixTest, matrix_sum_negative) {
+    Matrix mat(2, 2);
+    mat << -1 << -2 << -3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.sum(), -10);
+}
+
 
 } // namespace astra
