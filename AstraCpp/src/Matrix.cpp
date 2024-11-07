@@ -144,7 +144,7 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
-void swap(double& a, double& b) {
+void Matrix::swap(double& a, double& b) {
     double temp = a;
     a = b;
     b = temp;
