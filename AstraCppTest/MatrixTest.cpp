@@ -338,6 +338,17 @@ TEST_F(MatrixTest, matrix_replace) {
     EXPECT_EQ(mat(1, 1), 4);
 }
 
+TEST_F(MatrixTest, matrix_replace_all) { 
+    Matrix mat(2, 2);
+    mat << 4 << 4 << 4 << 4;
+    
+    mat.replace(4, 9);
+
+    EXPECT_EQ(mat(0, 0), 9);
+    EXPECT_EQ(mat(0, 1), 9);
+    EXPECT_EQ(mat(1, 0), 9);
+    EXPECT_EQ(mat(1, 1), 9);
+}
 
 
 } // namespace astra
