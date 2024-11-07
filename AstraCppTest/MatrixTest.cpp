@@ -522,4 +522,15 @@ TEST_F(MatrixTest, is_square_false) {
     EXPECT_FALSE(mat.is_square());
 }
 
+TEST_F(MatrixTest, is_zero_true) {
+    Matrix mat(2, 2);
+    EXPECT_TRUE(mat.is_zero());
+}
+
+TEST_F(MatrixTest, is_zero_false) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+    EXPECT_FALSE(mat.is_zero());
+}
+
 } // namespace astra
