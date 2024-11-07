@@ -34,6 +34,8 @@ class Matrix {
     double prod() const;
     double avg() const;
 
+    double min() const;
+
     bool is_square() const;
     bool is_zero() const;
 

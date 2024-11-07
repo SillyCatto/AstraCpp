@@ -172,6 +172,16 @@ double Matrix::avg() const {
     return sum / (rows * cols);
 }
 
+double Matrix::min() const {
+    double minVal = values[0];
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] < minVal) {
+            minVal = values[i];
+        }
+    }
+    return minVal;
+}
+
 bool Matrix::is_square() const { return rows == cols; }
 
 bool Matrix::is_zero() const {
