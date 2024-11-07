@@ -144,6 +144,14 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
+double Matrix::sum() const {
+    double total = 0.0;
+    for (int i = 0; i < rows * cols; ++i) {
+        total += values[i];
+    }
+    return total;
+}
+
 double Matrix::avg() const {
     if (rows == 0 || cols == 0) {
         throw astra::internals::exceptions::invalid_size();

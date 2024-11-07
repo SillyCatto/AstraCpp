@@ -29,6 +29,8 @@ class Matrix {
     bool operator==(const Matrix& other) const;
 
     void replace(double old_val, double new_val);
+
+    double sum() const;
     double avg() const;
 
     bool is_square() const;
