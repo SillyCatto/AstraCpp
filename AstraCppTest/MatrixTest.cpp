@@ -456,4 +456,12 @@ TEST_F(MatrixTest, matrix_avg_singleton) {
     EXPECT_DOUBLE_EQ(mat.avg(), -6);
 }
 
+TEST_F(MatrixTest, matrix_min_singleton) {
+    Matrix mat(1, 1);
+    mat << -6;
+
+    EXPECT_DOUBLE_EQ(mat.min(), -6);
+}
+
+
 } // namespace astra
