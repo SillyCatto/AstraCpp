@@ -45,6 +45,8 @@ class Vector {
      */
     Vector(const Vector& other);
 
+    Vector(std::initializer_list<double> values);
+
     /**
      * @brief Destructor to free dynamically allocated memory.
      */
@@ -234,5 +236,6 @@ class Vector {
      * @return The output stream with the vector representation.
      */
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& in, Vector& v);
 };
 }

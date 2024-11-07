@@ -43,6 +43,15 @@ Vector::Vector(const Vector& other)
     }
 }
 
+Vector::Vector(std::initializer_list<double> values)
+    : size(values.size()), current_index(values.size()),
+      values(new double[values.size()]) {
+    int i = 0;
+    for (double val : values) {
+        this->values[i++] = val;
+    }
+}
+
 Vector::~Vector() { 
     delete[] values;
     values = nullptr;
@@ -167,8 +176,8 @@ bool Vector::operator==(const Vector& other) const {
         return false;
     }
     for (int i = 0; i < size; ++i) {
-        if (astra::internals::mathutils::abs(this->values[i] - other.values[i]) >
-            1e-8) {
+        if (astra::internals::mathutils::abs(this->values[i] -
+                                             other.values[i]) > 1e-8) {
             return false;
         }
     }
@@ -237,6 +246,13 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     }
     ost << "]";
     return ost;
+}
+
+std::istream& astra::operator>>(std::istream& in, Vector& v) { 
+    int i = 0;
+    for (; i < v.size && in >> v.values[i]; ++i);
+
+    return in;
 }
 
 
