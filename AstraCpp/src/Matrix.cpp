@@ -152,6 +152,14 @@ double Matrix::sum() const {
     return total;
 }
 
+double Matrix::prod() const {
+    double total = 1.0;
+    for (int i = 0; i < rows * cols; ++i) {
+        total *= values[i];
+    }
+    return total;
+}
+
 double Matrix::avg() const {
     if (rows == 0 || cols == 0) {
         throw astra::internals::exceptions::invalid_size();
