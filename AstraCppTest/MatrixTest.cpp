@@ -316,7 +316,7 @@ TEST_F(MatrixTest, matrix_equality) {
     EXPECT_TRUE(matA == matB);
 }
 
-TEST_F(MatrixTest, matrix_inequality) {
+TEST_F(MatrixTest, matrix_equality_false) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
@@ -325,6 +325,37 @@ TEST_F(MatrixTest, matrix_inequality) {
 
     EXPECT_FALSE(matA == matB);
 }
+
+TEST_F(MatrixTest, matrix_equality_diff_size) {
+    Matrix matA(2, 3);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 6 << 5 << 7;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_FALSE(matA == matB);
+}
+
+TEST_F(MatrixTest, matrix_inequality_true) {
+    Matrix matA(2, 3);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 6 << 5 << 7;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_TRUE(matA != matB);
+}
+
+TEST_F(MatrixTest, matrix_inequality_false) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_FALSE(matA != matB);
+}
+
 
 TEST_F(MatrixTest, matrix_replace) {
     Matrix mat(2, 2);
@@ -551,6 +582,7 @@ TEST_F(MatrixTest, identity_pos) {
 TEST_F(MatrixTest, identity_zero) {
     EXPECT_THROW(Matrix::id(0), astra::internals::exceptions::invalid_size);
 }
+
 
 
 
