@@ -216,6 +216,16 @@ Matrix Matrix::id(int n) {
     return identity;
 }
 
+Matrix Matrix::transpose() const {
+    Matrix transposed(cols, rows); 
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            transposed.values[j * rows + i] = values[i * cols + j];
+        }
+    }
+    return transposed;
+}
+
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
