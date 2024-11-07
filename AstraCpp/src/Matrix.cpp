@@ -144,6 +144,12 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
+void swap(double& a, double& b) {
+    double temp = a;
+    a = b;
+    b = temp;
+}
+
 double Matrix::sum() const {
     double total = 0.0;
     for (int i = 0; i < rows * cols; ++i) {
