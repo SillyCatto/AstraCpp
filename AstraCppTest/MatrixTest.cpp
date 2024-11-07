@@ -477,5 +477,26 @@ TEST_F(MatrixTest, matrix_min_same) {
     EXPECT_DOUBLE_EQ(mat.min(), 1);
 }
 
+TEST_F(MatrixTest, matrix_max_same) {
+    Matrix mat(2, 2);
+    mat << 1 << 1 << 1 << 1;
+
+    EXPECT_DOUBLE_EQ(mat.max(), 1);
+}
+
+TEST_F(MatrixTest, matrix_max_singleton) {
+    Matrix mat(1, 1);
+    mat << -6;
+
+    EXPECT_DOUBLE_EQ(mat.max(), -6);
+}
+
+TEST_F(MatrixTest, matrix_max_zero) {
+    Matrix mat(2, 2);
+    mat << -10 << 0 << -45 << -1;
+
+    EXPECT_DOUBLE_EQ(mat.max(), 0);
+}
+
 
 } // namespace astra
