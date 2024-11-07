@@ -316,4 +316,15 @@ TEST_F(MatrixTest, matrix_equality) {
     EXPECT_TRUE(matA == matB);
 }
 
+TEST_F(MatrixTest, matrix_inequality) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 6;
+    matB << 1 << 2 << 3 << 4;
+
+    EXPECT_FALSE(matA == matB);
+}
+
+
 } // namespace astra
