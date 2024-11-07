@@ -498,5 +498,28 @@ TEST_F(MatrixTest, matrix_max_zero) {
     EXPECT_DOUBLE_EQ(mat.max(), 0);
 }
 
+TEST_F(MatrixTest, matrix_max_positive) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    EXPECT_DOUBLE_EQ(mat.max(), 4);
+}
+
+TEST_F(MatrixTest, matrix_max_negative) {
+    Matrix mat(2, 2);
+    mat << -1 << -2 << -3 << -4;
+
+    EXPECT_DOUBLE_EQ(mat.max(), -1);
+}
+
+TEST_F(MatrixTest, is_square_true) {
+    Matrix mat(2, 2);
+    EXPECT_TRUE(mat.is_square());
+}
+
+TEST_F(MatrixTest, is_square_false) {
+    Matrix mat(2, 1);
+    EXPECT_FALSE(mat.is_square());
+}
 
 } // namespace astra
