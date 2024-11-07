@@ -236,5 +236,6 @@ class Vector {
      * @return The output stream with the vector representation.
      */
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& in, Vector& v);
 };
 }

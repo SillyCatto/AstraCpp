@@ -10,10 +10,10 @@ int main() {
     std::cout << "------\n\n";
 
     double values1[] = {3, 4, 5};
-    double values2[] = {1, 2, 3};
-
     astra::Vector vec1(3, values1);
-    astra::Vector vec2(3, values2);
+
+    astra::Vector vec2(3);
+    std::cin >> vec2;
 
     astra::Vector vec3{1, 2, 3, 4};
 
