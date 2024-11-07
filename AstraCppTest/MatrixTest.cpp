@@ -279,4 +279,17 @@ TEST_F(MatrixTest, get_col_test) {
     EXPECT_EQ(mat.get_col(), 3);
 }
 
+TEST_F(MatrixTest, matrix_assignment_equal) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB = matA;
+
+    EXPECT_EQ(matB(0, 0), 1);
+    EXPECT_EQ(matB(0, 1), 2);
+    EXPECT_EQ(matB(1, 0), 3);
+    EXPECT_EQ(matB(1, 1), 4);
+}
+
 } // namespace astra
