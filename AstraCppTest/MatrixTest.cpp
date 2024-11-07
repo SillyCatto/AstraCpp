@@ -121,6 +121,18 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
+TEST_F(MatrixTest, TransposeSquareMatrix) {
+    Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix transposed = mat.transpose();
+
+    EXPECT_EQ(transposed.get_row(), 2);
+    EXPECT_EQ(transposed.get_col(), 2);
+    EXPECT_EQ(transposed(0, 0), 1.0);
+    EXPECT_EQ(transposed(0, 1), 3.0);
+    EXPECT_EQ(transposed(1, 0), 2.0);
+    EXPECT_EQ(transposed(1, 1), 4.0);
+}
+
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
     Matrix mat(2, 2);
     mat << 1.0, 2.0, 3.0, 4.0;
