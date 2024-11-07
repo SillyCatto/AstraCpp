@@ -269,4 +269,10 @@ TEST_F(MatrixTest, scalar_division_small_result) {
     EXPECT_DOUBLE_EQ(result(1, 1), 4e-12);
 }
 
+TEST_F(MatrixTest, get_row_test) {
+    Matrix mat(2, 3);
+    EXPECT_EQ(mat.get_row(), 2);
+}
+
+
 } // namespace astra
