@@ -182,6 +182,16 @@ double Matrix::min() const {
     return minVal;
 }
 
+double Matrix::max() const {
+    double maxVal = values[0];
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] > maxVal) {
+            maxVal = values[i];
+        }
+    }
+    return maxVal;
+}
+
 bool Matrix::is_square() const { return rows == cols; }
 
 bool Matrix::is_zero() const {

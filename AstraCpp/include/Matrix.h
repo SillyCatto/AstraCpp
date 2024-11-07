@@ -35,6 +35,7 @@ class Matrix {
     double avg() const;
 
     double min() const;
+    double max() const;
 
     bool is_square() const;
     bool is_zero() const;
