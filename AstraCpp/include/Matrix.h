@@ -47,6 +47,8 @@ class Matrix {
     void transpose();
     void row_swap(int i, int j);
 
+    void clear();
+
     friend Matrix operator*(const Matrix& mat, double scalar); 
     friend Matrix operator*(double scalar, const Matrix& mat); 
     

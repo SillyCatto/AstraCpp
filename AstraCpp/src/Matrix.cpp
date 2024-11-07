@@ -273,6 +273,12 @@ void Matrix::row_swap(int i, int j) {
     }
 }
 
+void Matrix::clear() {
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = 0.0;
+    }
+}
+
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
     int rows = mat.get_row();
