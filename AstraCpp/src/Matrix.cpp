@@ -279,6 +279,12 @@ void Matrix::clear() {
     }
 }
 
+void astra::Matrix::fill(double val) {
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = val;
+    }
+}
+
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
     int rows = mat.get_row();
