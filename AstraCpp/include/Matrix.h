@@ -29,12 +29,22 @@ class Matrix {
     bool operator==(const Matrix& other) const;
 
     void replace(double old_val, double new_val);
+    void swap(double& a, double& b);
+
+    double sum() const;
+    double prod() const;
+    double principal_prod() const;
     double avg() const;
+
+    double min() const;
+    double max() const;
 
     bool is_square() const;
     bool is_zero() const;
 
     static Matrix id(int n);
+
+    void transpose(); 
 
     friend Matrix operator*(const Matrix& mat, double scalar); 
     friend Matrix operator*(double scalar, const Matrix& mat); 

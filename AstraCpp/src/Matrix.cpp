@@ -144,6 +144,39 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
+void Matrix::swap(double& a, double& b) {
+    double temp = a;
+    a = b;
+    b = temp;
+}
+
+double Matrix::sum() const {
+    double total = 0.0;
+    for (int i = 0; i < rows * cols; ++i) {
+        total += values[i];
+    }
+    return total;
+}
+
+double Matrix::prod() const {
+    double total = 1.0;
+    for (int i = 0; i < rows * cols; ++i) {
+        total *= values[i];
+    }
+    return total;
+}
+
+double Matrix::principal_prod() const {
+    if (rows != cols) {
+        throw astra::internals::exceptions::invalid_argument();
+    }
+    double product = 1.0;
+    for (int i = 0; i < rows; ++i) {
+        product *= values[i * cols + i];
+    }
+    return product;
+}
+
 double Matrix::avg() const {
     if (rows == 0 || cols == 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -154,6 +187,26 @@ double Matrix::avg() const {
         sum += values[i];
     }
     return sum / (rows * cols);
+}
+
+double Matrix::min() const {
+    double minVal = values[0];
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] < minVal) {
+            minVal = values[i];
+        }
+    }
+    return minVal;
+}
+
+double Matrix::max() const {
+    double maxVal = values[0];
+    for (int i = 0; i < rows * cols; ++i) {
+        if (values[i] > maxVal) {
+            maxVal = values[i];
+        }
+    }
+    return maxVal;
 }
 
 bool Matrix::is_square() const { return rows == cols; }
@@ -178,6 +231,34 @@ Matrix Matrix::id(int n) {
     }
 
     return identity;
+}
+
+void Matrix::transpose() {
+    if (rows == cols) {
+        // SQUARE MATRIX TRANSPOSE
+        for (int i = 0; i < rows; ++i) {
+            for (int j = i + 1; j < cols; ++j) {
+                swap(values[i * cols + j], values[j * cols + i]);
+            }
+        }
+    }
+    else {
+        // NON-SQUARE TRANSPOSE
+        double* transposedValues = new double[rows * cols];
+        int newRows = cols;
+        int newCols = rows;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                transposedValues[j * newCols + i] = values[i * cols + j];
+            }
+        }
+
+        delete[] values;
+        values = transposedValues;
+        rows = newRows;
+        cols = newCols;
+    }
 }
 
 
