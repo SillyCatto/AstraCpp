@@ -29,7 +29,6 @@ class Matrix {
     bool operator==(const Matrix& other) const;
 
     void replace(double old_val, double new_val);
-    void swap(double& a, double& b);
 
     double sum() const;
     double prod() const;

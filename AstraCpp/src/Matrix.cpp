@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Matrix.h"
 #include "Exceptions.h"
+#include "Utils.h"
 
 #include <iostream>
 #include <iomanip>
@@ -144,11 +145,6 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
-void Matrix::swap(double& a, double& b) {
-    double temp = a;
-    a = b;
-    b = temp;
-}
 
 double Matrix::sum() const {
     double total = 0.0;
@@ -235,15 +231,15 @@ Matrix Matrix::id(int n) {
 
 void Matrix::transpose() {
     if (rows == cols) {
-        // SQUARE MATRIX TRANSPOSE
+        // sqaure
         for (int i = 0; i < rows; ++i) {
             for (int j = i + 1; j < cols; ++j) {
-                swap(values[i * cols + j], values[j * cols + i]);
+                astra::internals::utils::swap(values[i * cols + j], values[j * cols + i]);
             }
         }
     }
     else {
-        // NON-SQUARE TRANSPOSE
+        // rectangular
         double* transposedValues = new double[rows * cols];
         int newRows = cols;
         int newCols = rows;
