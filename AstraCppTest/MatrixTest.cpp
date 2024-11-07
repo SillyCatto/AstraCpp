@@ -121,7 +121,7 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, TransposeSquareMatrix) {
+TEST_F(MatrixTest, Transpose_Square_Matrix) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();
 
@@ -133,7 +133,7 @@ TEST_F(MatrixTest, TransposeSquareMatrix) {
     EXPECT_EQ(mat(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, TransposeNonSquareMatrixInPlace) {
+TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
     Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
     mat.transpose();
 
@@ -145,6 +145,43 @@ TEST_F(MatrixTest, TransposeNonSquareMatrixInPlace) {
     EXPECT_EQ(mat(1, 1), 5.0);
     EXPECT_EQ(mat(2, 0), 3.0);
     EXPECT_EQ(mat(2, 1), 6.0);
+}
+
+TEST_F(MatrixTest, row_swap_square) { 
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    mat.row_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 3);
+    EXPECT_EQ(mat(0, 1), 4);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+}
+
+TEST_F(MatrixTest, row_swap_not_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    mat.row_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 4);
+    EXPECT_EQ(mat(0, 1), 5);
+    EXPECT_EQ(mat(0, 2), 6);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+    EXPECT_EQ(mat(1, 2), 3);
+    
+}
+// test dosent work for mat(3,2);
+
+TEST_F(MatrixTest, row_swap_not_square_greater) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.row_swap(2, 1),
+                 astra::internals::exceptions::index_out_of_range);
+
 }
 
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
