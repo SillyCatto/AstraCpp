@@ -160,6 +160,17 @@ double Matrix::prod() const {
     return total;
 }
 
+double Matrix::principal_prod() const {
+    if (rows != cols) {
+        throw astra::internals::exceptions::invalid_argument();
+    }
+    double product = 1.0;
+    for (int i = 0; i < rows; ++i) {
+        product *= values[i * cols + i];
+    }
+    return product;
+}
+
 double Matrix::avg() const {
     if (rows == 0 || cols == 0) {
         throw astra::internals::exceptions::invalid_size();

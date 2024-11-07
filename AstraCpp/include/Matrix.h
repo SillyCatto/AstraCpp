@@ -32,6 +32,7 @@ class Matrix {
 
     double sum() const;
     double prod() const;
+    double principal_prod() const;
     double avg() const;
 
     double min() const;
