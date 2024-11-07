@@ -173,8 +173,20 @@ TEST_F(MatrixTest, row_swap_not_square) {
     EXPECT_EQ(mat(1, 2), 3);
     
 }
-// test dosent work for mat(3,2);
 
+TEST_F(MatrixTest, row_swap_not_square_test) {
+    Matrix mat(3, 2);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    mat.row_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 3);
+    EXPECT_EQ(mat(0, 1), 4);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+    EXPECT_EQ(mat(2, 0), 5);
+    EXPECT_EQ(mat(2, 1), 6);
+}
 TEST_F(MatrixTest, row_swap_not_square_greater) {
     Matrix mat(2, 3);
     mat << 1 << 2 << 3 << 4 << 5 << 6;
