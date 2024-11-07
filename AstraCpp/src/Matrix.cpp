@@ -233,14 +233,32 @@ Matrix Matrix::id(int n) {
     return identity;
 }
 
-Matrix Matrix::transpose() const {
-    Matrix transposed(cols, rows); 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            transposed.values[j * rows + i] = values[i * cols + j];
+void Matrix::transpose() {
+    if (rows == cols) {
+        // SQUARE MATRIX TRANSPOSE
+        for (int i = 0; i < rows; ++i) {
+            for (int j = i + 1; j < cols; ++j) {
+                swap(values[i * cols + j], values[j * cols + i]);
+            }
         }
     }
-    return transposed;
+    else {
+        // NON-SQUARE TRANSPOSE
+        double* transposedValues = new double[rows * cols];
+        int newRows = cols;
+        int newCols = rows;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                transposedValues[j * newCols + i] = values[i * cols + j];
+            }
+        }
+
+        delete[] values;
+        values = transposedValues;
+        rows = newRows;
+        cols = newCols;
+    }
 }
 
 
