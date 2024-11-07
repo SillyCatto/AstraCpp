@@ -274,5 +274,9 @@ TEST_F(MatrixTest, get_row_test) {
     EXPECT_EQ(mat.get_row(), 2);
 }
 
+TEST_F(MatrixTest, get_col_test) {
+    Matrix mat(2, 3);
+    EXPECT_EQ(mat.get_col(), 3);
+}
 
 } // namespace astra
