@@ -137,6 +137,10 @@ bool Matrix::operator==(const Matrix& other) const {
     return true;
 }
 
+bool astra::Matrix::operator!=(const Matrix& other) const { 
+	return !(*this == other);
+}
+
 void Matrix::replace(double old_val, double new_val) {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] == old_val) {

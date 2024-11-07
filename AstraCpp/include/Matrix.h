@@ -27,6 +27,7 @@ class Matrix {
     Matrix operator-(const Matrix& other) const;
     Matrix& operator=(const Matrix& other);
     bool operator==(const Matrix& other) const;
+    bool operator!=(const Matrix& other) const;
 
     void replace(double old_val, double new_val);
 
