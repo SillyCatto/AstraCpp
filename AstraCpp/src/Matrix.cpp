@@ -238,7 +238,8 @@ void Matrix::transpose() {
         // sqaure
         for (int i = 0; i < rows; ++i) {
             for (int j = i + 1; j < cols; ++j) {
-                astra::internals::utils::swap(values[i * cols + j], values[j * cols + i]);
+                astra::internals::utils::swap(values[i * cols + j], 
+                                              values[j * cols + i]);
             }
         }
     }
@@ -261,6 +262,16 @@ void Matrix::transpose() {
     }
 }
 
+void Matrix::row_swap(int i, int j) {
+    if (i >= rows || j >= rows || i < 0 || j < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    for (int k = 0; k < cols; ++k) {
+        astra::internals::utils::swap(values[i * cols + k],
+                                      values[j * cols + k]);
+    }
+}
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    

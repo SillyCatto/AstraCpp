@@ -44,7 +44,8 @@ class Matrix {
 
     static Matrix id(int n);
 
-    void transpose(); 
+    void transpose();
+    void row_swap(int i, int j);
 
     friend Matrix operator*(const Matrix& mat, double scalar); 
     friend Matrix operator*(double scalar, const Matrix& mat); 
