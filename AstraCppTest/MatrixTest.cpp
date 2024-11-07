@@ -413,4 +413,12 @@ TEST_F(MatrixTest, matrix_principal_prod_square) {
     EXPECT_DOUBLE_EQ(mat.principal_prod(), 4);
 }
 
+TEST_F(MatrixTest, matrix_principal_prod_non_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.principal_prod(),
+                 astra::internals::exceptions::invalid_argument);
+}
+
 } // namespace astra
