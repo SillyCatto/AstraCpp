@@ -399,5 +399,12 @@ TEST_F(MatrixTest, matrix_prod_zero) {
     EXPECT_DOUBLE_EQ(mat.prod(), 0);
 }
 
+TEST_F(MatrixTest, matrix_prod_large) {
+    Matrix mat(2, 2);
+    mat << 1e6 << 2e6 << 3e6 << 4e6;
+
+    EXPECT_DOUBLE_EQ(mat.prod(), 24e24);
+}
+
 
 } // namespace astra
