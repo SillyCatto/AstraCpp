@@ -632,6 +632,16 @@ TEST_F(MatrixTest, clear) {
     EXPECT_DOUBLE_EQ(mat(1, 1), 0);
 }
 
+TEST_F(MatrixTest, fill) {
+    Matrix mat(2, 2);
+    mat.fill(2);
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 2);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 2);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 2);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 2);
+}
+
 
 
 
