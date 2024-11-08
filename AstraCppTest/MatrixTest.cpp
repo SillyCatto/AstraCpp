@@ -22,8 +22,8 @@ class MatrixTest : public ::testing::Test {
 
 TEST_F(MatrixTest, valid_matrix_creation) {
     Matrix m(2, 3);
-    EXPECT_EQ(m.get_row(), 2);
-    EXPECT_EQ(m.get_col(), 3);
+    EXPECT_EQ(m.num_row(), 2);
+    EXPECT_EQ(m.num_col(), 3);
 }
 
 
@@ -125,8 +125,8 @@ TEST_F(MatrixTest, Transpose_Square_Matrix) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();
 
-    EXPECT_EQ(mat.get_row(), 2);
-    EXPECT_EQ(mat.get_col(), 2);
+    EXPECT_EQ(mat.num_row(), 2);
+    EXPECT_EQ(mat.num_col(), 2);
     EXPECT_EQ(mat(0, 0), 1.0);
     EXPECT_EQ(mat(0, 1), 3.0);
     EXPECT_EQ(mat(1, 0), 2.0);
@@ -137,8 +137,8 @@ TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
     Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
     mat.transpose();
 
-    EXPECT_EQ(mat.get_row(), 3);
-    EXPECT_EQ(mat.get_col(), 2);
+    EXPECT_EQ(mat.num_row(), 3);
+    EXPECT_EQ(mat.num_col(), 2);
     EXPECT_EQ(mat(0, 0), 1.0);
     EXPECT_EQ(mat(0, 1), 4.0);
     EXPECT_EQ(mat(1, 0), 2.0);
@@ -320,12 +320,12 @@ TEST_F(MatrixTest, scalar_division_small_result) {
 
 TEST_F(MatrixTest, get_row_test) {
     Matrix mat(2, 3);
-    EXPECT_EQ(mat.get_row(), 2);
+    EXPECT_EQ(mat.num_row(), 2);
 }
 
 TEST_F(MatrixTest, get_col_test) {
     Matrix mat(2, 3);
-    EXPECT_EQ(mat.get_col(), 3);
+    EXPECT_EQ(mat.num_col(), 3);
 }
 
 TEST_F(MatrixTest, matrix_assignment_equal) {
