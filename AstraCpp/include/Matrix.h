@@ -93,13 +93,13 @@ class Matrix {
      * @brief Returns the number of rows in the matrix.
      * @return The number of rows.
      */
-    int get_row() const;
+    int num_row() const;
 
     /**
      * @brief Returns the number of columns in the matrix.
      * @return The number of columns.
      */
-    int get_col() const;
+    int num_col() const;
 
 
     /**
