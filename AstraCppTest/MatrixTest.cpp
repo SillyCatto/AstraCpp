@@ -654,6 +654,26 @@ TEST_F(MatrixTest, fill) {
     EXPECT_DOUBLE_EQ(mat(1, 1), 2);
 }
 
+TEST_F(MatrixTest, resize_invalid) { 
+    Matrix mat(2, 2);
+    EXPECT_THROW(mat.resize(0, 2), astra::internals::exceptions::invalid_size);
+}
+
+TEST_F(MatrixTest, resize) {
+    Matrix mat(2, 2);
+    mat.resize(3, 3);
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 2), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 2), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(2, 2), 0);
+}
+
 
 
 
