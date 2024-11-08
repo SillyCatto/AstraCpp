@@ -276,5 +276,6 @@ class Matrix {
     void print(int width = 7) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
+    friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra

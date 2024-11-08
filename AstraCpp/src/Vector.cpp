@@ -248,12 +248,19 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     return ost;
 }
 
-std::istream& astra::operator>>(std::istream& in, Vector& v) { 
+std::istream& astra::operator>>(std::istream& in, Vector& v) {
+    std::cout << "Enter values for vector(" << v.size << "):\n";
     int i = 0;
-    for (; i < v.size && in >> v.values[i]; ++i);
+    while (i < v.size && in >> v.values[i]) {
+        ++i;
+    }
 
+    for (; i < v.size; ++i) {
+        v.values[i] = 0.0;
+    }
     return in;
 }
+
 
 
 double Vector::angle(const Vector& v1, const Vector& v2) {
