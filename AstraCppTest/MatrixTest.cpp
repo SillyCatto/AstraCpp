@@ -490,14 +490,14 @@ TEST_F(MatrixTest, matrix_principal_prod_square) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
 
-    EXPECT_DOUBLE_EQ(mat.principal_prod(), 4);
+    EXPECT_DOUBLE_EQ(mat.trace(), 4);
 }
 
 TEST_F(MatrixTest, matrix_principal_prod_non_square) {
     Matrix mat(2, 3);
     mat << 1 << 2 << 3 << 4 << 5 << 6;
 
-    EXPECT_THROW(mat.principal_prod(),
+    EXPECT_THROW(mat.trace(),
                  astra::internals::exceptions::invalid_argument);
 }
 
@@ -505,7 +505,7 @@ TEST_F(MatrixTest, matrix_principal_prod_singleton) {
     Matrix mat(1, 1); 
     mat << 5;
 
-    EXPECT_DOUBLE_EQ(mat.principal_prod(), 5);
+    EXPECT_DOUBLE_EQ(mat.trace(), 5);
 }
 
 TEST_F(MatrixTest, matrix_avg_positive) {

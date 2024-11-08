@@ -166,7 +166,7 @@ double Matrix::prod() const {
     return total;
 }
 
-double Matrix::principal_prod() const {
+double Matrix::trace() const {
     if (rows != cols) {
         throw astra::internals::exceptions::invalid_argument();
     }

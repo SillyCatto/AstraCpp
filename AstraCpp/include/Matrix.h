@@ -164,11 +164,11 @@ class Matrix {
 
     /**
      * @brief Returns the product of the principle diagonal elements of the matrix.
-     * @return The principal product of the matrix.
+     * @return The trace of the matrix.
      * @throws astra::internals::exceptions::invalid_argument if the rows and
      * cols are not equal.
      */
-    double principal_prod() const;
+    double trace() const;
 
     /**
      * @brief Returns the average of all elements in the matrix.
