@@ -66,8 +66,11 @@ int main() {
     std::cout << "------\n\n";
 
     astra::Matrix matA(2, 2);
-    //matA << 1.0, 2.0, 3.0, 4.0;
     std::cin >> matA;
+
+
+    //matA << 1.0, 2.0, 3.0, 4.0;
+
     std::cout << "Matrix A:\n" << matA << "\n";
 
     astra::Matrix matB(2, 2, 
