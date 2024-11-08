@@ -43,7 +43,8 @@ Matrix::Matrix(int r, int c, std::initializer_list<double> values)
 
     int i = 0;
     for (double val : values) {
-        this->values[i++] = val;
+        if (i < r * c)
+            this->values[i++] = val;
     }
 }
 
@@ -166,7 +167,7 @@ double Matrix::prod() const {
     return total;
 }
 
-double Matrix::principal_prod() const {
+double Matrix::trace() const {
     if (rows != cols) {
         throw astra::internals::exceptions::invalid_argument();
     }
@@ -285,10 +286,27 @@ void astra::Matrix::fill(double val) {
     }
 }
 
+void astra::Matrix::resize(int r, int c) {
+    if (r <= 0 || c <= 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    if (r == rows && c == cols) {
+        return;
+    }
+
+    double* newValues = new double[r * c];
+    delete[] values;
+    values = newValues;
+    rows = r;
+    cols = c;
+    fill(0);
+}
+
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
-    int rows = mat.get_row();
-    int cols = mat.get_col();
+    int rows = mat.num_row();
+    int cols = mat.num_col();
 
     Matrix result(rows, cols);
 
@@ -308,8 +326,8 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
         throw astra::internals::exceptions::zero_division();
     }
 
-    int rows = mat.get_row();
-    int cols = mat.get_col();
+    int rows = mat.num_row();
+    int cols = mat.num_col();
 
     Matrix result(rows, cols);
 
@@ -320,8 +338,8 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
     return result;
 }
 
-int Matrix::get_row() const { return rows; }
-int Matrix::get_col() const { return cols; }
+int Matrix::num_row() const { return rows; }
+int Matrix::num_col() const { return cols; }
 
 void Matrix::print(int width) const {
     for (int i = 0; i < rows; ++i) {
