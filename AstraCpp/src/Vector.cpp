@@ -249,7 +249,6 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
 }
 
 std::istream& astra::operator>>(std::istream& in, Vector& v) {
-    std::cout << "Enter values for vector size: (" << v.size << "):\n";
     int i = 0;
     while (i < v.size && in >> v.values[i]) {
         ++i;

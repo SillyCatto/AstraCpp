@@ -369,8 +369,6 @@ std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
 }
 
 std::istream& astra::operator>>(std::istream& in, Matrix& mat) {
-    std::cout << "Enter values for matrix size: (" << mat.rows << ", " << mat.cols
-              << "):\n";
     int size = mat.rows * mat.cols;
     int i = 0;
     while (i < size && in >> mat.values[i]) {
