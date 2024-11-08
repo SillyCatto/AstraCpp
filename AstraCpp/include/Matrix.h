@@ -242,6 +242,15 @@ class Matrix {
 
 
     /**
+     * @brief Resizes the matrix to a new size with all elements set to 0.
+     * @param r The new number of rows.
+     * @param c The new number of columns.
+     * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
+     */
+    void resize(int r, int c);
+
+
+    /**
      * @brief Multiplies each element of the matrix by a scalar.
      * @param mat The matrix to multiply.
      * @param scalar The scalar value to multiply with each element of the

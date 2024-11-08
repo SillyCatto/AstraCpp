@@ -285,6 +285,23 @@ void astra::Matrix::fill(double val) {
     }
 }
 
+void astra::Matrix::resize(int r, int c) {
+    if (r <= 0 || c <= 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    if (r == rows && c == cols) {
+        return;
+    }
+
+    double* newValues = new double[r * c];
+    delete[] values;
+    values = newValues;
+    rows = r;
+    cols = c;
+    fill(0);
+}
+
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
     int rows = mat.get_row();
