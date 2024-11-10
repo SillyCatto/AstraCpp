@@ -467,6 +467,16 @@ TEST_F(MatrixTest, matrix_replace_all) {
     EXPECT_EQ(mat(1, 1), 9);
 }
 
+TEST_F(MatrixTest, ReplaceNonexistentValue) {
+    Matrix mat(2, 2, {1, 2, 3, 4});
+    mat.replace(99, 8);
+
+    EXPECT_EQ(mat(0, 0), 1);
+    EXPECT_EQ(mat(0, 1), 2);
+    EXPECT_EQ(mat(1, 0), 3);
+    EXPECT_EQ(mat(1, 1), 4);
+}
+
 TEST_F(MatrixTest, matrix_sum_positive) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;

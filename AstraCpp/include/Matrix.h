@@ -160,10 +160,10 @@ class Matrix {
     bool operator!=(const Matrix& other) const;
 
     /**
-     * @brif Replace all occurrences of a value with another value.
+     * @brief Replace all occurrences of a value with another value.
      * @param old_val The value to replace.
-     * @param new_val The value to replace with.
-     * @return Reference to this matrix after replacement.
+     * @param new_val The value to replace with
+     * @note does nothing if the the value is not in the matrix
     */
     void replace(double old_val, double new_val);
 
