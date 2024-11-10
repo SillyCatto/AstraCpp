@@ -490,7 +490,7 @@ TEST_F(MatrixTest, matrix_trace_square) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
 
-    EXPECT_DOUBLE_EQ(mat.trace(), 4);
+    EXPECT_DOUBLE_EQ(mat.trace(), 5);
 }
 
 TEST_F(MatrixTest, matrix_trace_non_square) {
@@ -614,7 +614,7 @@ TEST_F(MatrixTest, is_zero_false) {
 }
 
 TEST_F(MatrixTest, identity_pos) { 
-    Matrix mat = Matrix::id(3); 
+    Matrix mat = Matrix::identity(3); 
 
     EXPECT_DOUBLE_EQ(mat(0, 0), 1);
     EXPECT_DOUBLE_EQ(mat(0, 1), 0);
@@ -629,7 +629,8 @@ TEST_F(MatrixTest, identity_pos) {
 }
 
 TEST_F(MatrixTest, identity_zero) {
-    EXPECT_THROW(Matrix::id(0), astra::internals::exceptions::invalid_size);
+    EXPECT_THROW(Matrix::identity(0),
+                 astra::internals::exceptions::invalid_size);
 }
 
 TEST_F(MatrixTest, clear) { 
