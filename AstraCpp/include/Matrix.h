@@ -87,7 +87,23 @@ class Matrix {
      * out of bounds.
      */
     double& operator()(int i, int j);
-
+    
+    /**
+     * @brief Accesses a matrix element at the specified row and column in a
+     * read-only manner.
+     *
+     * This function provides read-only access to elements within the matrix,
+     * allowing retrieval of an element located at the given row and column. The
+     * function performs bounds-checking to ensure the indices are within valid
+     * limits and throws an exception if the indices are out of range.
+     *
+     * @param i The row index of the desired element.
+     * @param j The column index of the desired element.
+     * @return A constant reference to the matrix element at the specified
+     * position.
+     * @throws astra::internals::exceptions::index_out_of_range if the indices
+     * `i` or `j` are outside the valid range of rows or columns.
+     */
     const double& operator()(int i, int j) const;
 
 
