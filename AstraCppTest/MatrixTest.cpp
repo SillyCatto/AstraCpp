@@ -674,8 +674,27 @@ TEST_F(MatrixTest, resize) {
     EXPECT_DOUBLE_EQ(mat(2, 2), 0);
 }
 
+TEST_F(MatrixTest, MatrixJoinSameRows) {
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix matB = Matrix(2, 3, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
 
+    matA.join(matB);
 
+    EXPECT_EQ(matA.num_row(), 2);
+    EXPECT_EQ(matA.num_col(), 5);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(matA(0, 2), 5.0);
+    EXPECT_DOUBLE_EQ(matA(0, 3), 6.0);
+    EXPECT_DOUBLE_EQ(matA(0, 4), 7.0);
+
+    EXPECT_DOUBLE_EQ(matA(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(matA(1, 1), 4.0);
+    EXPECT_DOUBLE_EQ(matA(1, 2), 8.0);
+    EXPECT_DOUBLE_EQ(matA(1, 3), 9.0);
+    EXPECT_DOUBLE_EQ(matA(1, 4), 10.0);
+}
 
 
 } // namespace astra
