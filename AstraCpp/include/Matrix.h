@@ -276,7 +276,16 @@ class Matrix {
      */
     friend Matrix operator/(const Matrix& mat, double scalar);
 
-
+    /**
+     * @brief Prints the matrix to the standard output with specified column
+     * width.
+     *
+     * This function displays the matrix in a formatted layout, where each row
+     * is printed on a new line with elements separated by commas. Each element
+     * occupies a specified width, aligning the output for improved readability.
+     *
+     * @param width The width allocated for each matrix element when printed.
+     */
     void print(int width = 7) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
