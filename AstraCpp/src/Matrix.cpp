@@ -83,6 +83,13 @@ double& Matrix::operator()(int i, int j) {
     return values[i * cols + j];
 }
 
+const double& Matrix::operator()(int i, int j) const {
+    if (i >= rows || i < 0 || j >= cols || j < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    return values[i * cols + j];
+}
+
 Matrix Matrix::operator+(const Matrix& other) const {
     if (rows != other.rows || cols != other.cols) {
         throw astra::internals::exceptions::matrix_size_mismatch();

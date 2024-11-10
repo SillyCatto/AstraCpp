@@ -88,6 +88,8 @@ class Matrix {
      */
     double& operator()(int i, int j);
 
+    const double& operator()(int i, int j) const;
+
 
     /**
      * @brief Returns the number of rows in the matrix.
