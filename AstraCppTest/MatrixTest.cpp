@@ -704,4 +704,42 @@ TEST_F(MatrixTest, MatrixJoinMismatchedRows) {
                  astra::internals::exceptions::matrix_join_size_mismatch);
 }
 
+TEST_F(MatrixTest, MatrixJoinSingleRowMatrices) {
+    Matrix matA = Matrix(1, 2, {1.0, 2.0});
+    Matrix matB = Matrix(1, 3, {3.0, 4.0, 5.0});
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 1);
+    EXPECT_EQ(matA.num_col(), 5);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(matA(0, 2), 3.0);
+    EXPECT_DOUBLE_EQ(matA(0, 3), 4.0);
+    EXPECT_DOUBLE_EQ(matA(0, 4), 5.0);
+}
+
+TEST_F(MatrixTest, MatrixJoinSingleColumnMatrices) {
+    Matrix matA = Matrix(3, 1, {1.0, 2.0, 3.0});
+    Matrix matB = Matrix(3, 2, {4.0, 5.0, 6.0, 7.0, 8.0, 9.0});
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 3);
+    EXPECT_EQ(matA.num_col(), 3);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 4.0);
+    EXPECT_DOUBLE_EQ(matA(0, 2), 5.0);
+
+    EXPECT_DOUBLE_EQ(matA(1, 0), 2.0);
+    EXPECT_DOUBLE_EQ(matA(1, 1), 6.0);
+    EXPECT_DOUBLE_EQ(matA(1, 2), 7.0);
+
+    EXPECT_DOUBLE_EQ(matA(2, 0), 3.0);
+    EXPECT_DOUBLE_EQ(matA(2, 1), 8.0);
+    EXPECT_DOUBLE_EQ(matA(2, 2), 9.0);
+}
+
 } // namespace astra
