@@ -116,7 +116,8 @@ class Vector {
      * @throws astra::internals::exceptions::index_out_of_range if index is out
      * of bounds.
      */
-    double operator[](int index) const;
+    double& operator[](int i);
+    const double& operator()(int i) const;
 
     /**
      * @brief Calculates the cross product of a 3d vector with another 3d vector.

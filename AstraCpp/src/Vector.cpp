@@ -134,11 +134,18 @@ Vector Vector::operator-(const Vector& other) const {
     return result;
 }
 
-double Vector::operator[](int index) const {
-    if (index < 0 || index >= size) {
+double& Vector::operator[](int i) {
+    if (i < 0 || i >= size) {
         throw astra::internals::exceptions::index_out_of_range();
     }
-    return values[index];
+    return values[i];
+}
+
+const double& astra::Vector::operator()(int i) const {
+    if (i < 0 || i >= size) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    return values[i];
 }
 
 Vector Vector::operator^(const Vector& other) const {
