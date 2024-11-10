@@ -158,6 +158,17 @@ TEST_F(MatrixTest, TransposeSingleRowMatrix) {
     EXPECT_EQ(mat(2, 0), 3.0);
 }
 
+TEST_F(MatrixTest, TransposeSingleColumnMatrix) {
+    Matrix mat(3, 1, {1.0, 2.0, 3.0});
+    mat.transpose();
+
+    EXPECT_EQ(mat.num_row(), 1);
+    EXPECT_EQ(mat.num_col(), 3);
+    EXPECT_EQ(mat(0, 0), 1.0);
+    EXPECT_EQ(mat(0, 1), 2.0);
+    EXPECT_EQ(mat(0, 2), 3.0);
+}
+
 TEST_F(MatrixTest, row_swap_square) { 
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
