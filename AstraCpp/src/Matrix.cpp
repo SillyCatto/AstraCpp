@@ -181,11 +181,11 @@ double Matrix::trace() const {
     if (rows != cols) {
         throw astra::internals::exceptions::invalid_argument();
     }
-    double product = 1.0;
+    double sum = 0.0;
     for (int i = 0; i < rows; ++i) {
-        product *= values[i * cols + i];
+        sum += values[i * cols + i];
     }
-    return product;
+    return sum;
 }
 
 double Matrix::avg() const {
