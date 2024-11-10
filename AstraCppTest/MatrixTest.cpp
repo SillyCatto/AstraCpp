@@ -759,4 +759,19 @@ TEST_F(MatrixTest, MatrixJoinLargeMatrices) {
     EXPECT_DOUBLE_EQ(matA(3, 5), 24.0);
 }
 
+TEST_F(MatrixTest, MatrixJoinWithEmptyOtherMatrix) {
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix matB = Matrix(2, 1);
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 2);
+    EXPECT_EQ(matA.num_col(), 3);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(matA(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(matA(1, 1), 4.0);
+}
+
 } // namespace astra
