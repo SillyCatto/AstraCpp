@@ -121,7 +121,7 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, Transpose_Square_Matrix_In_Place) {
+TEST_F(MatrixTest, transpose_square_matrix_in_place) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();
 
@@ -133,7 +133,7 @@ TEST_F(MatrixTest, Transpose_Square_Matrix_In_Place) {
     EXPECT_EQ(mat(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
+TEST_F(MatrixTest, transpose_nonsquare_matrix_in_place) {
     Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
     mat.transpose();
 
@@ -147,7 +147,7 @@ TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
     EXPECT_EQ(mat(2, 1), 6.0);
 }
 
-TEST_F(MatrixTest, TransposeSingleRowMatrix) {
+TEST_F(MatrixTest, transpose_single_row_matrix) {
     Matrix mat(1, 3, {1.0, 2.0, 3.0});
     mat.transpose();
 
@@ -158,7 +158,7 @@ TEST_F(MatrixTest, TransposeSingleRowMatrix) {
     EXPECT_EQ(mat(2, 0), 3.0);
 }
 
-TEST_F(MatrixTest, TransposeSingleColumnMatrix) {
+TEST_F(MatrixTest, transpose_single_column_matrix) {
     Matrix mat(3, 1, {1.0, 2.0, 3.0});
     mat.transpose();
 
@@ -169,7 +169,7 @@ TEST_F(MatrixTest, TransposeSingleColumnMatrix) {
     EXPECT_EQ(mat(0, 2), 3.0);
 }
 
-TEST_F(MatrixTest, TransposeAlreadyTransposedMatrix) {
+TEST_F(MatrixTest, transpose_already_transposed_matrix) {
     Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
     mat.transpose();
     mat.transpose(); // again transpose
@@ -712,7 +712,7 @@ TEST_F(MatrixTest, resize) {
     EXPECT_DOUBLE_EQ(mat(2, 2), 0);
 }
 
-TEST_F(MatrixTest, MatrixJoinSameRows) {
+TEST_F(MatrixTest, matrix_join_same_rows) {
     Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
     Matrix matB = Matrix(2, 3, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
 
@@ -734,7 +734,7 @@ TEST_F(MatrixTest, MatrixJoinSameRows) {
     EXPECT_DOUBLE_EQ(matA(1, 4), 10.0);
 }
 
-TEST_F(MatrixTest, MatrixJoinMismatchedRows) {
+TEST_F(MatrixTest, matrix_join_mismatched_rows) {
     Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
     Matrix matB = Matrix(3, 2, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
 
@@ -742,7 +742,7 @@ TEST_F(MatrixTest, MatrixJoinMismatchedRows) {
                  astra::internals::exceptions::matrix_join_size_mismatch);
 }
 
-TEST_F(MatrixTest, MatrixJoinSingleRowMatrices) {
+TEST_F(MatrixTest, matrix_join_single_row_matrices) {
     Matrix matA = Matrix(1, 2, {1.0, 2.0});
     Matrix matB = Matrix(1, 3, {3.0, 4.0, 5.0});
 
@@ -758,7 +758,7 @@ TEST_F(MatrixTest, MatrixJoinSingleRowMatrices) {
     EXPECT_DOUBLE_EQ(matA(0, 4), 5.0);
 }
 
-TEST_F(MatrixTest, MatrixJoinSingleColumnMatrices) {
+TEST_F(MatrixTest, matrix_join_single_column_matrices) {
     Matrix matA = Matrix(3, 1, {1.0, 2.0, 3.0});
     Matrix matB = Matrix(3, 2, {4.0, 5.0, 6.0, 7.0, 8.0, 9.0});
 
@@ -780,7 +780,7 @@ TEST_F(MatrixTest, MatrixJoinSingleColumnMatrices) {
     EXPECT_DOUBLE_EQ(matA(2, 2), 9.0);
 }
 
-TEST_F(MatrixTest, MatrixJoinLargeMatrices) {
+TEST_F(MatrixTest, matrix_join_large_matrices) {
     double valuesA[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     Matrix matA(4, 4, valuesA);
 
@@ -797,7 +797,7 @@ TEST_F(MatrixTest, MatrixJoinLargeMatrices) {
     EXPECT_DOUBLE_EQ(matA(3, 5), 24.0);
 }
 
-TEST_F(MatrixTest, MatrixJoinWithEmptyOtherMatrix) {
+TEST_F(MatrixTest, matrix_join_with_empty_other_matrix) {
     Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
     Matrix matB = Matrix(2, 1);
 
@@ -812,7 +812,7 @@ TEST_F(MatrixTest, MatrixJoinWithEmptyOtherMatrix) {
     EXPECT_DOUBLE_EQ(matA(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, MatrixJoinBothEmptyMatrices) {
+TEST_F(MatrixTest, matrix_join_both_empty_matrices) {
     Matrix matA = Matrix(2, 2); 
     Matrix matB = Matrix(2, 3); 
 
@@ -822,7 +822,7 @@ TEST_F(MatrixTest, MatrixJoinBothEmptyMatrices) {
     EXPECT_EQ(matA.num_col(), 5);
 }
 
-TEST_F(MatrixTest, MatrixJoinWithNegativeValues) {
+TEST_F(MatrixTest, matrix_join_with_negative_values) {
     Matrix matA = Matrix(2, 2, {-1.0, -2.0, -3.0, -4.0});
     Matrix matB = Matrix(2, 2, {5.0, -6.0, 7.0, -8.0});
 
