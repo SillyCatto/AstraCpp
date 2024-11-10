@@ -106,8 +106,25 @@ int main() {
     astra::Matrix matH = matA;
     std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
 
-    matA.join(matB);
-    std::cout << matA;
+    astra::Matrix mat1(3, 2, 
+        {
+            1, 2, 
+            3, 4, 
+            5, 6
+        }
+    );
+
+    astra::Matrix mat2(3, 2, 
+        {
+            11, 12, 
+            13, 14, 
+            15, 16
+        }
+    );
+
+    mat1.join(mat2);
+
+    std::cout << mat1;
 
     std::cin.get();
 
