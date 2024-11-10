@@ -742,4 +742,21 @@ TEST_F(MatrixTest, MatrixJoinSingleColumnMatrices) {
     EXPECT_DOUBLE_EQ(matA(2, 2), 9.0);
 }
 
+TEST_F(MatrixTest, MatrixJoinLargeMatrices) {
+    double valuesA[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    Matrix matA(4, 4, valuesA);
+
+    double valuesB[] = {17, 18, 19, 20, 21, 22, 23, 24};
+    Matrix matB(4, 2, valuesB);
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 4);
+    EXPECT_EQ(matA.num_col(), 6);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 4), 17.0);
+    EXPECT_DOUBLE_EQ(matA(3, 5), 24.0);
+}
+
 } // namespace astra
