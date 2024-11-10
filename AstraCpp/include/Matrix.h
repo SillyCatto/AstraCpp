@@ -267,6 +267,22 @@ class Matrix {
      */
     void resize(int r, int c);
 
+    /**
+     * @brief Concatenates another matrix to the right of the current matrix.
+     *
+     * This function horizontally joins the `other` matrix to the current matrix
+     * (`this`), effectively increasing the number of columns. Both matrices
+     * must have the same number of rows. After the operation, the current
+     * matrix (`this`) will have its columns expanded by the number of columns
+     * in the `other` matrix, and the `other` matrix remains unchanged.
+     *
+     * @param other The matrix to be joined to the right of the current matrix.
+     * @throws astra::internals::exceptions::matrix_join_size_mismatch if the
+     * number of rows in the current matrix does not match the number of rows in
+     * the `other` matrix.
+     *
+     * @note This operation modifies the current matrix in-place.
+     */
     void join(const Matrix& other);
 
 
