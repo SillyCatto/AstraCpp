@@ -314,8 +314,8 @@ void astra::Matrix::resize(int r, int c) {
 }
 
 void Matrix::join(const Matrix& other) { 
-    int num_row_1 = this->cols;
-    int num_col_1 = this->rows;
+    int num_row_1 = this->rows;
+    int num_col_1 = this->cols;
     int num_row_2 = other.rows;
     int num_col_2 = other.cols;
 
