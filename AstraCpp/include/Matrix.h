@@ -87,7 +87,23 @@ class Matrix {
      * out of bounds.
      */
     double& operator()(int i, int j);
-
+    
+    /**
+     * @brief Accesses a matrix element at the specified row and column in a
+     * read-only manner.
+     *
+     * This function provides read-only access to elements within the matrix,
+     * allowing retrieval of an element located at the given row and column. The
+     * function performs bounds-checking to ensure the indices are within valid
+     * limits and throws an exception if the indices are out of range.
+     *
+     * @param i The row index of the desired element.
+     * @param j The column index of the desired element.
+     * @return A constant reference to the matrix element at the specified
+     * position.
+     * @throws astra::internals::exceptions::index_out_of_range if the indices
+     * `i` or `j` are outside the valid range of rows or columns.
+     */
     const double& operator()(int i, int j) const;
 
 
@@ -251,6 +267,22 @@ class Matrix {
      */
     void resize(int r, int c);
 
+    /**
+     * @brief Concatenates another matrix to the right of the current matrix.
+     *
+     * This function horizontally joins the `other` matrix to the current matrix
+     * (`this`), effectively increasing the number of columns. Both matrices
+     * must have the same number of rows. After the operation, the current
+     * matrix (`this`) will have its columns expanded by the number of columns
+     * in the `other` matrix, and the `other` matrix remains unchanged.
+     *
+     * @param other The matrix to be joined to the right of the current matrix.
+     * @throws astra::internals::exceptions::matrix_join_size_mismatch if the
+     * number of rows in the current matrix does not match the number of rows in
+     * the `other` matrix.
+     *
+     * @note This operation modifies the current matrix in-place.
+     */
     void join(const Matrix& other);
 
 
@@ -276,10 +308,47 @@ class Matrix {
      */
     friend Matrix operator/(const Matrix& mat, double scalar);
 
-
+    /**
+     * @brief Prints the matrix to the standard output with specified column
+     * width.
+     *
+     * This function displays the matrix in a formatted layout, where each row
+     * is printed on a new line with elements separated by commas. Each element
+     * occupies a specified width, aligning the output for improved readability.
+     *
+     * @param width The width allocated for each matrix element when printed.
+     */
     void print(int width = 7) const;
 
+    /**
+     * @brief Outputs the matrix to an output stream.
+     *
+     * This operator overloads the << operator, allowing matrices to be
+     * displayed through an output stream such as `std::cout`. The function
+     * formats each row of the matrix with elements separated by commas and
+     * enclosed in square brackets.
+     *
+     * @param os The output stream to which the matrix will be sent.
+     * @param mat The matrix to output.
+     * @return A reference to the output stream, allowing chaining of output
+     * operations.
+     */
     friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
+
+    /**
+     * @brief Reads matrix values from an input stream.
+     *
+     * This operator overloads the >> operator, enabling input of matrix
+     * elements from an input stream such as `std::cin`. Elements are read
+     * sequentially, filling the matrix in row-major order. If there are fewer
+     * elements than required, remaining entries are filled with zero. Excess
+     * elements are ignored.
+     *
+     * @param in The input stream from which to read matrix values.
+     * @param mat The matrix to populate with values from the input stream.
+     * @return A reference to the input stream, allowing chaining of input
+     * operations.
+     */
     friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra
