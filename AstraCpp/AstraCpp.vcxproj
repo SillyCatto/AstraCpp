@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="include\Decomposer.h" />
     <ClInclude Include="include\Matrix.h" />
     <ClInclude Include="include\Solver.h" />
     <ClInclude Include="include\Vector.h" />
@@ -176,6 +177,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Decomposer.cpp" />
     <ClCompile Include="src\Matrix.cpp" />
     <ClCompile Include="src\Solver.cpp" />
     <ClCompile Include="src\Vector.cpp" />

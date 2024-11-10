@@ -242,6 +242,6 @@ class Vector {
     friend std::istream& operator>>(std::istream& in, Vector& v);
 };
 
-    Vector operator*(const Matrix& mat, const Vector& v);    
+    Vector operator*(const Matrix& mat, const Vector& v);
 
 }
