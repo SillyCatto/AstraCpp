@@ -59,7 +59,10 @@ Matrix::Matrix(const Matrix& other)
 }
 
 
-Matrix::~Matrix() { delete[] values; }
+Matrix::~Matrix() { 
+    delete[] values;
+    values = nullptr;
+}
 
 Matrix& Matrix::operator<<(double val) {
     if (current_index < (rows * cols)) {
