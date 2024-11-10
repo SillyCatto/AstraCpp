@@ -696,5 +696,12 @@ TEST_F(MatrixTest, MatrixJoinSameRows) {
     EXPECT_DOUBLE_EQ(matA(1, 4), 10.0);
 }
 
+TEST_F(MatrixTest, MatrixJoinMismatchedRows) {
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix matB = Matrix(3, 2, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
+
+    EXPECT_THROW(matA.join(matB),
+                 astra::internals::exceptions::matrix_join_size_mismatch);
+}
 
 } // namespace astra
