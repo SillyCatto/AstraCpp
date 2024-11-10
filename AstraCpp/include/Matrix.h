@@ -249,6 +249,8 @@ class Matrix {
      */
     void resize(int r, int c);
 
+    void join(const Matrix& other);
+
 
     /**
      * @brief Multiplies each element of the matrix by a scalar.

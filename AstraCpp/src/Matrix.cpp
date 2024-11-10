@@ -306,6 +306,51 @@ void astra::Matrix::resize(int r, int c) {
     fill(0);
 }
 
+void Matrix::join(const Matrix& other) { 
+    int num_row_1 = this->cols;
+    int num_col_1 = this->rows;
+    int num_row_2 = other.rows;
+    int num_col_2 = other.cols;
+
+    if (num_row_1 != num_row_2) {
+        throw astra::internals::exceptions::matrix_join_size_mismatch();
+    }
+
+    double* join_values = new double[num_row_1 * (num_col_1 + num_col_2)];
+
+    int linear_ind, join_linear_ind;
+
+    for (int i = 0; i < num_row_1; ++i) {
+        for (int j = 0; j < (num_col_1 + num_col_2); ++j) {
+            join_linear_ind = (i * (num_col_1 + num_col_2)) + j;
+
+            // if j is in lhs, get data from there
+            if (j < num_col_1) {
+                linear_ind = (i * num_col_1) + j;
+                join_values[join_linear_ind] = values[linear_ind];
+            }
+            // if j is in rhs, get data from there
+            else {
+                linear_ind = (i * num_col_2) + (j - num_col_1);
+                join_values[join_linear_ind] = other.values[linear_ind];
+            }
+        }
+    }
+
+    this->cols = num_col_1 + num_col_2;
+    this->rows = num_row_1;
+
+    delete[] values;
+    values = new double[rows * cols];
+
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = join_values[i];
+    }
+
+    delete[] join_values;
+    join_values = nullptr;
+}
+
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
     int rows = mat.num_row();
