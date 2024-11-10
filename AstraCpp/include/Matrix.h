@@ -302,6 +302,21 @@ class Matrix {
      * operations.
      */
     friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
+
+    /**
+     * @brief Reads matrix values from an input stream.
+     *
+     * This operator overloads the >> operator, enabling input of matrix
+     * elements from an input stream such as `std::cin`. Elements are read
+     * sequentially, filling the matrix in row-major order. If there are fewer
+     * elements than required, remaining entries are filled with zero. Excess
+     * elements are ignored.
+     *
+     * @param in The input stream from which to read matrix values.
+     * @param mat The matrix to populate with values from the input stream.
+     * @return A reference to the input stream, allowing chaining of input
+     * operations.
+     */
     friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra
