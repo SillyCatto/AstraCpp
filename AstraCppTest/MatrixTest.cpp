@@ -774,4 +774,16 @@ TEST_F(MatrixTest, MatrixJoinWithEmptyOtherMatrix) {
     EXPECT_DOUBLE_EQ(matA(1, 1), 4.0);
 }
 
+TEST_F(MatrixTest, MatrixJoinBothEmptyMatrices) {
+    Matrix matA = Matrix(2, 2); 
+    Matrix matB = Matrix(2, 3); 
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 2);
+    EXPECT_EQ(matA.num_col(), 5);
+}
+
+
+
 } // namespace astra
