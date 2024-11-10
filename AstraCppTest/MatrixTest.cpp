@@ -43,6 +43,28 @@ TEST_F(MatrixTest, comma_initializer) {
     EXPECT_EQ(m(1, 1), 4.0);
 }
 
+TEST_F(MatrixTest, InsertValidValue) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+    EXPECT_EQ(mat(0, 0), 1);
+    EXPECT_EQ(mat(1, 1), 4);
+}
+
+TEST_F(MatrixTest, InsertExceedingMatrixSize) {
+    Matrix mat(2, 2);
+    EXPECT_THROW(mat << 1 << 2 << 3 << 4 << 5,
+                 astra::internals::exceptions::init_out_of_range);
+}
+
+TEST_F(MatrixTest, InsertPartialFill) {
+    Matrix mat(2, 2);
+    mat << 1 << 2;
+    EXPECT_EQ(mat(0, 0), 1);
+    EXPECT_EQ(mat(0, 1), 2);
+    EXPECT_EQ(mat(1, 0), 0);
+    EXPECT_EQ(mat(1, 1), 0); 
+}
+
 TEST_F(MatrixTest, matrix_addition) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
@@ -467,6 +489,16 @@ TEST_F(MatrixTest, matrix_replace_all) {
     EXPECT_EQ(mat(1, 1), 9);
 }
 
+TEST_F(MatrixTest, ReplaceNonexistentValue) {
+    Matrix mat(2, 2, {1, 2, 3, 4});
+    mat.replace(99, 8);
+
+    EXPECT_EQ(mat(0, 0), 1);
+    EXPECT_EQ(mat(0, 1), 2);
+    EXPECT_EQ(mat(1, 0), 3);
+    EXPECT_EQ(mat(1, 1), 4);
+}
+
 TEST_F(MatrixTest, matrix_sum_positive) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
@@ -697,7 +729,7 @@ TEST_F(MatrixTest, resize_invalid) {
     EXPECT_THROW(mat.resize(0, 2), astra::internals::exceptions::invalid_size);
 }
 
-TEST_F(MatrixTest, resize) {
+TEST_F(MatrixTest, resize_larger) {
     Matrix mat(2, 2);
     mat.resize(3, 3);
 
