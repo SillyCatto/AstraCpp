@@ -121,7 +121,7 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, Transpose_Square_Matrix) {
+TEST_F(MatrixTest, Transpose_Square_Matrix_In_Place) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();
 
@@ -145,6 +145,43 @@ TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
     EXPECT_EQ(mat(1, 1), 5.0);
     EXPECT_EQ(mat(2, 0), 3.0);
     EXPECT_EQ(mat(2, 1), 6.0);
+}
+
+TEST_F(MatrixTest, TransposeSingleRowMatrix) {
+    Matrix mat(1, 3, {1.0, 2.0, 3.0});
+    mat.transpose();
+
+    EXPECT_EQ(mat.num_row(), 3);
+    EXPECT_EQ(mat.num_col(), 1);
+    EXPECT_EQ(mat(0, 0), 1.0);
+    EXPECT_EQ(mat(1, 0), 2.0);
+    EXPECT_EQ(mat(2, 0), 3.0);
+}
+
+TEST_F(MatrixTest, TransposeSingleColumnMatrix) {
+    Matrix mat(3, 1, {1.0, 2.0, 3.0});
+    mat.transpose();
+
+    EXPECT_EQ(mat.num_row(), 1);
+    EXPECT_EQ(mat.num_col(), 3);
+    EXPECT_EQ(mat(0, 0), 1.0);
+    EXPECT_EQ(mat(0, 1), 2.0);
+    EXPECT_EQ(mat(0, 2), 3.0);
+}
+
+TEST_F(MatrixTest, TransposeAlreadyTransposedMatrix) {
+    Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
+    mat.transpose();
+    mat.transpose(); // again transpose
+
+    EXPECT_EQ(mat.num_row(), 2);
+    EXPECT_EQ(mat.num_col(), 3);
+    EXPECT_EQ(mat(0, 0), 1.0);
+    EXPECT_EQ(mat(0, 1), 2.0);
+    EXPECT_EQ(mat(0, 2), 3.0);
+    EXPECT_EQ(mat(1, 0), 4.0);
+    EXPECT_EQ(mat(1, 1), 5.0);
+    EXPECT_EQ(mat(1, 2), 6.0);
 }
 
 TEST_F(MatrixTest, row_swap_square) { 
@@ -697,5 +734,112 @@ TEST_F(MatrixTest, MatrixJoinSameRows) {
     EXPECT_DOUBLE_EQ(matA(1, 4), 10.0);
 }
 
+TEST_F(MatrixTest, MatrixJoinMismatchedRows) {
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix matB = Matrix(3, 2, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
+
+    EXPECT_THROW(matA.join(matB),
+                 astra::internals::exceptions::matrix_join_size_mismatch);
+}
+
+TEST_F(MatrixTest, MatrixJoinSingleRowMatrices) {
+    Matrix matA = Matrix(1, 2, {1.0, 2.0});
+    Matrix matB = Matrix(1, 3, {3.0, 4.0, 5.0});
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 1);
+    EXPECT_EQ(matA.num_col(), 5);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(matA(0, 2), 3.0);
+    EXPECT_DOUBLE_EQ(matA(0, 3), 4.0);
+    EXPECT_DOUBLE_EQ(matA(0, 4), 5.0);
+}
+
+TEST_F(MatrixTest, MatrixJoinSingleColumnMatrices) {
+    Matrix matA = Matrix(3, 1, {1.0, 2.0, 3.0});
+    Matrix matB = Matrix(3, 2, {4.0, 5.0, 6.0, 7.0, 8.0, 9.0});
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 3);
+    EXPECT_EQ(matA.num_col(), 3);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 4.0);
+    EXPECT_DOUBLE_EQ(matA(0, 2), 5.0);
+
+    EXPECT_DOUBLE_EQ(matA(1, 0), 2.0);
+    EXPECT_DOUBLE_EQ(matA(1, 1), 6.0);
+    EXPECT_DOUBLE_EQ(matA(1, 2), 7.0);
+
+    EXPECT_DOUBLE_EQ(matA(2, 0), 3.0);
+    EXPECT_DOUBLE_EQ(matA(2, 1), 8.0);
+    EXPECT_DOUBLE_EQ(matA(2, 2), 9.0);
+}
+
+TEST_F(MatrixTest, MatrixJoinLargeMatrices) {
+    double valuesA[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    Matrix matA(4, 4, valuesA);
+
+    double valuesB[] = {17, 18, 19, 20, 21, 22, 23, 24};
+    Matrix matB(4, 2, valuesB);
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 4);
+    EXPECT_EQ(matA.num_col(), 6);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 4), 17.0);
+    EXPECT_DOUBLE_EQ(matA(3, 5), 24.0);
+}
+
+TEST_F(MatrixTest, MatrixJoinWithEmptyOtherMatrix) {
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix matB = Matrix(2, 1);
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 2);
+    EXPECT_EQ(matA.num_col(), 3);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), 1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), 2.0);
+    EXPECT_DOUBLE_EQ(matA(1, 0), 3.0);
+    EXPECT_DOUBLE_EQ(matA(1, 1), 4.0);
+}
+
+TEST_F(MatrixTest, MatrixJoinBothEmptyMatrices) {
+    Matrix matA = Matrix(2, 2); 
+    Matrix matB = Matrix(2, 3); 
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 2);
+    EXPECT_EQ(matA.num_col(), 5);
+}
+
+TEST_F(MatrixTest, MatrixJoinWithNegativeValues) {
+    Matrix matA = Matrix(2, 2, {-1.0, -2.0, -3.0, -4.0});
+    Matrix matB = Matrix(2, 2, {5.0, -6.0, 7.0, -8.0});
+
+    matA.join(matB);
+
+    EXPECT_EQ(matA.num_row(), 2);
+    EXPECT_EQ(matA.num_col(), 4);
+
+    EXPECT_DOUBLE_EQ(matA(0, 0), -1.0);
+    EXPECT_DOUBLE_EQ(matA(0, 1), -2.0);
+    EXPECT_DOUBLE_EQ(matA(0, 2), 5.0);
+    EXPECT_DOUBLE_EQ(matA(0, 3), -6.0);
+
+    EXPECT_DOUBLE_EQ(matA(1, 0), -3.0);
+    EXPECT_DOUBLE_EQ(matA(1, 1), -4.0);
+    EXPECT_DOUBLE_EQ(matA(1, 2), 7.0);
+    EXPECT_DOUBLE_EQ(matA(1, 3), -8.0);
+}
 
 } // namespace astra
