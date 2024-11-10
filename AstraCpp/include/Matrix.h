@@ -213,7 +213,7 @@ class Matrix {
      * @return The identity matrix.
      * @throws astra::internals::exceptions::invalid_size if n is <= 0.
     */
-    static Matrix id(int n);
+    static Matrix identity(int n);
 
 
     /**

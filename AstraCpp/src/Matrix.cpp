@@ -231,7 +231,7 @@ bool Matrix::is_zero() const {
     return true;
 }
 
-Matrix Matrix::id(int n) {
+Matrix Matrix::identity(int n) {
     if (n <= 0) {
         throw astra::internals::exceptions::invalid_size();
     }
