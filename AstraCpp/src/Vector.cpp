@@ -141,7 +141,7 @@ double& Vector::operator[](int i) {
     return values[i];
 }
 
-const double& astra::Vector::operator[](int i) const {
+const double& Vector::operator[](int i) const {
     if (i < 0 || i >= size) {
         throw astra::internals::exceptions::index_out_of_range();
     }
@@ -203,7 +203,7 @@ double Vector::magnitude() const {
     return astra::internals::mathutils::sqrt(sum_of_squares);
 }
 
-double astra::Vector::sum() const {
+double Vector::sum() const {
     double sum = 0.0;
     for (int i = 0; i < size; ++i) {
         sum += values[i];
@@ -215,7 +215,7 @@ double Vector::avg() const {
 	return sum() / size; 
 }
 
-double astra::Vector::min() const {
+double Vector::min() const {
     double min = values[0];
     for (int i = 1; i < size; ++i) {
         if (values[i] < min) {
@@ -225,7 +225,7 @@ double astra::Vector::min() const {
     return min;
 }
 
-double astra::Vector::max() const {
+double Vector::max() const {
     double max = values[0];
     for (int i = 1; i < size; ++i) {
         if (values[i] > max) {
@@ -235,7 +235,7 @@ double astra::Vector::max() const {
     return max;
 }
 
-Vector astra::Vector::normalize() const { 
+Vector Vector::normalize() const { 
 	double mag = magnitude();
     if (mag == 0) {
         throw astra::internals::exceptions::zero_division();
