@@ -141,7 +141,7 @@ double& Vector::operator[](int i) {
     return values[i];
 }
 
-const double& astra::Vector::operator()(int i) const {
+const double& astra::Vector::operator[](int i) const {
     if (i < 0 || i >= size) {
         throw astra::internals::exceptions::index_out_of_range();
     }
@@ -268,7 +268,6 @@ std::istream& astra::operator>>(std::istream& in, Vector& v) {
 }
 
 
-
 double Vector::angle(const Vector& v1, const Vector& v2) {
     if (v1.get_size() != v2.get_size()) {
         throw astra::internals::exceptions::vector_size_mismatch();
@@ -292,7 +291,24 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
     return angle_radians;
 }
 
-double astra::Vector::angle_deg(const Vector& v1, const Vector& v2) {
+double Vector::angle_deg(const Vector& v1, const Vector& v2) {
     return astra::internals::mathutils::rad_to_deg(angle(v1, v2));
+}
+
+Vector operator*(const Matrix& mat, const Vector& v) {
+    if (mat.num_col() != v.get_size()) {
+        throw astra::internals::exceptions::matrix_size_mismatch();
+    }
+    Vector result(mat.num_row());
+
+    for (int i = 0; i < mat.num_row(); ++i) {
+        double sum = 0.0;
+
+        for (int j = 0; j < mat.num_col(); ++j) {
+            sum += mat(i, j) * v[j];
+        }
+        result[i] = sum;
+    }
+    return result;
 }
 
