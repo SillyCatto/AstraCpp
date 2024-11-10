@@ -288,6 +288,19 @@ class Matrix {
      */
     void print(int width = 7) const;
 
+    /**
+     * @brief Outputs the matrix to an output stream.
+     *
+     * This operator overloads the << operator, allowing matrices to be
+     * displayed through an output stream such as `std::cout`. The function
+     * formats each row of the matrix with elements separated by commas and
+     * enclosed in square brackets.
+     *
+     * @param os The output stream to which the matrix will be sent.
+     * @param mat The matrix to output.
+     * @return A reference to the output stream, allowing chaining of output
+     * operations.
+     */
     friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
     friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };

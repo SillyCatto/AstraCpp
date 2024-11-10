@@ -486,14 +486,14 @@ TEST_F(MatrixTest, matrix_prod_large) {
     EXPECT_DOUBLE_EQ(mat.prod(), 24e24);
 }
 
-TEST_F(MatrixTest, matrix_principal_prod_square) {
+TEST_F(MatrixTest, matrix_trace_square) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.trace(), 4);
 }
 
-TEST_F(MatrixTest, matrix_principal_prod_non_square) {
+TEST_F(MatrixTest, matrix_trace_non_square) {
     Matrix mat(2, 3);
     mat << 1 << 2 << 3 << 4 << 5 << 6;
 
@@ -501,7 +501,7 @@ TEST_F(MatrixTest, matrix_principal_prod_non_square) {
                  astra::internals::exceptions::invalid_argument);
 }
 
-TEST_F(MatrixTest, matrix_principal_prod_singleton) { 
+TEST_F(MatrixTest, matrix_trace_singleton) { 
     Matrix mat(1, 1); 
     mat << 5;
 
