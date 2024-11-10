@@ -121,7 +121,7 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
-TEST_F(MatrixTest, Transpose_Square_Matrix) {
+TEST_F(MatrixTest, Transpose_Square_Matrix_In_Place) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();
 
@@ -145,6 +145,17 @@ TEST_F(MatrixTest, Transpose_Non_Square_Matrix_In_Place) {
     EXPECT_EQ(mat(1, 1), 5.0);
     EXPECT_EQ(mat(2, 0), 3.0);
     EXPECT_EQ(mat(2, 1), 6.0);
+}
+
+TEST_F(MatrixTest, TransposeSingleRowMatrix) {
+    Matrix mat(1, 3, {1.0, 2.0, 3.0});
+    mat.transpose();
+
+    EXPECT_EQ(mat.num_row(), 3);
+    EXPECT_EQ(mat.num_col(), 1);
+    EXPECT_EQ(mat(0, 0), 1.0);
+    EXPECT_EQ(mat(1, 0), 2.0);
+    EXPECT_EQ(mat(2, 0), 3.0);
 }
 
 TEST_F(MatrixTest, row_swap_square) { 
