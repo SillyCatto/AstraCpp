@@ -9,6 +9,8 @@ class Decomposer {
         Matrix L;
         Matrix U;
 
+        PLUResult(int size) : P(size, size), L(size, size), U(size, size) {}
+
         PLUResult(const Matrix& p, const Matrix& l, const Matrix& u)
             : P(p), L(l), U(u) {}
     };
