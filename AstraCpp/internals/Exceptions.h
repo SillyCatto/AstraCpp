@@ -59,6 +59,13 @@ class matrix_size_mismatch : public std::exception {
     }
 };
 
+class matrix_join_size_mismatch : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  cannot join matrices with different number of rows";
+    }
+};
+
 class invalid_argument : public std::exception {
   public:
     const char* what() const override {

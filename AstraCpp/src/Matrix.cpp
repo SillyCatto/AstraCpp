@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Matrix.h"
 #include "Exceptions.h"
+#include "Utils.h"
 
 #include <iostream>
 #include <iomanip>
@@ -42,7 +43,8 @@ Matrix::Matrix(int r, int c, std::initializer_list<double> values)
 
     int i = 0;
     for (double val : values) {
-        this->values[i++] = val;
+        if (i < r * c)
+            this->values[i++] = val;
     }
 }
 
@@ -57,7 +59,10 @@ Matrix::Matrix(const Matrix& other)
 }
 
 
-Matrix::~Matrix() { delete[] values; }
+Matrix::~Matrix() { 
+    delete[] values;
+    values = nullptr;
+}
 
 Matrix& Matrix::operator<<(double val) {
     if (current_index < (rows * cols)) {
@@ -72,6 +77,13 @@ Matrix& Matrix::operator<<(double val) {
 Matrix& Matrix::operator,(double val) { return (*this << val); }
 
 double& Matrix::operator()(int i, int j) { 
+    if (i >= rows || i < 0 || j >= cols || j < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    return values[i * cols + j];
+}
+
+const double& Matrix::operator()(int i, int j) const {
     if (i >= rows || i < 0 || j >= cols || j < 0) {
         throw astra::internals::exceptions::index_out_of_range();
     }
@@ -136,6 +148,10 @@ bool Matrix::operator==(const Matrix& other) const {
     return true;
 }
 
+bool astra::Matrix::operator!=(const Matrix& other) const { 
+	return !(*this == other);
+}
+
 void Matrix::replace(double old_val, double new_val) {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] == old_val) {
@@ -144,11 +160,6 @@ void Matrix::replace(double old_val, double new_val) {
     }
 }
 
-void Matrix::swap(double& a, double& b) {
-    double temp = a;
-    a = b;
-    b = temp;
-}
 
 double Matrix::sum() const {
     double total = 0.0;
@@ -166,7 +177,7 @@ double Matrix::prod() const {
     return total;
 }
 
-double Matrix::principal_prod() const {
+double Matrix::trace() const {
     if (rows != cols) {
         throw astra::internals::exceptions::invalid_argument();
     }
@@ -235,15 +246,16 @@ Matrix Matrix::id(int n) {
 
 void Matrix::transpose() {
     if (rows == cols) {
-        // SQUARE MATRIX TRANSPOSE
+        // sqaure
         for (int i = 0; i < rows; ++i) {
             for (int j = i + 1; j < cols; ++j) {
-                swap(values[i * cols + j], values[j * cols + i]);
+                astra::internals::utils::swap(values[i * cols + j], 
+                                              values[j * cols + i]);
             }
         }
     }
     else {
-        // NON-SQUARE TRANSPOSE
+        // rectangular
         double* transposedValues = new double[rows * cols];
         int newRows = cols;
         int newCols = rows;
@@ -261,11 +273,95 @@ void Matrix::transpose() {
     }
 }
 
+void Matrix::row_swap(int i, int j) {
+    if (i >= rows || j >= rows || i < 0 || j < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    for (int k = 0; k < cols; ++k) {
+        astra::internals::utils::swap(values[i * cols + k],
+                                      values[j * cols + k]);
+    }
+}
+
+void Matrix::clear() {
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = 0.0;
+    }
+}
+
+void astra::Matrix::fill(double val) {
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = val;
+    }
+}
+
+void astra::Matrix::resize(int r, int c) {
+    if (r <= 0 || c <= 0) {
+        throw astra::internals::exceptions::invalid_size();
+    }
+
+    if (r == rows && c == cols) {
+        return;
+    }
+
+    double* newValues = new double[r * c];
+    delete[] values;
+    values = newValues;
+    rows = r;
+    cols = c;
+    fill(0);
+}
+
+void Matrix::join(const Matrix& other) { 
+    int num_row_1 = this->cols;
+    int num_col_1 = this->rows;
+    int num_row_2 = other.rows;
+    int num_col_2 = other.cols;
+
+    if (num_row_1 != num_row_2) {
+        throw astra::internals::exceptions::matrix_join_size_mismatch();
+    }
+
+    double* join_values = new double[num_row_1 * (num_col_1 + num_col_2)];
+
+    int linear_ind, join_linear_ind;
+
+    for (int i = 0; i < num_row_1; ++i) {
+        for (int j = 0; j < (num_col_1 + num_col_2); ++j) {
+            join_linear_ind = (i * (num_col_1 + num_col_2)) + j;
+
+            // if j is in lhs, get data from there
+            if (j < num_col_1) {
+                linear_ind = (i * num_col_1) + j;
+                join_values[join_linear_ind] = values[linear_ind];
+            }
+            // if j is in rhs, get data from there
+            else {
+                linear_ind = (i * num_col_2) + (j - num_col_1);
+                join_values[join_linear_ind] = other.values[linear_ind];
+            }
+        }
+    }
+
+    this->cols = num_col_1 + num_col_2;
+    this->rows = num_row_1;
+
+    delete[] values;
+    values = new double[rows * cols];
+
+    for (int i = 0; i < rows * cols; ++i) {
+        values[i] = join_values[i];
+    }
+
+    delete[] join_values;
+    join_values = nullptr;
+}
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
-    int rows = mat.get_row();
-    int cols = mat.get_col();
+    int rows = mat.num_row();
+    int cols = mat.num_col();
 
     Matrix result(rows, cols);
 
@@ -285,8 +381,8 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
         throw astra::internals::exceptions::zero_division();
     }
 
-    int rows = mat.get_row();
-    int cols = mat.get_col();
+    int rows = mat.num_row();
+    int cols = mat.num_col();
 
     Matrix result(rows, cols);
 
@@ -297,8 +393,8 @@ Matrix astra::operator/(const Matrix& mat, double scalar) {
     return result;
 }
 
-int Matrix::get_row() const { return rows; }
-int Matrix::get_col() const { return cols; }
+int Matrix::num_row() const { return rows; }
+int Matrix::num_col() const { return cols; }
 
 void Matrix::print(int width) const {
     for (int i = 0; i < rows; ++i) {
@@ -325,4 +421,17 @@ std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
         os << "]" << std::endl;
     }
     return os;
+}
+
+std::istream& astra::operator>>(std::istream& in, Matrix& mat) {
+    int size = mat.rows * mat.cols;
+    int i = 0;
+    while (i < size && in >> mat.values[i]) {
+        ++i;
+    }
+
+    for (; i < size; ++i) {
+        mat.values[i] = 0.0;
+    }
+    return in;
 }

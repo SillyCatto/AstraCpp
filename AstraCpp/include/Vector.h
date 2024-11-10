@@ -7,6 +7,8 @@
 #pragma once
 #include <iostream>
 
+#include "Matrix.h"
+
 namespace astra {
 
 /**
@@ -116,7 +118,8 @@ class Vector {
      * @throws astra::internals::exceptions::index_out_of_range if index is out
      * of bounds.
      */
-    double operator[](int index) const;
+    double& operator[](int i);
+    const double& operator[](int i) const;
 
     /**
      * @brief Calculates the cross product of a 3d vector with another 3d vector.
@@ -236,5 +239,9 @@ class Vector {
      * @return The output stream with the vector representation.
      */
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& in, Vector& v);
 };
+
+    Vector operator*(const Matrix& mat, const Vector& v);    
+
 }

@@ -134,11 +134,18 @@ Vector Vector::operator-(const Vector& other) const {
     return result;
 }
 
-double Vector::operator[](int index) const {
-    if (index < 0 || index >= size) {
+double& Vector::operator[](int i) {
+    if (i < 0 || i >= size) {
         throw astra::internals::exceptions::index_out_of_range();
     }
-    return values[index];
+    return values[i];
+}
+
+const double& Vector::operator[](int i) const {
+    if (i < 0 || i >= size) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    return values[i];
 }
 
 Vector Vector::operator^(const Vector& other) const {
@@ -196,7 +203,7 @@ double Vector::magnitude() const {
     return astra::internals::mathutils::sqrt(sum_of_squares);
 }
 
-double astra::Vector::sum() const {
+double Vector::sum() const {
     double sum = 0.0;
     for (int i = 0; i < size; ++i) {
         sum += values[i];
@@ -208,7 +215,7 @@ double Vector::avg() const {
 	return sum() / size; 
 }
 
-double astra::Vector::min() const {
+double Vector::min() const {
     double min = values[0];
     for (int i = 1; i < size; ++i) {
         if (values[i] < min) {
@@ -218,7 +225,7 @@ double astra::Vector::min() const {
     return min;
 }
 
-double astra::Vector::max() const {
+double Vector::max() const {
     double max = values[0];
     for (int i = 1; i < size; ++i) {
         if (values[i] > max) {
@@ -228,7 +235,7 @@ double astra::Vector::max() const {
     return max;
 }
 
-Vector astra::Vector::normalize() const { 
+Vector Vector::normalize() const { 
 	double mag = magnitude();
     if (mag == 0) {
         throw astra::internals::exceptions::zero_division();
@@ -246,6 +253,18 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     }
     ost << "]";
     return ost;
+}
+
+std::istream& astra::operator>>(std::istream& in, Vector& v) {
+    int i = 0;
+    while (i < v.size && in >> v.values[i]) {
+        ++i;
+    }
+
+    for (; i < v.size; ++i) {
+        v.values[i] = 0.0;
+    }
+    return in;
 }
 
 
@@ -272,7 +291,24 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
     return angle_radians;
 }
 
-double astra::Vector::angle_deg(const Vector& v1, const Vector& v2) {
+double Vector::angle_deg(const Vector& v1, const Vector& v2) {
     return astra::internals::mathutils::rad_to_deg(angle(v1, v2));
+}
+
+Vector operator*(const Matrix& mat, const Vector& v) {
+    if (mat.num_col() != v.get_size()) {
+        throw astra::internals::exceptions::matrix_size_mismatch();
+    }
+    Vector result(mat.num_row());
+
+    for (int i = 0; i < mat.num_row(); ++i) {
+        double sum = 0.0;
+
+        for (int j = 0; j < mat.num_col(); ++j) {
+            sum += mat(i, j) * v[j];
+        }
+        result[i] = sum;
+    }
+    return result;
 }
 

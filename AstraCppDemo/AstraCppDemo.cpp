@@ -10,10 +10,12 @@ int main() {
     std::cout << "------\n\n";
 
     double values1[] = {3, 4, 5};
-    double values2[] = {1, 2, 3};
-
+    double values2[] = {11, 13, 15};
     astra::Vector vec1(3, values1);
+
+    //astra::Vector vec2(3);
     astra::Vector vec2(3, values2);
+    //std::cin >> vec2;
 
     astra::Vector vec3{1, 2, 3, 4};
 
@@ -66,7 +68,10 @@ int main() {
     std::cout << "------\n\n";
 
     astra::Matrix matA(2, 2);
+    //std::cin >> matA;
+
     matA << 1.0, 2.0, 3.0, 4.0;
+
     std::cout << "Matrix A:\n" << matA << "\n";
 
     astra::Matrix matB(2, 2, 
@@ -100,6 +105,9 @@ int main() {
 
     astra::Matrix matH = matA;
     std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
+
+    matA.join(matB);
+    std::cout << matA;
 
     std::cin.get();
 

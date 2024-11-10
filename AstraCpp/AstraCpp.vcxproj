@@ -166,6 +166,7 @@
     <ClInclude Include="include\Vector.h" />
     <ClInclude Include="internals\Exceptions.h" />
     <ClInclude Include="internals\MathUtils.h" />
+    <ClInclude Include="internals\Utils.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
