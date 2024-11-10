@@ -706,7 +706,7 @@ TEST_F(MatrixTest, resize_invalid) {
     EXPECT_THROW(mat.resize(0, 2), astra::internals::exceptions::invalid_size);
 }
 
-TEST_F(MatrixTest, resize) {
+TEST_F(MatrixTest, resize_larger) {
     Matrix mat(2, 2);
     mat.resize(3, 3);
 
@@ -719,6 +719,16 @@ TEST_F(MatrixTest, resize) {
     EXPECT_DOUBLE_EQ(mat(2, 0), 0);
     EXPECT_DOUBLE_EQ(mat(2, 1), 0);
     EXPECT_DOUBLE_EQ(mat(2, 2), 0);
+}
+
+TEST_F(MatrixTest, resize_smaller) {
+    Matrix mat(3, 3);
+    mat.resize(2, 2);
+
+    EXPECT_EQ(mat(0, 0), 0);
+    EXPECT_EQ(mat(0, 1), 0);
+    EXPECT_EQ(mat(1, 0), 0);
+    EXPECT_EQ(mat(1, 1), 0); 
 }
 
 TEST_F(MatrixTest, MatrixJoinSameRows) {
