@@ -780,6 +780,11 @@ TEST_F(MatrixTest, is_symmetric_false) {
     EXPECT_FALSE(mat.is_symmetric());
 }
 
+TEST_F(MatrixTest, TrueDiagonalMatrix) {
+    Matrix diag_matrix(3, 3, {1, 0, 0, 0, 2, 0, 0, 0, 3});
+    EXPECT_TRUE(diag_matrix.is_diagonal());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
