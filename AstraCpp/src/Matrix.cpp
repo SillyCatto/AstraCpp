@@ -263,6 +263,21 @@ bool Matrix::is_identity() const {
 
 }
 
+bool Matrix::is_symmetric() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (values[i * cols + j] != values[j * cols + i]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] != 0.0) {

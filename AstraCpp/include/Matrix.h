@@ -239,6 +239,12 @@ class Matrix {
     bool is_identity() const;
 
     /**
+     * @brief Checks if this matrix is symmetric.
+     * @return True if the matrix is symmetric, false otherwise.
+     */
+    bool is_symmetric() const;
+
+    /**
      * @brief Checks if all elements in the matrix are zero.
      * @return True if all elements are zero, false otherwise.
     */
