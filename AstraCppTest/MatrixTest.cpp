@@ -830,6 +830,20 @@ TEST_F(MatrixTest, LowerTriangularWithZeroOnDiagonal) {
     EXPECT_TRUE(zero_diag_lower_triangular_matrix.is_lower_triangular());
 }
 
+TEST_F(MatrixTest, IdentityMatrixIsTriangular) {
+    Matrix identity_matrix(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_TRUE(identity_matrix.is_triangular());
+    EXPECT_TRUE(identity_matrix.is_upper_triangular());
+    EXPECT_TRUE(identity_matrix.is_lower_triangular());
+    EXPECT_TRUE(identity_matrix.is_diagonal());
+}
+
+TEST_F(MatrixTest, ZeroMatrixIsTriangularAndDiagonal) {
+    Matrix zero_matrix(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    EXPECT_TRUE(zero_matrix.is_triangular());
+    EXPECT_TRUE(zero_matrix.is_diagonal());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
