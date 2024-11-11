@@ -790,7 +790,10 @@ TEST_F(MatrixTest, FalseDiagonalMatrix) {
     EXPECT_FALSE(non_diag_matrix.is_diagonal());
 }
 
-
+TEST_F(MatrixTest, SingleElementMatrix) {
+    Matrix single_element_matrix(1, 1, {5});
+    EXPECT_TRUE(single_element_matrix.is_diagonal());
+}
 
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
