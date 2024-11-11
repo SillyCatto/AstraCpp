@@ -325,6 +325,10 @@ bool Matrix::is_lower_triangular() const {
 
 }
 
+bool Matrix::is_triangular() const { 
+    return is_lower_triangular() || is_upper_triangular();
+}
+
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] != 0.0) {

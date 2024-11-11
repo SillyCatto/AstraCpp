@@ -263,6 +263,12 @@ class Matrix {
     bool is_lower_triangular() const;
 
     /**
+     * @brief Checks if this matrix is triangular.
+     * @return True if the matrix is triangular, false otherwise.
+     */
+    bool is_triangular() const;
+
+    /**
      * @brief Checks if all elements in the matrix are zero.
      * @return True if all elements are zero, false otherwise.
     */
