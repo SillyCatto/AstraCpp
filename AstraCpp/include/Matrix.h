@@ -138,6 +138,8 @@ class Matrix {
      */
     Matrix operator-(const Matrix& other) const;
 
+    Matrix operator*(const Matrix& other) const;
+
     /**
      * @brif Assign another matrix to this matrix (deep copy).
      * @param other The matrix to assign from.

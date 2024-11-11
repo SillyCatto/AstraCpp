@@ -112,6 +112,26 @@ Matrix Matrix::operator-(const Matrix& other) const {
     return result;
 }
 
+Matrix Matrix::operator*(const Matrix& other) const { 
+    if (cols != other.rows) {
+        throw astra::internals::exceptions::
+            matrix_multiplication_size_mismatch();
+    }
+
+    Matrix result(rows, other.cols);
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < other.cols; ++j) {
+            for (int k = 0; k < cols; ++k) {
+                result.values[i * result.cols + j] +=
+                    values[i * cols + k] * other.values[k * other.cols + j];
+            }
+        }
+    }
+
+    return result;
+}
+
 Matrix& Matrix::operator=(const Matrix& other) {
     if (this == &other) {
         return *this;
