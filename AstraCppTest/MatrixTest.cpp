@@ -744,6 +744,16 @@ TEST_F(MatrixTest, resize_larger) {
     EXPECT_DOUBLE_EQ(mat(2, 2), 0);
 }
 
+TEST_F(MatrixTest, resize_smaller) {
+    Matrix mat(3, 3);
+    mat.resize(2, 2);
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 0);
+}
+
 TEST_F(MatrixTest, matrix_join_same_rows) {
     Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
     Matrix matB = Matrix(2, 3, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
