@@ -780,6 +780,70 @@ TEST_F(MatrixTest, is_symmetric_false) {
     EXPECT_FALSE(mat.is_symmetric());
 }
 
+TEST_F(MatrixTest, TrueDiagonalMatrix) {
+    Matrix diag_matrix(3, 3, {1, 0, 0, 0, 2, 0, 0, 0, 3});
+    EXPECT_TRUE(diag_matrix.is_diagonal());
+}
+
+TEST_F(MatrixTest, FalseDiagonalMatrix) {
+    Matrix non_diag_matrix(3, 3, {1, 2, 0, 0, 2, 0, 0, 1, 3});
+    EXPECT_FALSE(non_diag_matrix.is_diagonal());
+}
+
+TEST_F(MatrixTest, SingleElementMatrix) {
+    Matrix single_element_matrix(1, 1, {5});
+    EXPECT_TRUE(single_element_matrix.is_diagonal());
+}
+
+TEST_F(MatrixTest, NonSquareMatrix) {
+    Matrix non_square_matrix(2, 3, {1, 0, 0, 0, 2, 0});
+    EXPECT_FALSE(non_square_matrix.is_diagonal());
+}
+
+TEST_F(MatrixTest, TrueUpperTriangularMatrix) {
+    Matrix upper_triangular_matrix(3, 3, {1, 2, 3, 0, 5, 6, 0, 0, 9});
+    EXPECT_TRUE(upper_triangular_matrix.is_upper_triangular());
+}
+
+TEST_F(MatrixTest, ZeroUpperTriangularMatrix) {
+    Matrix zero_upper_triangular_matrix(3, 3, {0, 2, 3, 0, 0, 6, 0, 0, 0});
+    EXPECT_TRUE(zero_upper_triangular_matrix.is_upper_triangular());
+}
+
+TEST_F(MatrixTest, UpperTriangularWithZeroOnDiagonal) {
+    Matrix zero_diag_upper_triangular_matrix(3, 3, {1, 2, 3, 0, 0, 6, 0, 0, 9});
+    EXPECT_TRUE(zero_diag_upper_triangular_matrix.is_upper_triangular());
+}
+
+TEST_F(MatrixTest, TrueLowerTriangularMatrix) {
+    Matrix lower_triangular_matrix(3, 3, {1, 0, 0, 4, 5, 0, 7, 8, 9});
+    EXPECT_TRUE(lower_triangular_matrix.is_lower_triangular());
+}
+
+TEST_F(MatrixTest, ZeroLowerTriangularMatrix) {
+    Matrix zero_lower_triangular_matrix(3, 3, {0, 0, 0, 4, 0, 0, 7, 8, 0});
+    EXPECT_TRUE(zero_lower_triangular_matrix.is_lower_triangular());
+}
+
+TEST_F(MatrixTest, LowerTriangularWithZeroOnDiagonal) {
+    Matrix zero_diag_lower_triangular_matrix(3, 3, {1, 0, 0, 4, 0, 0, 7, 8, 0});
+    EXPECT_TRUE(zero_diag_lower_triangular_matrix.is_lower_triangular());
+}
+
+TEST_F(MatrixTest, IdentityMatrixIsTriangular) {
+    Matrix identity_matrix(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_TRUE(identity_matrix.is_triangular());
+    EXPECT_TRUE(identity_matrix.is_upper_triangular());
+    EXPECT_TRUE(identity_matrix.is_lower_triangular());
+    EXPECT_TRUE(identity_matrix.is_diagonal());
+}
+
+TEST_F(MatrixTest, ZeroMatrixIsTriangularAndDiagonal) {
+    Matrix zero_matrix(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    EXPECT_TRUE(zero_matrix.is_triangular());
+    EXPECT_TRUE(zero_matrix.is_diagonal());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
@@ -851,6 +915,16 @@ TEST_F(MatrixTest, resize_larger) {
     EXPECT_DOUBLE_EQ(mat(2, 0), 0);
     EXPECT_DOUBLE_EQ(mat(2, 1), 0);
     EXPECT_DOUBLE_EQ(mat(2, 2), 0);
+}
+
+TEST_F(MatrixTest, resize_smaller) {
+    Matrix mat(3, 3);
+    mat.resize(2, 2);
+
+    EXPECT_DOUBLE_EQ(mat(0, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(0, 1), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 0), 0);
+    EXPECT_DOUBLE_EQ(mat(1, 1), 0);
 }
 
 TEST_F(MatrixTest, matrix_join_same_rows) {
