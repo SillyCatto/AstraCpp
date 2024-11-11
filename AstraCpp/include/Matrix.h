@@ -233,6 +233,12 @@ class Matrix {
     bool is_rectangular() const;
 
     /**
+     * @brief Checks if this matrix is identity matrix.
+     * @return True if the matrix is identity matrix, false otherwise.
+     */
+    bool is_identity() const;
+
+    /**
      * @brief Checks if all elements in the matrix are zero.
      * @return True if all elements are zero, false otherwise.
     */

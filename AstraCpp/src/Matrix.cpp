@@ -244,6 +244,25 @@ bool Matrix::is_square() const { return rows == cols; }
 
 bool Matrix::is_rectangular() const { return rows != cols; }
 
+bool Matrix::is_identity() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (i == j && values[i * cols + j] != 1.0) {
+                return false;
+            }
+            if (i != j && values[i * cols + j] != 0.0) {
+                return false;
+            }
+        }
+    }
+    return true;
+
+}
+
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] != 0.0) {
