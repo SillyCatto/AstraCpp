@@ -198,7 +198,7 @@ double Matrix::prod() const {
 }
 
 double Matrix::trace() const {
-    if (rows != cols) {
+    if (!is_square()) {
         throw astra::internals::exceptions::invalid_argument();
     }
     double sum = 0.0;
@@ -245,7 +245,7 @@ bool Matrix::is_square() const { return rows == cols; }
 bool Matrix::is_rectangular() const { return rows != cols; }
 
 bool Matrix::is_identity() const { 
-    if (rows != cols) {
+    if (!is_square()) {
         return false;
     }
 
@@ -264,7 +264,7 @@ bool Matrix::is_identity() const {
 }
 
 bool Matrix::is_symmetric() const { 
-    if (rows != cols) {
+    if (!is_square()) {
         return false;
     }
 
@@ -279,7 +279,7 @@ bool Matrix::is_symmetric() const {
 }
 
 bool Matrix::is_diagonal() const { 
-    if (rows != cols) {
+    if (!is_square()) {
         return false;
     }
 
@@ -294,7 +294,7 @@ bool Matrix::is_diagonal() const {
 }
 
 bool Matrix::is_upper_triangular() const {
-    if (rows != cols) {
+    if (!is_square()) {
         return false;
     }
 
@@ -309,7 +309,7 @@ bool Matrix::is_upper_triangular() const {
 }
 
 bool Matrix::is_lower_triangular() const { 
-    if (rows != cols) {
+    if (!is_square()) {
         return false;
     }
 
@@ -352,7 +352,7 @@ Matrix Matrix::identity(int n) {
 }
 
 void Matrix::transpose() {
-    if (rows == cols) {
+    if (is_square()) {
         // sqaure
         for (int i = 0; i < rows; ++i) {
             for (int j = i + 1; j < cols; ++j) {
