@@ -278,6 +278,21 @@ bool Matrix::is_symmetric() const {
     return true;
 }
 
+bool Matrix::is_diagonal() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (i != j && values[i * cols + j] != 0.0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] != 0.0) {

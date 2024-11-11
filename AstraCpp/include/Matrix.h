@@ -245,6 +245,12 @@ class Matrix {
     bool is_symmetric() const;
 
     /**
+     * @brief Checks if this matrix is diagonal.
+     * @return True if the matrix is diagonal, false otherwise.
+     */
+    bool is_diagonal() const;
+
+    /**
      * @brief Checks if all elements in the matrix are zero.
      * @return True if all elements are zero, false otherwise.
     */
