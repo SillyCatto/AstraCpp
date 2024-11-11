@@ -251,6 +251,12 @@ class Matrix {
     bool is_diagonal() const;
 
     /**
+     * @brief Checks if this matrix is upper triangular.
+     * @return True if the matrix is upper triangular, false otherwise.
+     */
+    bool is_upper_triangular() const;
+
+    /**
      * @brief Checks if all elements in the matrix are zero.
      * @return True if all elements are zero, false otherwise.
     */
