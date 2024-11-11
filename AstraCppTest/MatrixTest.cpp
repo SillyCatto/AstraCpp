@@ -795,6 +795,11 @@ TEST_F(MatrixTest, SingleElementMatrix) {
     EXPECT_TRUE(single_element_matrix.is_diagonal());
 }
 
+TEST_F(MatrixTest, NonSquareMatrix) {
+    Matrix non_square_matrix(2, 3, {1, 0, 0, 0, 2, 0});
+    EXPECT_FALSE(non_square_matrix.is_diagonal());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
