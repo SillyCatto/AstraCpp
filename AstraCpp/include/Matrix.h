@@ -227,6 +227,12 @@ class Matrix {
     bool is_square() const;
 
     /**
+     * @brief Checks if this matrix is rectangular.
+     * @return True if the matrix is rectangular, false otherwise.
+     */
+    bool is_rectangular() const;
+
+    /**
      * @brief Checks if all elements in the matrix are zero.
      * @return True if all elements are zero, false otherwise.
     */

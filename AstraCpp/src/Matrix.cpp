@@ -242,6 +242,8 @@ double Matrix::max() const {
 
 bool Matrix::is_square() const { return rows == cols; }
 
+bool Matrix::is_rectangular() const { return rows != cols; }
+
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
         if (values[i] != 0.0) {
