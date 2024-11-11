@@ -815,6 +815,21 @@ TEST_F(MatrixTest, UpperTriangularWithZeroOnDiagonal) {
     EXPECT_TRUE(zero_diag_upper_triangular_matrix.is_upper_triangular());
 }
 
+TEST_F(MatrixTest, TrueLowerTriangularMatrix) {
+    Matrix lower_triangular_matrix(3, 3, {1, 0, 0, 4, 5, 0, 7, 8, 9});
+    EXPECT_TRUE(lower_triangular_matrix.is_lower_triangular());
+}
+
+TEST_F(MatrixTest, ZeroLowerTriangularMatrix) {
+    Matrix zero_lower_triangular_matrix(3, 3, {0, 0, 0, 4, 0, 0, 7, 8, 0});
+    EXPECT_TRUE(zero_lower_triangular_matrix.is_lower_triangular());
+}
+
+TEST_F(MatrixTest, LowerTriangularWithZeroOnDiagonal) {
+    Matrix zero_diag_lower_triangular_matrix(3, 3, {1, 0, 0, 4, 0, 0, 7, 8, 0});
+    EXPECT_TRUE(zero_diag_lower_triangular_matrix.is_lower_triangular());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
