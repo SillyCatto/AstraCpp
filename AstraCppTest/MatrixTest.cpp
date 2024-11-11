@@ -768,6 +768,18 @@ TEST_F(MatrixTest, is_identity_non1) {
     EXPECT_FALSE(mat.is_identity());
 }
 
+TEST_F(MatrixTest, is_symmetric_true) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 2 << 5;
+    EXPECT_TRUE(mat.is_symmetric());
+}
+
+TEST_F(MatrixTest, is_symmetric_false) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+    EXPECT_FALSE(mat.is_symmetric());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
