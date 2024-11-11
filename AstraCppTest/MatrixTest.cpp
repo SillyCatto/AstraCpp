@@ -749,6 +749,25 @@ TEST_F(MatrixTest, is_rectangular_false) {
     Matrix mat(2, 2);
     EXPECT_FALSE(mat.is_rectangular());
 }
+
+TEST_F(MatrixTest, is_identity_true) {
+    Matrix mat = Matrix::identity(3);
+    EXPECT_TRUE(mat.is_identity());
+
+}
+
+TEST_F(MatrixTest, is_identity_false) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+    EXPECT_FALSE(mat.is_identity());
+}
+
+TEST_F(MatrixTest, is_identity_non1) { 
+    Matrix mat(2, 2); 
+    mat << 2 << 0 << 0 << 2;
+    EXPECT_FALSE(mat.is_identity());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
