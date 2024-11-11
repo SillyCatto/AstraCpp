@@ -73,4 +73,11 @@ class invalid_argument : public std::exception {
     }
 };
 
+class matrix_multiplication_size_mismatch : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  matrix's column number and other matrix's row number should be same";
+    }
+};
+
 }  // namespace astra::internals::exceptions

@@ -112,6 +112,26 @@ Matrix Matrix::operator-(const Matrix& other) const {
     return result;
 }
 
+Matrix Matrix::operator*(const Matrix& other) const { 
+    if (cols != other.rows) {
+        throw astra::internals::exceptions::
+            matrix_multiplication_size_mismatch();
+    }
+
+    Matrix result(rows, other.cols);
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < other.cols; ++j) {
+            for (int k = 0; k < cols; ++k) {
+                result.values[i * result.cols + j] +=
+                    values[i * cols + k] * other.values[k * other.cols + j];
+            }
+        }
+    }
+
+    return result;
+}
+
 Matrix& Matrix::operator=(const Matrix& other) {
     if (this == &other) {
         return *this;
@@ -221,6 +241,93 @@ double Matrix::max() const {
 }
 
 bool Matrix::is_square() const { return rows == cols; }
+
+bool Matrix::is_rectangular() const { return rows != cols; }
+
+bool Matrix::is_identity() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (i == j && values[i * cols + j] != 1.0) {
+                return false;
+            }
+            if (i != j && values[i * cols + j] != 0.0) {
+                return false;
+            }
+        }
+    }
+    return true;
+
+}
+
+bool Matrix::is_symmetric() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (values[i * cols + j] != values[j * cols + i]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Matrix::is_diagonal() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (i != j && values[i * cols + j] != 0.0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Matrix::is_upper_triangular() const {
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < i; ++j) {
+            if (values[i * cols + j] != 0.0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Matrix::is_lower_triangular() const { 
+    if (rows != cols) {
+        return false;
+    }
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = i + 1; j < cols; ++j) {
+            if (values[i * cols + j] != 0.0) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+
+}
+
+bool Matrix::is_triangular() const { 
+    return is_lower_triangular() || is_upper_triangular();
+}
 
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {

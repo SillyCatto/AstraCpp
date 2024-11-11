@@ -139,6 +139,16 @@ class Matrix {
     Matrix operator-(const Matrix& other) const;
 
     /**
+     * @brief Overloaded operator to multiply two matrices.
+     * @param other The matrix to multiply.
+     * @return The product of the two matrices.
+     * @throws astra::internals::exceptions::matrix_multiplication_size_mismatch
+     * if the number of columns in the current matrix does not match the number
+     * of rows in the `other` matrix.
+     */
+    Matrix operator*(const Matrix& other) const;
+
+    /**
      * @brif Assign another matrix to this matrix (deep copy).
      * @param other The matrix to assign from.
      * @return Reference to this matrix after assignment.
@@ -215,6 +225,48 @@ class Matrix {
      * @return True if the matrix is square, false otherwise.
      */
     bool is_square() const;
+
+    /**
+     * @brief Checks if this matrix is rectangular.
+     * @return True if the matrix is rectangular, false otherwise.
+     */
+    bool is_rectangular() const;
+
+    /**
+     * @brief Checks if this matrix is identity matrix.
+     * @return True if the matrix is identity matrix, false otherwise.
+     */
+    bool is_identity() const;
+
+    /**
+     * @brief Checks if this matrix is symmetric.
+     * @return True if the matrix is symmetric, false otherwise.
+     */
+    bool is_symmetric() const;
+
+    /**
+     * @brief Checks if this matrix is diagonal.
+     * @return True if the matrix is diagonal, false otherwise.
+     */
+    bool is_diagonal() const;
+
+    /**
+     * @brief Checks if this matrix is upper triangular.
+     * @return True if the matrix is upper triangular, false otherwise.
+     */
+    bool is_upper_triangular() const;
+
+    /**
+     * @brief Checks if this matrix is lower triangular.
+     * @return True if the matrix is lower triangular, false otherwise.
+     */
+    bool is_lower_triangular() const;
+
+    /**
+     * @brief Checks if this matrix is triangular.
+     * @return True if the matrix is triangular, false otherwise.
+     */
+    bool is_triangular() const;
 
     /**
      * @brief Checks if all elements in the matrix are zero.
