@@ -800,6 +800,21 @@ TEST_F(MatrixTest, NonSquareMatrix) {
     EXPECT_FALSE(non_square_matrix.is_diagonal());
 }
 
+TEST_F(MatrixTest, TrueUpperTriangularMatrix) {
+    Matrix upper_triangular_matrix(3, 3, {1, 2, 3, 0, 5, 6, 0, 0, 9});
+    EXPECT_TRUE(upper_triangular_matrix.is_upper_triangular());
+}
+
+TEST_F(MatrixTest, ZeroUpperTriangularMatrix) {
+    Matrix zero_upper_triangular_matrix(3, 3, {0, 2, 3, 0, 0, 6, 0, 0, 0});
+    EXPECT_TRUE(zero_upper_triangular_matrix.is_upper_triangular());
+}
+
+TEST_F(MatrixTest, UpperTriangularWithZeroOnDiagonal) {
+    Matrix zero_diag_upper_triangular_matrix(3, 3, {1, 2, 3, 0, 0, 6, 0, 0, 9});
+    EXPECT_TRUE(zero_diag_upper_triangular_matrix.is_upper_triangular());
+}
+
 TEST_F(MatrixTest, is_zero_true) {
     Matrix mat(2, 2);
     EXPECT_TRUE(mat.is_zero());
