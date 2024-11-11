@@ -143,6 +143,75 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     EXPECT_EQ(result(1, 1), 4);
 }
 
+TEST_F(MatrixTest, matrix_multiplication) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB << 5 << 6 << 7 << 8;
+
+    Matrix result = matA * matB;
+
+    EXPECT_EQ(result(0, 0), 19);
+    EXPECT_EQ(result(0, 1), 22);
+    EXPECT_EQ(result(1, 0), 43);
+    EXPECT_EQ(result(1, 1), 50);
+}
+
+TEST_F(MatrixTest, matrix_multiplication_size_mismatch) {
+    Matrix matA(2, 2);
+    Matrix matB(3, 3);
+
+    matA << 1 << 2 << 3 << 4;
+
+    EXPECT_THROW(
+        matA * matB,
+        astra::internals::exceptions::matrix_multiplication_size_mismatch);
+}
+
+TEST_F(MatrixTest, matrix_multiplication_empty) {
+    Matrix matA(2, 2);
+    Matrix matB(2, 2);
+
+    matA << 1 << 2 << 3 << 4;
+    matB << 0 << 0 << 0 << 0;
+
+    Matrix result = matA * matB;
+
+    EXPECT_EQ(result(0, 0), 0);
+    EXPECT_EQ(result(0, 1), 0);
+    EXPECT_EQ(result(1, 0), 0);
+    EXPECT_EQ(result(1, 1), 0);
+}
+
+TEST_F(MatrixTest, matrix_multiplication_identity) {
+    Matrix matA(2, 2);
+    Matrix matB = Matrix::identity(2);
+
+    matA << 1 << 2 << 3 << 4;
+
+    Matrix result = matA * matB;
+
+    EXPECT_EQ(result(0, 0), 1);
+    EXPECT_EQ(result(0, 1), 2);
+    EXPECT_EQ(result(1, 0), 3);
+    EXPECT_EQ(result(1, 1), 4);
+}
+
+TEST_F(MatrixTest, matrix_multiplication_identity_reverse) {
+    Matrix matA(2, 2);
+    Matrix matB = Matrix::identity(2);
+
+    matA << 1 << 2 << 3 << 4;
+
+    Matrix result = matB * matA;
+
+    EXPECT_EQ(result(0, 0), 1);
+    EXPECT_EQ(result(0, 1), 2);
+    EXPECT_EQ(result(1, 0), 3);
+    EXPECT_EQ(result(1, 1), 4);
+}
+
 TEST_F(MatrixTest, transpose_square_matrix_in_place) {
     Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
     mat.transpose();

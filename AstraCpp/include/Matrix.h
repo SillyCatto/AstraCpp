@@ -138,6 +138,14 @@ class Matrix {
      */
     Matrix operator-(const Matrix& other) const;
 
+    /**
+     * @brief Overloaded operator to multiply two matrices.
+     * @param other The matrix to multiply.
+     * @return The product of the two matrices.
+     * @throws astra::internals::exceptions::matrix_multiplication_size_mismatch
+     * if the number of columns in the current matrix does not match the number
+     * of rows in the `other` matrix.
+     */
     Matrix operator*(const Matrix& other) const;
 
     /**
