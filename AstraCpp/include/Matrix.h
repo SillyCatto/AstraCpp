@@ -290,7 +290,7 @@ class Matrix {
     void transpose();
 
     /**
-     * @brief Swaps two rows of the matrix.
+     * @brief Swaps two rows of the matrix in place.
      * @param i The index of the first row.
      * @param j The index of the second row.
      * @throws astra::internals::exceptions::index_out_of_range if i or j is
