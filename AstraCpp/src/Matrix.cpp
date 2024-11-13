@@ -465,6 +465,27 @@ void Matrix::join(const Matrix& other) {
     join_values = nullptr;
 }
 
+Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
+    if (r1 < 0 || r1 >= rows || r2 < 0 || r2 >= rows || c1 < 0 || c1 >= cols ||
+        c2 < 0 || c2 >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    if (r1 > r2 || c1 > c2) {
+        throw astra::internals::exceptions::invalid_argument();
+    }
+
+    int new_rows = r2 - r1 + 1;
+    int new_cols = c2 - c1 + 1;
+    Matrix submat(new_rows, new_cols);
+
+    for (int i = 0; i < new_rows; ++i) {
+        for (int j = 0; j < new_cols; ++j) {
+            submat(i, j) = values[(r1 + i) * cols + (c1 + j)];
+        }
+    }
+    return submat;
+}
+
 Matrix astra::operator*(const Matrix& mat, double scalar) {
    
     int rows = mat.num_row();

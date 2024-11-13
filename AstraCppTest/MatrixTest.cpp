@@ -1057,4 +1057,53 @@ TEST_F(MatrixTest, matrix_join_with_negative_values) {
     EXPECT_DOUBLE_EQ(matA(1, 3), -8.0);
 }
 
+TEST_F(MatrixTest, ValidSubmatrix) {
+    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+
+    Matrix submat = mat.submatrix(1, 1, 2, 2);
+    Matrix expected(2, 2, {6, 7, 10, 11});
+
+    EXPECT_EQ(submat, expected);
+}
+
+TEST_F(MatrixTest, SingleRowSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Matrix submat = mat.submatrix(1, 0, 1, 2);
+    Matrix expected(1, 3, {4, 5, 6});
+
+    EXPECT_EQ(submat, expected);
+}
+
+TEST_F(MatrixTest, SingleColumnSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Matrix submat = mat.submatrix(0, 1, 2, 1);
+    Matrix expected(3, 1, {2, 5, 8});
+
+    EXPECT_EQ(submat, expected);
+}
+
+TEST_F(MatrixTest, OneByOneSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Matrix submat = mat.submatrix(1, 1, 1, 1);
+    Matrix expected(1, 1, {5});
+
+    EXPECT_EQ(submat, expected);
+}
+
+TEST_F(MatrixTest, OutOfBoundsSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    EXPECT_THROW(mat.submatrix(-1, 0, 1, 1), astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.submatrix(0, 0, 3, 3), astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, ReverseIndicesSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    EXPECT_THROW(mat.submatrix(2, 2, 1, 1), astra::internals::exceptions::invalid_argument);
+}
+
 } // namespace astra
