@@ -43,20 +43,20 @@ TEST_F(MatrixTest, comma_initializer) {
     EXPECT_EQ(m(1, 1), 4.0);
 }
 
-TEST_F(MatrixTest, InsertValidValue) {
+TEST_F(MatrixTest, insert_valid_value) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
     EXPECT_EQ(mat(0, 0), 1);
     EXPECT_EQ(mat(1, 1), 4);
 }
 
-TEST_F(MatrixTest, InsertExceedingMatrixSize) {
+TEST_F(MatrixTest, insert_exceeding_matrix_size) {
     Matrix mat(2, 2);
     EXPECT_THROW(mat << 1 << 2 << 3 << 4 << 5,
                  astra::internals::exceptions::init_out_of_range);
 }
 
-TEST_F(MatrixTest, InsertPartialFill) {
+TEST_F(MatrixTest, insert_partial_fill) {
     Matrix mat(2, 2);
     mat << 1 << 2;
     EXPECT_EQ(mat(0, 0), 1);
@@ -263,7 +263,7 @@ TEST_F(MatrixTest, transpose_single_column_matrix) {
 TEST_F(MatrixTest, transpose_already_transposed_matrix) {
     Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
     mat.transpose();
-    mat.transpose(); // again transpose
+    mat.transpose();
 
     EXPECT_EQ(mat.num_row(), 2);
     EXPECT_EQ(mat.num_col(), 3);
@@ -558,7 +558,7 @@ TEST_F(MatrixTest, matrix_replace_all) {
     EXPECT_EQ(mat(1, 1), 9);
 }
 
-TEST_F(MatrixTest, ReplaceNonexistentValue) {
+TEST_F(MatrixTest, replace_nonexistent_value) {
     Matrix mat(2, 2, {1, 2, 3, 4});
     mat.replace(99, 8);
 
@@ -780,17 +780,17 @@ TEST_F(MatrixTest, is_symmetric_false) {
     EXPECT_FALSE(mat.is_symmetric());
 }
 
-TEST_F(MatrixTest, TrueDiagonalMatrix) {
+TEST_F(MatrixTest, true_diagonal_matrix) {
     Matrix diag_matrix(3, 3, {1, 0, 0, 0, 2, 0, 0, 0, 3});
     EXPECT_TRUE(diag_matrix.is_diagonal());
 }
 
-TEST_F(MatrixTest, FalseDiagonalMatrix) {
+TEST_F(MatrixTest, false_diagonal_matrix) {
     Matrix non_diag_matrix(3, 3, {1, 2, 0, 0, 2, 0, 0, 1, 3});
     EXPECT_FALSE(non_diag_matrix.is_diagonal());
 }
 
-TEST_F(MatrixTest, SingleElementMatrix) {
+TEST_F(MatrixTest, single_element_matrix) {
     Matrix single_element_matrix(1, 1, {5});
     EXPECT_TRUE(single_element_matrix.is_diagonal());
 }
