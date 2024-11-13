@@ -8,11 +8,12 @@ class Decomposer {
         Matrix P;
         Matrix L;
         Matrix U;
+        int swaps;
 
-        PLUResult(int size) : P(size, size), L(size, size), U(size, size) {}
+        PLUResult(int size) : P(size, size), L(size, size), U(size, size), swaps(0) {}
 
-        PLUResult(const Matrix& p, const Matrix& l, const Matrix& u)
-            : P(p), L(l), U(u) {}
+        PLUResult(const Matrix& p, const Matrix& l, const Matrix& u, int s)
+            : P(p), L(l), U(u), swaps(s) {}
     };
 
     static PLUResult palu(Matrix A);
