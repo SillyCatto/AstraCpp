@@ -1066,4 +1066,13 @@ TEST_F(MatrixTest, ValidSubmatrix) {
     EXPECT_EQ(submat, expected);
 }
 
+TEST_F(MatrixTest, SingleRowSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Matrix submat = mat.submatrix(1, 0, 1, 2);
+    Matrix expected(1, 3, {4, 5, 6});
+
+    EXPECT_EQ(submat, expected);
+}
+
 } // namespace astra
