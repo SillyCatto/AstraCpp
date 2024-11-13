@@ -1100,4 +1100,10 @@ TEST_F(MatrixTest, OutOfBoundsSubmatrix) {
     EXPECT_THROW(mat.submatrix(0, 0, 3, 3), astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, ReverseIndicesSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    EXPECT_THROW(mat.submatrix(2, 2, 1, 1), astra::internals::exceptions::invalid_argument);
+}
+
 } // namespace astra
