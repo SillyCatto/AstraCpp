@@ -795,42 +795,48 @@ TEST_F(MatrixTest, single_element_matrix) {
     EXPECT_TRUE(single_element_matrix.is_diagonal());
 }
 
-TEST_F(MatrixTest, NonSquareMatrix) {
+TEST_F(MatrixTest, non_square_matrix) {
     Matrix non_square_matrix(2, 3, {1, 0, 0, 0, 2, 0});
     EXPECT_FALSE(non_square_matrix.is_diagonal());
 }
 
-TEST_F(MatrixTest, TrueUpperTriangularMatrix) {
+TEST_F(MatrixTest, true_upper_triangular_matrix) {
     Matrix upper_triangular_matrix(3, 3, {1, 2, 3, 0, 5, 6, 0, 0, 9});
     EXPECT_TRUE(upper_triangular_matrix.is_upper_triangular());
 }
 
-TEST_F(MatrixTest, ZeroUpperTriangularMatrix) {
+TEST_F(MatrixTest, zero_upper_triangular_matrix) {
     Matrix zero_upper_triangular_matrix(3, 3, {0, 2, 3, 0, 0, 6, 0, 0, 0});
     EXPECT_TRUE(zero_upper_triangular_matrix.is_upper_triangular());
 }
 
-TEST_F(MatrixTest, UpperTriangularWithZeroOnDiagonal) {
+TEST_F(MatrixTest, upper_triangular_with_zero_on_diagonal) {
     Matrix zero_diag_upper_triangular_matrix(3, 3, {1, 2, 3, 0, 0, 6, 0, 0, 9});
     EXPECT_TRUE(zero_diag_upper_triangular_matrix.is_upper_triangular());
 }
 
-TEST_F(MatrixTest, TrueLowerTriangularMatrix) {
-    Matrix lower_triangular_matrix(3, 3, {1, 0, 0, 4, 5, 0, 7, 8, 9});
+TEST_F(MatrixTest, true_lower_triangular_matrix) {
+    Matrix lower_triangular_matrix(3, 3, 
+        {
+            1, 0, 0, 
+            4, 5, 0, 
+            7, 8, 9
+        }
+    );
     EXPECT_TRUE(lower_triangular_matrix.is_lower_triangular());
 }
 
-TEST_F(MatrixTest, ZeroLowerTriangularMatrix) {
+TEST_F(MatrixTest, zero_lower_triangular_matrix) {
     Matrix zero_lower_triangular_matrix(3, 3, {0, 0, 0, 4, 0, 0, 7, 8, 0});
     EXPECT_TRUE(zero_lower_triangular_matrix.is_lower_triangular());
 }
 
-TEST_F(MatrixTest, LowerTriangularWithZeroOnDiagonal) {
+TEST_F(MatrixTest, lower_triangular_with_zero_on_diagonal) {
     Matrix zero_diag_lower_triangular_matrix(3, 3, {1, 0, 0, 4, 0, 0, 7, 8, 0});
     EXPECT_TRUE(zero_diag_lower_triangular_matrix.is_lower_triangular());
 }
 
-TEST_F(MatrixTest, IdentityMatrixIsTriangular) {
+TEST_F(MatrixTest, identity_matrix_is_triangular) {
     Matrix identity_matrix(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
     EXPECT_TRUE(identity_matrix.is_triangular());
     EXPECT_TRUE(identity_matrix.is_upper_triangular());
@@ -838,7 +844,7 @@ TEST_F(MatrixTest, IdentityMatrixIsTriangular) {
     EXPECT_TRUE(identity_matrix.is_diagonal());
 }
 
-TEST_F(MatrixTest, ZeroMatrixIsTriangularAndDiagonal) {
+TEST_F(MatrixTest, zero_matrix_is_triangular_and_diagonal) {
     Matrix zero_matrix(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
     EXPECT_TRUE(zero_matrix.is_triangular());
     EXPECT_TRUE(zero_matrix.is_diagonal());
@@ -1057,16 +1063,28 @@ TEST_F(MatrixTest, matrix_join_with_negative_values) {
     EXPECT_DOUBLE_EQ(matA(1, 3), -8.0);
 }
 
-TEST_F(MatrixTest, ValidSubmatrix) {
-    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+TEST_F(MatrixTest, valid_submatrix) {
+    Matrix mat(4, 4, 
+        {
+            1, 2, 3, 4, 
+            5, 6, 7, 8, 
+            9, 10, 11, 12, 
+            13, 14, 15, 16
+        }
+    );
 
     Matrix submat = mat.submatrix(1, 1, 2, 2);
-    Matrix expected(2, 2, {6, 7, 10, 11});
+    Matrix expected(2, 2, 
+        {
+            6, 7, 
+            10, 11
+        }
+    );
 
     EXPECT_EQ(submat, expected);
 }
 
-TEST_F(MatrixTest, SingleRowSubmatrix) {
+TEST_F(MatrixTest, single_row_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
     Matrix submat = mat.submatrix(1, 0, 1, 2);
@@ -1075,7 +1093,7 @@ TEST_F(MatrixTest, SingleRowSubmatrix) {
     EXPECT_EQ(submat, expected);
 }
 
-TEST_F(MatrixTest, SingleColumnSubmatrix) {
+TEST_F(MatrixTest, single_column_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
     Matrix submat = mat.submatrix(0, 1, 2, 1);
@@ -1084,7 +1102,7 @@ TEST_F(MatrixTest, SingleColumnSubmatrix) {
     EXPECT_EQ(submat, expected);
 }
 
-TEST_F(MatrixTest, OneByOneSubmatrix) {
+TEST_F(MatrixTest, one_by_one_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
     Matrix submat = mat.submatrix(1, 1, 1, 1);
@@ -1093,14 +1111,14 @@ TEST_F(MatrixTest, OneByOneSubmatrix) {
     EXPECT_EQ(submat, expected);
 }
 
-TEST_F(MatrixTest, OutOfBoundsSubmatrix) {
+TEST_F(MatrixTest, out_of_bounds_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
     EXPECT_THROW(mat.submatrix(-1, 0, 1, 1), astra::internals::exceptions::index_out_of_range);
     EXPECT_THROW(mat.submatrix(0, 0, 3, 3), astra::internals::exceptions::index_out_of_range);
 }
 
-TEST_F(MatrixTest, ReverseIndicesSubmatrix) {
+TEST_F(MatrixTest, reverse_indices_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
     EXPECT_THROW(mat.submatrix(2, 2, 1, 1), astra::internals::exceptions::invalid_argument);
