@@ -1093,4 +1093,11 @@ TEST_F(MatrixTest, OneByOneSubmatrix) {
     EXPECT_EQ(submat, expected);
 }
 
+TEST_F(MatrixTest, OutOfBoundsSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    EXPECT_THROW(mat.submatrix(-1, 0, 1, 1), astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.submatrix(0, 0, 3, 3), astra::internals::exceptions::index_out_of_range);
+}
+
 } // namespace astra
