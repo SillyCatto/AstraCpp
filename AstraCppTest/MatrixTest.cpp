@@ -1084,4 +1084,13 @@ TEST_F(MatrixTest, SingleColumnSubmatrix) {
     EXPECT_EQ(submat, expected);
 }
 
+TEST_F(MatrixTest, OneByOneSubmatrix) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Matrix submat = mat.submatrix(1, 1, 1, 1);
+    Matrix expected(1, 1, {5});
+
+    EXPECT_EQ(submat, expected);
+}
+
 } // namespace astra
