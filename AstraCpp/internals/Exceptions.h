@@ -59,6 +59,13 @@ class matrix_size_mismatch : public std::exception {
     }
 };
 
+class non_sqauare_matrix : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  given matrix is not a sqaure matrix for the operation";
+    }
+};
+
 class matrix_join_size_mismatch : public std::exception {
   public:
     const char* what() const override {
