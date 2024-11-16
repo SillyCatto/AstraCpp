@@ -291,12 +291,14 @@ class Matrix {
 
     /**
      * @brief Swaps two rows of the matrix in place.
-     * @param i The index of the first row.
-     * @param j The index of the second row.
+     * @param row1 The index of the first row.
+     * @param row2 The index of the second row.
      * @throws astra::internals::exceptions::index_out_of_range if i or j is
      * out of bounds.
     */
-    void row_swap(int i, int j);
+    void row_swap(int row1, int row2);
+
+    void partial_row_swap(int row1, int row2, int limit_col);
 
 
     /**
