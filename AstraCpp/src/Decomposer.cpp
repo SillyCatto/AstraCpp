@@ -17,7 +17,13 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
     Matrix U = A;
     int swaps = 0;
 
+    for (int x = 0; x < m; x++) {
+        int pivot_row = x;
 
+        // TODO: find the largest entry in current column and select it as the pivot
+
+
+    }
 
 
 
