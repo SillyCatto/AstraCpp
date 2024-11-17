@@ -89,13 +89,7 @@ class Matrix {
     double& operator()(int i, int j);
     
     /**
-     * @brief Accesses a matrix element at the specified row and column in a
-     * read-only manner.
-     *
-     * This function provides read-only access to elements within the matrix,
-     * allowing retrieval of an element located at the given row and column. The
-     * function performs bounds-checking to ensure the indices are within valid
-     * limits and throws an exception if the indices are out of range.
+     * @brief Gives read-only access to a matrix entry at row i and column j
      *
      * @param i The row index of the desired element.
      * @param j The column index of the desired element.
@@ -291,12 +285,22 @@ class Matrix {
 
     /**
      * @brief Swaps two rows of the matrix in place.
-     * @param i The index of the first row.
-     * @param j The index of the second row.
+     * @param row1 The index of the first row.
+     * @param row2 The index of the second row.
      * @throws astra::internals::exceptions::index_out_of_range if i or j is
      * out of bounds.
     */
-    void row_swap(int i, int j);
+    void row_swap(int row1, int row2);
+
+    /**
+     * @breif Swaps two columns of the matrix until the specified column.
+     * @param col1 The index of the first column.
+     * @param col2 The index of the second column.
+     * @param limit_row The index of the row to stop swapping.
+     * @throws astra::internals::exceptions::index_out_of_range if i or j or limit_row
+     * is out of bounds.
+     */
+    void partial_row_swap(int row1, int row2, int limit_col);
 
 
     /**

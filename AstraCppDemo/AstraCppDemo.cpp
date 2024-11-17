@@ -2,6 +2,7 @@
 
 #include "../AstraCpp/include/Vector.h"
 #include "../AstraCpp/include/Matrix.h"
+#include "../AstraCpp/include/Decomposer.h"
 
 int main() {
     // ----------VECTOR----------
@@ -67,68 +68,67 @@ int main() {
     std::cout << "MATRIX\n";
     std::cout << "------\n\n";
 
-    astra::Matrix matA(2, 2);
-    //std::cin >> matA;
+    //astra::Matrix matA(2, 2);
+    ////std::cin >> matA;
 
-    matA << 1.0, 2.0, 3.0, 4.0;
+    //matA << 1.0, 2.0, 3.0, 4.0;
 
-    std::cout << "Matrix A:\n" << matA << "\n";
+    //std::cout << "Matrix A:\n" << matA << "\n";
 
-    astra::Matrix matB(2, 2, 
+    //astra::Matrix matB(2, 2, 
+    //    {
+    //        5.0, 6.0, 
+    //        7.0, 8.0
+    //    }
+    //);
+
+    //std::cout << "Matrix B:\n" << matB << "\n";
+
+    //matB.row_swap(0, 1);
+
+    //std::cout << "Matrix B after swap:\n" << matB << "\n";
+
+    //astra::Matrix matC = matA + matB;
+    //std::cout << "Matrix A + Matrix B:\n" << matC << "\n";
+
+    //astra::Matrix matD = matA - matB;
+    //std::cout << "Matrix A - Matrix B:\n" << matD << "\n";
+
+    //astra::Matrix matE = matA * 2.0;
+    //std::cout << "Matrix A * 2.0:\n" << matE << "\n";
+
+    //astra::Matrix matF = 3.0 * matB;
+    //std::cout << "3.0 * Matrix B:\n" << matF << "\n";
+
+    //astra::Matrix matG = matB / 2.0;
+    //std::cout << "Matrix B / 2.0:\n" << matG << "\n";
+
+    //std::cout << "Element at (0, 1) in Matrix A: " << matA(0, 1) << "\n";
+
+    //std::cout << "Matrix A == Matrix A: " << ( matA == matA ? "true" : "false" )
+    //          << "\n";
+
+    //astra::Matrix matH = matA;
+    //std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
+
+    astra::Matrix mat1(3, 3, 
         {
-            5.0, 6.0, 
-            7.0, 8.0
+            3, -1, 0,
+            3, -1, 1,
+            0, 2, 1
         }
     );
 
-    std::cout << "Matrix B:\n" << matB << "\n";
+    auto plu_res = astra::Decomposer::palu(mat1);
 
-    matB.row_swap(0, 1);
+    std::cout << "P:\n";
+    std::cout << plu_res.P;
 
-    std::cout << "Matrix B after swap:\n" << matB << "\n";
+    std::cout << "L:\n";
+    std::cout << plu_res.L;
 
-    astra::Matrix matC = matA + matB;
-    std::cout << "Matrix A + Matrix B:\n" << matC << "\n";
-
-    astra::Matrix matD = matA - matB;
-    std::cout << "Matrix A - Matrix B:\n" << matD << "\n";
-
-    astra::Matrix matE = matA * 2.0;
-    std::cout << "Matrix A * 2.0:\n" << matE << "\n";
-
-    astra::Matrix matF = 3.0 * matB;
-    std::cout << "3.0 * Matrix B:\n" << matF << "\n";
-
-    astra::Matrix matG = matB / 2.0;
-    std::cout << "Matrix B / 2.0:\n" << matG << "\n";
-
-    std::cout << "Element at (0, 1) in Matrix A: " << matA(0, 1) << "\n";
-
-    std::cout << "Matrix A == Matrix A: " << ( matA == matA ? "true" : "false" )
-              << "\n";
-
-    astra::Matrix matH = matA;
-    std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
-
-    astra::Matrix mat1(3, 2, 
-        {
-            1, 2, 
-            3, 4, 
-            5, 6
-        }
-    );
-
-    astra::Matrix mat2(3, 2, 
-        {
-            11, 12, 
-            13, 14, 
-            15, 16
-        }
-    );
-
-    mat1.join(mat2);
-
-    std::cout << mat1;
+    std::cout << "U:\n";
+    std::cout << plu_res.U;
 
     std::cin.get();
 
