@@ -356,6 +356,9 @@ class Matrix {
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
 
 
+    double determinant();
+
+
     /**
      * @brief Multiplies each element of the matrix by a scalar.
      * @param mat The matrix to multiply.

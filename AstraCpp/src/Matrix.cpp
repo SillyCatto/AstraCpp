@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "Exceptions.h"
 #include "Utils.h"
+#include "Decomposer.h"
 
 #include <iostream>
 #include <iomanip>
@@ -497,6 +498,15 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
         }
     }
     return submat;
+}
+
+double Matrix::determinant() {
+    if (!is_square()) {
+        throw astra::internals::exceptions::non_sqauare_matrix();
+    }
+    auto p = astra::Decomposer::palu(*this);
+
+    return p.U.trace();
 }
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
