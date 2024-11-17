@@ -341,8 +341,22 @@ class Matrix {
      */
     void join(const Matrix& other);
 
-
+    /**
+     * @brief Extracts a submatrix from the matrix.
+     *
+     * @param r1 The starting row index of the submatrix.
+     * @param c1 The starting column index of the submatrix.
+     * @param r2 The ending row index of the submatrix.
+     * @param c2 The ending column index of the submatrix.
+     * @return Matrix A new matrix that is the submatrix defined by the
+     * coordinates.
+     * @throws astra::internals::exceptions::index_out_of_range if the specified indices are out of bounds or
+     * astra::internals::exceptions::invalid_argument if the specified indices are invalid.
+     */
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
+
+
+    double determinant();
 
 
     /**
