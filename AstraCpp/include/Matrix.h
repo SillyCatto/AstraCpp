@@ -298,6 +298,14 @@ class Matrix {
     */
     void row_swap(int row1, int row2);
 
+    /**
+     * @breif Swaps two columns of the matrix until the specified column.
+     * @param col1 The index of the first column.
+     * @param col2 The index of the second column.
+     * @param limit_row The index of the row to stop swapping.
+     * @throws astra::internals::exceptions::index_out_of_range if i or j or limit_row
+     * is out of bounds.
+     */
     void partial_row_swap(int row1, int row2, int limit_col);
 
 
