@@ -113,8 +113,8 @@ int main() {
 
     astra::Matrix mat1(3, 3, 
         {
-            3, -1, 0,
-            3, -1, 1,
+            4, 2, 0,
+            1, 3, 5,
             0, 2, 1
         }
     );
@@ -129,6 +129,8 @@ int main() {
 
     std::cout << "U:\n";
     std::cout << plu_res.U;
+
+    std::cout << "\nDet(mat1): " << mat1.det() << "\n";
 
     std::cin.get();
 
