@@ -52,18 +52,24 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
             }
 
             double pivot = U(x, x);
-            double factor = current_val / pivot;
+            double pivot_factor = current_val / pivot;
 
+            U(y, x) = 0; // eliminated
 
+            // update rest of the values in the row
+            for (int i = x + 1; i < m; i++) {
+                // r2 = r2 - f * r1  (where f = current_val / pivot )
+
+                U(y, i) = U(y, i) - pivot_factor * U(pivot_row, i);
+            }
+
+            // put the pivot factor in appropriate position of L
+            L(y, x) = pivot_factor;
 
         }
 
 
     }
 
-
-
-
-    Decomposer::PLUResult res(3);
-    return res;
+    return PLUResult(P, L, U, swaps);
 }
