@@ -89,13 +89,7 @@ class Matrix {
     double& operator()(int i, int j);
     
     /**
-     * @brief Accesses a matrix element at the specified row and column in a
-     * read-only manner.
-     *
-     * This function provides read-only access to elements within the matrix,
-     * allowing retrieval of an element located at the given row and column. The
-     * function performs bounds-checking to ensure the indices are within valid
-     * limits and throws an exception if the indices are out of range.
+     * @brief Gives read-only access to a matrix entry at row i and column j
      *
      * @param i The row index of the desired element.
      * @param j The column index of the desired element.

@@ -6,10 +6,12 @@
 
 using namespace astra;
 
-Decomposer::PLUResult Decomposer::palu(Matrix A) { 
-	int m = A.num_row();
+Decomposer::PLUResult Decomposer::palu(Matrix A) {
+    int m = A.num_row();
+
+    // matrix is not square
     if (m != A.num_col()) {
-            throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_sqauare_matrix();
     }
 
     Matrix P = Matrix::identity(m);
@@ -18,9 +20,7 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
     int swaps = 0;
 
     for (int x = 0; x < m; x++) {
-        int pivot_row = x;
-
-        // TODO: find the largest entry in current column and select it as the pivot 
+        int pivot_row = x; 
         
         // finding the largest value in the column and selecting it as the pivot
         for (int y = x; y < m; y++) {
@@ -41,6 +41,21 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
             P.row_swap(x, pivot_row); // swaping P
             L.partial_row_swap(x, pivot_row, x); // partial swapping L till diagonal
             swaps++;
+        }
+
+        // TODO: eliminate entries below the pivot
+        for (int y = x + 1; y < m; y++) {
+            double current_val = U(y, x);
+
+            if (current_val == 0) {
+                continue; // it is already eliminated
+            }
+
+            double pivot = U(x, x);
+            double factor = current_val / pivot;
+
+
+
         }
 
 
