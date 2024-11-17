@@ -380,14 +380,27 @@ void Matrix::transpose() {
     }
 }
 
-void Matrix::row_swap(int i, int j) {
-    if (i >= rows || j >= rows || i < 0 || j < 0) {
+void Matrix::row_swap(int row1, int row2) {
+    if (row1 >= rows || row2 >= rows || row1 < 0 || row2 < 0) {
         throw astra::internals::exceptions::index_out_of_range();
     }
 
     for (int k = 0; k < cols; ++k) {
-        astra::internals::utils::swap(values[i * cols + k],
-                                      values[j * cols + k]);
+        astra::internals::utils::swap(values[row1 * cols + k],
+                                      values[row2 * cols + k]);
+    }
+}
+
+void Matrix::partial_row_swap(int row1, int row2, int limit_col) {
+    if (row1 >= rows || row2 >= rows || 
+        row1 < 0 || row2 < 0 ||
+        limit_col >= cols || limit_col < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    for (int k = 0; k < limit_col; k++) {
+        astra::internals::utils::swap(values[row1 * cols + k],
+                                      values[row2 * cols + k]);
     }
 }
 
