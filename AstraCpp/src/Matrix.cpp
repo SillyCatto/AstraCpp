@@ -506,7 +506,11 @@ double Matrix::determinant() {
     }
     auto p = astra::Decomposer::palu(*this);
 
-    return p.U.trace();
+    double det = p.U.trace();
+
+    det *= (p.swaps % 2 == 0) ? 1 : -1;
+
+    return det;
 }
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
