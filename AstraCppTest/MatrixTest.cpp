@@ -324,6 +324,48 @@ TEST_F(MatrixTest, row_swap_not_square_greater) {
 
 }
 
+TEST_F(MatrixTest, partial_row_swap_square) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 << 3 << 4;
+
+    mat.partial_row_swap(0, 1, 1);
+
+    EXPECT_EQ(mat(0, 0), 3);
+    EXPECT_EQ(mat(0, 1), 2);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 4);
+}
+
+TEST_F(MatrixTest, partial_row_swap_not_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    mat.partial_row_swap(0, 1, 2);
+
+    EXPECT_EQ(mat(0, 0), 4);
+    EXPECT_EQ(mat(0, 1), 5);
+    EXPECT_EQ(mat(0, 2), 3);
+    EXPECT_EQ(mat(1, 0), 1);
+    EXPECT_EQ(mat(1, 1), 2);
+    EXPECT_EQ(mat(1, 2), 6);
+}
+
+TEST_F(MatrixTest, partial_row_swap_not_square_greater) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.partial_row_swap(2, 1, 1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, partial_row_swap_not_square_smaller) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.partial_row_swap(0, 1, 4),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
     Matrix mat(2, 2);
     mat << 1.0, 2.0, 3.0, 4.0;
