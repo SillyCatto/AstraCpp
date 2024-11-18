@@ -367,7 +367,22 @@ class Matrix {
      */
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
 
-
+    /**
+     * @brief Computes the determinant of the matrix using PLU decomposition.
+     *
+     * This function computes the determinant of a square matrix. If the matrix
+     * is non-square, it throws a
+     * `astra::internals::exceptions::non_sqauare_matrix` exception.
+     *
+     * The determinant is calculated using the PLU decomposition method. The
+     * product of the principal diagonal elements of the upper triangular matrix
+     * (U) is multiplied by -1 raised to the number of row swaps performed
+     * during decomposition.
+     *
+     * @throws astra::internals::exceptions::non_sqauare_matrix If the matrix is
+     * not square.
+     * @return double The determinant of the matrix.
+     */
     double det();
 
 
