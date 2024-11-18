@@ -185,13 +185,23 @@ class Matrix {
     double prod() const;
 
     /**
-     * @brief Returns the product of the principle diagonal elements of the matrix.
+     * @brief Returns the sum of the principle diagonal elements of the matrix.
      * @return The trace of the matrix.
-     * @throws astra::internals::exceptions::invalid_argument if the rows and
+     * @throws astra::internals::exceptions::non_sqauare_matrix if the rows and
      * cols are not equal.
      */
     double trace() const;
 
+    /**
+     * @brief Computes the product of the principal diagonal elements of the
+     * matrix.
+     *
+     * This function calculates the product of the elements along the main
+     * diagonal (top-left to bottom-right) of the matrix. If the matrix is not
+     * square, the behavior is undefined.
+     *
+     * @return The product of the diagonal elements.
+     */
     double principal_prod() const;
 
     /**
@@ -357,7 +367,22 @@ class Matrix {
      */
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
 
-
+    /**
+     * @brief Computes the determinant of the matrix using PLU decomposition.
+     *
+     * This function computes the determinant of a square matrix. If the matrix
+     * is non-square, it throws a
+     * `astra::internals::exceptions::non_sqauare_matrix` exception.
+     *
+     * The determinant is calculated using the PLU decomposition method. The
+     * product of the principal diagonal elements of the upper triangular matrix
+     * (U) is multiplied by -1 raised to the number of row swaps performed
+     * during decomposition.
+     *
+     * @throws astra::internals::exceptions::non_sqauare_matrix If the matrix is
+     * not square.
+     * @return double The determinant of the matrix.
+     */
     double det();
 
 
