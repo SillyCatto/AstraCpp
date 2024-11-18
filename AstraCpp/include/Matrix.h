@@ -192,6 +192,8 @@ class Matrix {
      */
     double trace() const;
 
+    double principal_prod() const;
+
     /**
      * @brief Returns the average of all elements in the matrix.
      * @return The average of all elements in the matrix.
@@ -356,7 +358,7 @@ class Matrix {
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
 
 
-    double determinant();
+    double det();
 
 
     /**
