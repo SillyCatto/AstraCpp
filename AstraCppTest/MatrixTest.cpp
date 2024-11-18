@@ -678,7 +678,7 @@ TEST_F(MatrixTest, matrix_trace_non_square) {
     mat << 1 << 2 << 3 << 4 << 5 << 6;
 
     EXPECT_THROW(mat.trace(),
-                 astra::internals::exceptions::invalid_argument);
+                 astra::internals::exceptions::non_sqauare_matrix);
 }
 
 TEST_F(MatrixTest, matrix_trace_singleton) { 

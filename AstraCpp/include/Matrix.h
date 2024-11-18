@@ -185,13 +185,23 @@ class Matrix {
     double prod() const;
 
     /**
-     * @brief Returns the product of the principle diagonal elements of the matrix.
+     * @brief Returns the sum of the principle diagonal elements of the matrix.
      * @return The trace of the matrix.
-     * @throws astra::internals::exceptions::invalid_argument if the rows and
+     * @throws astra::internals::exceptions::non_sqauare_matrix if the rows and
      * cols are not equal.
      */
     double trace() const;
 
+    /**
+     * @brief Computes the product of the principal diagonal elements of the
+     * matrix.
+     *
+     * This function calculates the product of the elements along the main
+     * diagonal (top-left to bottom-right) of the matrix. If the matrix is not
+     * square, the behavior is undefined.
+     *
+     * @return The product of the diagonal elements.
+     */
     double principal_prod() const;
 
     /**
