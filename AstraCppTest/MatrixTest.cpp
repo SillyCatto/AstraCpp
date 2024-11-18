@@ -1126,6 +1126,12 @@ TEST_F(MatrixTest, valid_submatrix) {
     EXPECT_EQ(submat, expected);
 }
 
+TEST_F(MatrixTest, Determinant2x2) {
+    Matrix mat(2, 2,{ 1, 2, 
+                      3, 4 });
+    EXPECT_EQ(mat.det(), -2); // det = 1*4 - 2*3 = -2
+}
+
 TEST_F(MatrixTest, single_row_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
