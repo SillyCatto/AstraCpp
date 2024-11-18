@@ -111,11 +111,10 @@ int main() {
     //astra::Matrix matH = matA;
     //std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
 
-    astra::Matrix mat1(3, 3, 
+    astra::Matrix mat1(2, 2, 
         {
-            4, 2, 0,
-            1, 3, 5,
-            0, 2, 1
+            1, 2,
+            3, 4
         }
     );
 
