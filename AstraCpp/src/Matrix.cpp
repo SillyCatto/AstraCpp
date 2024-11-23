@@ -2,6 +2,7 @@
 #include "Matrix.h"
 #include "Exceptions.h"
 #include "Utils.h"
+#include "Decomposer.h"
 
 #include <iostream>
 #include <iomanip>
@@ -199,13 +200,24 @@ double Matrix::prod() const {
 
 double Matrix::trace() const {
     if (!is_square()) {
-        throw astra::internals::exceptions::invalid_argument();
+        throw astra::internals::exceptions::non_sqauare_matrix();
     }
     double sum = 0.0;
     for (int i = 0; i < rows; ++i) {
         sum += values[i * cols + i];
     }
     return sum;
+}
+
+double astra::Matrix::principal_prod() const { 
+    if (!is_square()) {
+        throw astra::internals::exceptions::non_sqauare_matrix();
+    }
+    double prod = 1.0;
+    for (int i = 0; i < rows; ++i) {
+        prod *= values[i * cols + i];
+    }
+    return prod;
 }
 
 double Matrix::avg() const {
@@ -497,6 +509,21 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
         }
     }
     return submat;
+}
+
+double Matrix::det() {
+    if (!is_square()) {
+        throw astra::internals::exceptions::non_sqauare_matrix();
+    }
+    auto plu = astra::Decomposer::palu(*this);
+
+    double det = plu.U.principal_prod();
+
+    // for even no. of swaps determinant is +ve,
+    // for odd swaps it is -ve
+    det *= (plu.swaps % 2 == 0) ? 1 : -1;
+
+    return det;
 }
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {

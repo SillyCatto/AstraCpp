@@ -89,13 +89,7 @@ class Matrix {
     double& operator()(int i, int j);
     
     /**
-     * @brief Accesses a matrix element at the specified row and column in a
-     * read-only manner.
-     *
-     * This function provides read-only access to elements within the matrix,
-     * allowing retrieval of an element located at the given row and column. The
-     * function performs bounds-checking to ensure the indices are within valid
-     * limits and throws an exception if the indices are out of range.
+     * @brief Gives read-only access to a matrix entry at row i and column j
      *
      * @param i The row index of the desired element.
      * @param j The column index of the desired element.
@@ -191,12 +185,24 @@ class Matrix {
     double prod() const;
 
     /**
-     * @brief Returns the product of the principle diagonal elements of the matrix.
+     * @brief Returns the sum of the principle diagonal elements of the matrix.
      * @return The trace of the matrix.
-     * @throws astra::internals::exceptions::invalid_argument if the rows and
+     * @throws astra::internals::exceptions::non_sqauare_matrix if the rows and
      * cols are not equal.
      */
     double trace() const;
+
+    /**
+     * @brief Computes the product of the principal diagonal elements of the
+     * matrix.
+     *
+     * This function calculates the product of the elements along the main
+     * diagonal (top-left to bottom-right) of the matrix. If the matrix is not
+     * square, the behavior is undefined.
+     *
+     * @return The product of the diagonal elements.
+     */
+    double principal_prod() const;
 
     /**
      * @brief Returns the average of all elements in the matrix.
@@ -347,8 +353,37 @@ class Matrix {
      */
     void join(const Matrix& other);
 
-
+    /**
+     * @brief Extracts a submatrix from the matrix.
+     *
+     * @param r1 The starting row index of the submatrix.
+     * @param c1 The starting column index of the submatrix.
+     * @param r2 The ending row index of the submatrix.
+     * @param c2 The ending column index of the submatrix.
+     * @return Matrix A new matrix that is the submatrix defined by the
+     * coordinates.
+     * @throws astra::internals::exceptions::index_out_of_range if the specified indices are out of bounds or
+     * astra::internals::exceptions::invalid_argument if the specified indices are invalid.
+     */
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
+
+    /**
+     * @brief Computes the determinant of the matrix using PLU decomposition.
+     *
+     * This function computes the determinant of a square matrix. If the matrix
+     * is non-square, it throws a
+     * `astra::internals::exceptions::non_sqauare_matrix` exception.
+     *
+     * The determinant is calculated using the PLU decomposition method. The
+     * product of the principal diagonal elements of the upper triangular matrix
+     * (U) is multiplied by -1 raised to the number of row swaps performed
+     * during decomposition.
+     *
+     * @throws astra::internals::exceptions::non_sqauare_matrix If the matrix is
+     * not square.
+     * @return double The determinant of the matrix.
+     */
+    double det();
 
 
     /**

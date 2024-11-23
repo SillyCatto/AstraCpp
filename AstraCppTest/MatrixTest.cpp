@@ -678,7 +678,7 @@ TEST_F(MatrixTest, matrix_trace_non_square) {
     mat << 1 << 2 << 3 << 4 << 5 << 6;
 
     EXPECT_THROW(mat.trace(),
-                 astra::internals::exceptions::invalid_argument);
+                 astra::internals::exceptions::non_sqauare_matrix);
 }
 
 TEST_F(MatrixTest, matrix_trace_singleton) { 
@@ -1124,6 +1124,12 @@ TEST_F(MatrixTest, valid_submatrix) {
     );
 
     EXPECT_EQ(submat, expected);
+}
+
+TEST_F(MatrixTest, Determinant2x2) {
+    Matrix mat(2, 2,{ 1, 2, 
+                      3, 4 });
+    EXPECT_EQ(mat.det(), -2); // det = 1*4 - 2*3 = -2
 }
 
 TEST_F(MatrixTest, single_row_submatrix) {
