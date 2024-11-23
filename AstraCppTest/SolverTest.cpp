@@ -11,7 +11,7 @@
 
 namespace astra {
 
-// Test fixture class for Vector
+// Test fixture class for Solver
 class SolverTest : public ::testing::Test {
   protected:
     void SetUp() override {}
