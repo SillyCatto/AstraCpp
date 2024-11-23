@@ -134,15 +134,15 @@ int main() {
 
     astra::Matrix mat1(2, 2, 
         {
-            1, 0, 
-            3, 4
+            2, -3, 
+            0, 4
         }
             
     );
 
-    astra::Vector vect {1, 2};
+    astra::Vector vect {-9, 20};
 
-    auto res = astra::Solver::forward_sub(mat1, vect);
+    auto res = astra::Solver::backward_sub(mat1, vect);
     std::cout << res;
 
     std::cin.get();
