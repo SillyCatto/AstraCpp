@@ -3,6 +3,7 @@
 #include "../AstraCpp/include/Vector.h"
 #include "../AstraCpp/include/Matrix.h"
 #include "../AstraCpp/include/Decomposer.h"
+#include "../AstraCpp/include/Solver.h"
 
 int main() {
     // ----------VECTOR----------
@@ -111,7 +112,7 @@ int main() {
     //astra::Matrix matH = matA;
     //std::cout << "Assigned Matrix H from Matrix A:\n" << matH << "\n\n";
 
-    astra::Matrix mat1(2, 2, 
+    /*astra::Matrix mat1(2, 2, 
         {
             1, 2,
             3, 4
@@ -129,7 +130,20 @@ int main() {
     std::cout << "U:\n";
     std::cout << plu_res.U;
 
-    std::cout << "\nDet(mat1): " << mat1.det() << "\n";
+    std::cout << "\nDet(mat1): " << mat1.det() << "\n";*/
+
+    astra::Matrix mat1(2, 2, 
+        {
+            1, 0, 
+            3, 4
+        }
+            
+    );
+
+    astra::Vector vect {1, 2};
+
+    auto res = astra::Solver::forward_sub(mat1, vect);
+    std::cout << res;
 
     std::cin.get();
 
