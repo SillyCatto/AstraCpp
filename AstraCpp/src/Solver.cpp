@@ -3,11 +3,18 @@
 #include "Vector.h"
 #include "Matrix.h"
 #include "Solver.h"
+#include "Exceptions.h"
 
 using namespace astra;
 
 Vector Solver::forward_sub(Matrix L, Vector b) { 
 	int m = b.get_size();
+
+	if (L.num_col() != m) {
+            throw astra::internals::exceptions::
+                variable_and_value_number_mismatch();
+    }
+
     Vector x(m);
 
 	for (int v = 0; v < m; v++) {
