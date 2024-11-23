@@ -87,4 +87,11 @@ class matrix_multiplication_size_mismatch : public std::exception {
     }
 };
 
+class variable_and_value_number_mismatch : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  number of variables and number of values should be same for solver";
+    }
+};
+
 }  // namespace astra::internals::exceptions
