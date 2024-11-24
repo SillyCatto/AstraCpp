@@ -62,7 +62,7 @@ Vector astra::Solver::backward_sub(Matrix U, Vector b) {
 
 }
 
-Vector Solver::plu_solve(Matrix A, Vector b) {
+Vector Solver::solve(Matrix A, Vector b) {
     if (!A.is_square()) {
         throw internals::exceptions::non_square_matrix();
     }
