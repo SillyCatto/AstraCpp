@@ -523,6 +523,102 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
     return submat;
 }
 
+Matrix Matrix::rref(double tol) const { 
+    /*int n_rows = rows;
+    int n_cols = cols;*/
+    int r = 0;
+    int pivot_row = 0;
+    int pivot_col = 0;
+    double pivot_val = 0.0;
+    double factor = 0.0;
+    bool pivot_found = false;
+
+    Matrix rref(*this);
+
+    for (int c = 0; c < cols; c++) {
+        pivot_found = false;
+        pivot_row = 0;
+        pivot_val = 0.0;
+        factor = 0.0;
+
+        for (int i = r; i < rows; i++) {
+            if (internals::mathutils::abs(rref(i, c)) > tol) {
+                pivot_row = i;
+                pivot_found = true;
+                break;
+            }
+        }
+
+        if (!pivot_found) {
+            continue;
+        }
+
+        // swap rows to move selected pivot to current row
+        for (int k = 0; k < cols; ++k) {
+            astra::internals::utils::swap(values[r * cols + k],
+                                          values[pivot_row * cols + k]);
+        }
+
+        // normalize the pivot row
+        pivot_val = rref(r, c);
+        for (int i = 0; i < cols; i++) {
+            rref(r, i) = rref(r, i) / pivot_val;
+        }
+
+        // eliminate entries below pivot
+        for (int i = r + 1; i < rows; i++) {
+            factor = rref(i, c);
+            for (int j = 0; j < cols; j++) {
+                rref(i, j) = rref(i, j) - factor * rref(r, j);
+            }
+        }
+
+        r++; // move to next row
+
+    }
+
+
+    // backward elimination
+    for (int i = r - 1; i > -1 ; i--) {
+        pivot_found = false;
+        pivot_col = 0.0;
+        pivot_val = 0.0;
+        factor = 0.0;
+
+        for (int c = 0; c < cols; c++) {
+            if (internals::mathutils::abs(rref(i, c) - 1) < tol) {
+                pivot_col = c;
+                pivot_found = true;
+                break;
+            }
+        }
+
+        if (!pivot_found) {
+            continue;
+        }
+
+        // eliminate entries above pivot
+        for (int j = i - 1; j > -1; j--) {
+            factor = rref(j, pivot_col);
+            for (int k = 0; k < cols; k++) {
+                rref(j, k) = rref(j, k) - factor * rref(i, k);
+            }
+        }
+    }
+
+    // stabilize the zero entry
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (internals::mathutils::abs(rref(i, j)) < tol) {
+                rref(i, j) = 0.0;
+            }
+        }
+    }
+
+    return rref;
+
+}
+
 double Matrix::det() {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();

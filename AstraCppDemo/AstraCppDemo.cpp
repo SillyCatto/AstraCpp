@@ -144,8 +144,30 @@ int main() {
 
     astra::Vector vec{22, -2, 2, 3};
 
-    auto res = astra::Solver::plu_solve(mat1, vec);
+    auto res = astra::Solver::solve(mat1, vec);
     std::cout << res;
+
+    std::cout << "\n\n";
+
+    astra::Matrix mat2(3, 4,
+        {
+            1, 2, 3, 3, 
+            2, 2, 1, 4, 
+            3, 4, 4, 7
+        }
+    
+    );
+
+    astra::Matrix mat3(3, 4,
+        {
+            1, 1, 1, 2, 
+            0, 1, 2, 3, 
+            1, 2, 3, 5
+        }
+    );
+
+    auto res2 = mat2.rref();
+    std::cout << res2;
 
     std::cin.get();
 
