@@ -257,23 +257,29 @@ bool Matrix::is_square() const { return rows == cols; }
 
 bool Matrix::is_rectangular() const { return rows != cols; }
 
-bool Matrix::is_identity() const { 
+bool Matrix::is_identity() const {
     if (!is_square()) {
         return false;
     }
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (i == j && values[i * cols + j] != 1.0) {
-                return false;
+            if (i == j) { // diagonal
+                if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                           1.0)) {
+                    return false;
+                }
             }
-            if (i != j && values[i * cols + j] != 0.0) {
-                return false;
+            else { // non-diagonal
+                if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                           0.0)) {
+                    return false;
+                }
             }
         }
     }
-    return true;
 
+    return true;
 }
 
 bool Matrix::is_symmetric() const { 
