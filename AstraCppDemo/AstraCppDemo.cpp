@@ -132,17 +132,19 @@ int main() {
 
     std::cout << "\nDet(mat1): " << mat1.det() << "\n";*/
 
-    astra::Matrix mat1(2, 2, 
+    astra::Matrix mat1(4, 4, 
         {
-            2, -3, 
-            0, 4
+            1, 2, -1, 5, 
+            3, 6, -3, -2,
+            7, -5, 3, -1,
+            5, 10, 2, -7
         }
             
     );
 
-    astra::Vector vect {-9, 20};
+    astra::Vector vec{22, -2, 2, 3};
 
-    auto res = astra::Solver::backward_sub(mat1, vect);
+    auto res = astra::Solver::plu_solve(mat1, vec);
     std::cout << res;
 
     std::cin.get();

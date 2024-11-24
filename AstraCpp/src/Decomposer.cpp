@@ -11,7 +11,7 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
 
     // matrix is not square
     if (m != A.num_col()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
 
     Matrix P = Matrix::identity(m);

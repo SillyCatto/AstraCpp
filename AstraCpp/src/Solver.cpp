@@ -64,7 +64,7 @@ Vector astra::Solver::backward_sub(Matrix U, Vector b) {
 
 Vector Solver::plu_solve(Matrix A, Vector b) {
     if (!A.is_square()) {
-        throw internals::exceptions::non_sqauare_matrix();
+        throw internals::exceptions::non_square_matrix();
     }
     
     int m = A.num_col();
@@ -72,6 +72,7 @@ Vector Solver::plu_solve(Matrix A, Vector b) {
     Vector x(m);
 
     auto plu_res = Decomposer::palu(A);
+    b = plu_res.P * b;
 
     y = forward_sub(plu_res.L, b);
     x = backward_sub(plu_res.U, y);

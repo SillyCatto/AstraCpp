@@ -201,7 +201,7 @@ double Matrix::prod() const {
 
 double Matrix::trace() const {
     if (!is_square()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
     double sum = 0.0;
     for (int i = 0; i < rows; ++i) {
@@ -212,7 +212,7 @@ double Matrix::trace() const {
 
 double astra::Matrix::principal_prod() const { 
     if (!is_square()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
     double prod = 1.0;
     for (int i = 0; i < rows; ++i) {
@@ -524,7 +524,7 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
 
 double Matrix::det() {
     if (!is_square()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
     auto plu = astra::Decomposer::palu(*this);
 
