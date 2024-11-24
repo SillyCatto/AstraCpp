@@ -3,6 +3,7 @@
 #include "Exceptions.h"
 #include "Utils.h"
 #include "Decomposer.h"
+#include "MathUtils.h"
 
 #include <iostream>
 #include <iomanip>
@@ -282,7 +283,8 @@ bool Matrix::is_symmetric() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (values[i * cols + j] != values[j * cols + i]) {
+            if (!internals::mathutils::nearly_equal(
+                    values[i * cols + j], values[j * cols + i])) {
                 return false;
             }
         }
@@ -297,7 +299,8 @@ bool Matrix::is_diagonal() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (i != j && values[i * cols + j] != 0.0) {
+            if (i != j && !internals::mathutils::nearly_equal(
+                              values[i * cols + j], 0.0)) {
                 return false;
             }
         }
@@ -312,7 +315,8 @@ bool Matrix::is_upper_triangular() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < i; ++j) {
-            if (values[i * cols + j] != 0.0) {
+            if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                    0.0)) {
                 return false;
             }
         }
@@ -327,7 +331,8 @@ bool Matrix::is_lower_triangular() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = i + 1; j < cols; ++j) {
-            if (values[i * cols + j] != 0.0) {
+            if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                    0.0)) {
                 return false;
             }
         }
@@ -343,7 +348,7 @@ bool Matrix::is_triangular() const {
 
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
-        if (values[i] != 0.0) {
+        if (!internals::mathutils::nearly_equal(values[i], 0.0)) {
             return false;
         }
     }
