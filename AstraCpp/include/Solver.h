@@ -22,6 +22,7 @@ class Solver {
   public:
     static Vector forward_sub(Matrix L, Vector b);
     static Vector backward_sub(Matrix U, Vector b);
+    static Vector plu_solve(Matrix A, Vector b);
 };
 
 }

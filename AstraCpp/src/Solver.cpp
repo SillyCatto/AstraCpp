@@ -4,6 +4,7 @@
 #include "Matrix.h"
 #include "Solver.h"
 #include "Exceptions.h"
+#include "Decomposer.h"
 
 using namespace astra;
 
@@ -57,6 +58,23 @@ Vector astra::Solver::backward_sub(Matrix U, Vector b) {
         x[v] = value / U(v, v);
 
     }
+    return x;
+
+}
+
+Vector Solver::plu_solve(Matrix A, Vector b) {
+    if (!A.is_square()) {
+        throw internals::exceptions::non_sqauare_matrix();
+    }
+    
+    int m = A.num_col();
+    Vector y(m);
+    Vector x(m);
+
+    auto plu_res = Decomposer::palu(A);
+
+    y = forward_sub(plu_res.L, b);
+    x = backward_sub(plu_res.U, y);
     return x;
 
 }
