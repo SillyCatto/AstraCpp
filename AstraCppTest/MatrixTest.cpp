@@ -1152,6 +1152,11 @@ TEST_F(MatrixTest, Determinant3x3) {
     EXPECT_EQ(mat.det(), -306); 
 }
 
+TEST_F(MatrixTest, Determinant3x3second) {
+    Matrix mat(3, 3, {3, 7, 0, 8, 0, -2, 0, -4, -5});
+    EXPECT_EQ(mat.det(), 256);
+}
+
 TEST_F(MatrixTest, DeterminantWithRowSwaps) {
     Matrix mat(2, 2, {0, 1, 1, 0}); 
     EXPECT_EQ(mat.det(), -1);    
