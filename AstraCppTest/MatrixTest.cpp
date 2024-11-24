@@ -1132,6 +1132,13 @@ TEST_F(MatrixTest, Determinant2x2) {
     EXPECT_EQ(mat.det(), -2); // det = 1*4 - 2*3 = -2
 }
 
+TEST_F(MatrixTest, DeterminantIdentityMatrix) {
+    Matrix identity(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_EQ(identity.det(), 1); // Determinant of identity matrix is 1
+}
+
+
+
 TEST_F(MatrixTest, single_row_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
