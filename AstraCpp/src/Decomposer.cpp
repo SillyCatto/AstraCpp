@@ -11,7 +11,7 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
 
     // matrix is not square
     if (m != A.num_col()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
 
     Matrix P = Matrix::identity(m);
@@ -23,7 +23,7 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
         int pivot_row = x; 
         
         // finding the largest value in the column and selecting it as the pivot
-        for (int y = x; y < m; y++) {
+        for (int y = x + 1; y < m; y++) {
             if (abs(U(y, x)) > abs(U(pivot_row, x))) {
                 pivot_row = y;
             }
@@ -60,7 +60,7 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
             for (int i = x + 1; i < m; i++) {
                 // r2 = r2 - f * r1  (where f = current_val / pivot )
 
-                U(y, i) = U(y, i) - pivot_factor * U(pivot_row, i);
+                U(y, i) = U(y, i) - pivot_factor * U(x, i);
             }
 
             // put the pivot factor in appropriate position of L

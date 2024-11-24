@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Matrix.h"
+#include "Vector.h"
 #include "Decomposer.h"
 
 // TODO: implement solver using LU
@@ -19,7 +20,9 @@ class Solver {
   private:
 
   public:
-    
+    static Vector forward_sub(Matrix L, Vector b);
+    static Vector backward_sub(Matrix U, Vector b);
+    static Vector solve(Matrix A, Vector b);
 };
 
 }
