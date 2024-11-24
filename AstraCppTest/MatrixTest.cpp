@@ -1137,7 +1137,10 @@ TEST_F(MatrixTest, DeterminantIdentityMatrix) {
     EXPECT_EQ(identity.det(), 1); // Determinant of identity matrix is 1
 }
 
-
+TEST_F(MatrixTest, DeterminantSingularMatrix) {
+    Matrix singular(2, 2, {1, 2, 2, 4});
+    EXPECT_EQ(singular.det(), 0); // Rows are linearly dependent, determinant is 0
+}
 
 TEST_F(MatrixTest, single_row_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
