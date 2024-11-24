@@ -120,6 +120,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DecomposerTest.cpp" />
     <ClCompile Include="MatrixTest.cpp" />
     <ClCompile Include="SolverTest.cpp" />
     <ClCompile Include="test.cpp" />
