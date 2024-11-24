@@ -490,8 +490,9 @@ void Matrix::join(const Matrix& other) {
     this->cols = num_col_1 + num_col_2;
     this->rows = num_row_1;
 
+    double* new_val = new double[rows * cols];
     delete[] values;
-    values = new double[rows * cols];
+    values = new_val;
 
     for (int i = 0; i < rows * cols; ++i) {
         values[i] = join_values[i];
