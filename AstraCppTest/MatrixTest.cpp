@@ -1147,6 +1147,11 @@ TEST_F(MatrixTest, DeterminantNonSquareMatrix) {
     EXPECT_THROW(non_square.det(), astra::internals::exceptions::non_square_matrix);
 }
 
+TEST_F(MatrixTest, Determinant3x3) {
+    Matrix mat(3, 3, {6, 1, 1, 4, -2, 5, 2, 8, 7});
+    EXPECT_EQ(mat.det(), -306); 
+}
+
 TEST_F(MatrixTest, single_row_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
