@@ -557,7 +557,7 @@ Matrix astra::operator*(double scalar, const Matrix& mat) {
 
 
 Matrix astra::operator/(const Matrix& mat, double scalar) {
-    if (scalar == 0.0) {
+    if (internals::mathutils::nearly_equal(scalar, 0.0)) {
         throw astra::internals::exceptions::zero_division();
     }
 
