@@ -19,7 +19,28 @@ class DecomposerTest : public ::testing::Test {
     void TearDown() override {}
 };
 
+TEST_F(DecomposerTest, HandlesSquareMatrix) {
+    // Arrange
+    Matrix mat(3, 3,
+        { 2, 1, 1, 
+          4, -6, 0,
+         -2, 7, 2 
+        });
 
+    // Act
+    auto result = Decomposer::palu(mat);
+
+    // Assert
+    EXPECT_EQ(result.P * result.L * result.U, mat)
+        << "P * L * U should reconstruct the original matrix.";
+    EXPECT_EQ(result.P.num_row(), result.P.num_col()) << "P must be square.";
+    EXPECT_EQ(result.L.num_row(), result.L.num_col()) << "L must be square.";
+    EXPECT_EQ(result.U.num_row(), result.U.num_col()) << "U must be square.";
+    EXPECT_TRUE(result.L.is_lower_triangular())
+        << "L must be a lower triangular matrix.";
+    EXPECT_TRUE(result.U.is_upper_triangular())
+        << "U must be an upper triangular matrix.";
+}
 
 
 
