@@ -20,17 +20,15 @@ class DecomposerTest : public ::testing::Test {
 };
 
 TEST_F(DecomposerTest, HandlesSquareMatrix) {
-    // Arrange
+    
     Matrix mat(3, 3,
         { 2, 1, 1, 
           4, -6, 0,
          -2, 7, 2 
         });
-
-    // Act
+    
     auto result = Decomposer::palu(mat);
 
-    // Assert
     EXPECT_EQ(result.P * result.L * result.U, mat)
         << "P * L * U should reconstruct the original matrix.";
     EXPECT_EQ(result.P.num_row(), result.P.num_col()) << "P must be square.";
@@ -42,6 +40,20 @@ TEST_F(DecomposerTest, HandlesSquareMatrix) {
         << "U must be an upper triangular matrix.";
 }
 
+TEST_F(DecomposerTest, HandlesNonInvertibleMatrix) {
+
+    Matrix mat(3, 3, 
+        {1, 2, 3, 
+         4, 5, 6, 
+         7, 8, 9});
+
+    auto result = Decomposer::palu(mat);
+
+    EXPECT_EQ(result.U.principal_prod(), 0)
+        << "The determinant must be zero for singular "
+           "matrices.";
+    EXPECT_EQ(result.swaps % 2, 0) << "Swaps count parity is consistent.";
+}
 
 
 
