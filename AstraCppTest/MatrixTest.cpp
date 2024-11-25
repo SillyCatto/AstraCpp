@@ -688,6 +688,19 @@ TEST_F(MatrixTest, matrix_trace_singleton) {
     EXPECT_DOUBLE_EQ(mat.trace(), 5);
 }
 
+TEST_F(MatrixTest, PrincipalProd2x2) {
+    Matrix mat(2, 2, {1, 2, 3, 4});
+    EXPECT_EQ(mat.principal_prod(), 4); 
+}
+
+TEST_F(MatrixTest, PrincipalProdDiagonalMatrix) {
+    Matrix mat(3, 3, { 2, 0, 0, 
+                       0, 3, 0, 
+                       0, 0, 5 }
+               );
+    EXPECT_EQ(mat.principal_prod(), 30); 
+}
+
 TEST_F(MatrixTest, matrix_avg_positive) {
     Matrix mat(2, 2);
     mat << 1 << 2 << 3 << 4;
