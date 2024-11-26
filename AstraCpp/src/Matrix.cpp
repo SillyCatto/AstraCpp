@@ -645,6 +645,9 @@ Matrix Matrix::inverse() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
     }
+    if (is_singular()) {
+        throw astra::internals::exceptions::singular_matrix();
+    }
     // taking an identity matrix
     Matrix inverse = Matrix::identity(rows);
     // making copy of the given matrix
