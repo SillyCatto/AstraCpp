@@ -1139,6 +1139,109 @@ TEST_F(MatrixTest, valid_submatrix) {
     EXPECT_EQ(submat, expected);
 }
 
+TEST_F(MatrixTest, submatrix_out_of_bounds) {
+    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+
+    EXPECT_THROW(mat.submatrix(1, 1, 5, 5),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, submatrix_invalid) {
+
+    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+
+    EXPECT_THROW(mat.submatrix(1, 1, 0, 0),
+                 astra::internals::exceptions::invalid_argument);
+}
+
+TEST_F(MatrixTest, submatrix_single_element) {
+    Matrix mat(1, 1, {5});
+
+    Matrix submat = mat.submatrix(0, 0, 0, 0);
+
+    EXPECT_EQ(submat, mat);
+}
+
+TEST_F(MatrixTest, submatrix_single_row) {
+    Matrix mat(1, 3, {1, 2, 3});
+
+    Matrix submat = mat.submatrix(0, 0, 0, 2);
+
+    EXPECT_EQ(submat, mat);
+}
+
+TEST_F(MatrixTest, submatrix_single_column) {
+    Matrix mat(3, 1, {1, 2, 3});
+
+    Matrix submat = mat.submatrix(0, 0, 2, 0);
+
+    EXPECT_EQ(submat, mat);
+}
+
+TEST_F(MatrixTest, rref_singleton) {
+    Matrix singleton(1, 1, {5});
+    Matrix rref = singleton.rref();
+
+    Matrix expected(1, 1, {1});
+
+    EXPECT_EQ(rref, expected);
+}
+
+TEST_F(MatrixTest, rref_zero) {
+    Matrix zero(2, 2);
+    Matrix rref = zero.rref();
+
+    EXPECT_EQ(rref, zero);
+}
+
+TEST_F(MatrixTest, rref_identity) {
+    Matrix identity = Matrix::identity(3);
+    Matrix rref = identity.rref();
+
+    EXPECT_EQ(rref, identity);
+}
+
+TEST_F(MatrixTest, rref_diagonal) {
+    Matrix diagonal(3, 3, {1, 0, 0, 0, 2, 0, 0, 0, 3});
+    Matrix rref = diagonal.rref();
+    Matrix expected(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+
+    EXPECT_EQ(rref, expected);
+}
+
+TEST_F(MatrixTest, rref_upper_triangular) {
+    Matrix upper_triangular(3, 3, {1, 2, 3, 0, 5, 6, 0, 0, 9});
+    Matrix rref = upper_triangular.rref();
+    Matrix expected = Matrix::identity(3);
+
+    EXPECT_EQ(rref, expected);
+}
+
+TEST_F(MatrixTest, rref_lower_triangular) {
+    Matrix lower_triangular(3, 3, {1, 0, 0, 4, 5, 0, 7, 8, 9});
+    Matrix rref = lower_triangular.rref();
+    Matrix expected = Matrix::identity(3);
+
+    EXPECT_EQ(rref, expected);
+}
+
+TEST_F(MatrixTest, rref_non_square) {
+    Matrix non_square(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix rref = non_square.rref();
+    Matrix expected(2, 3, {1, 0, -1, 0, 1, 2});
+
+    EXPECT_EQ(rref, expected);
+}
+
+TEST_F(MatrixTest, rref_non_square2) {
+    Matrix non_square(3, 2, {1, 2, 3, 4, 5, 6});
+    Matrix rref = non_square.rref();
+    Matrix expected(3, 2, {1, 0, 0, 1, 0, 0});
+
+    EXPECT_EQ(rref, expected);
+}
+
+
 TEST_F(MatrixTest, Determinant2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
@@ -1173,6 +1276,57 @@ TEST_F(MatrixTest, Determinant3x3second) {
 TEST_F(MatrixTest, DeterminantWithRowSwaps) {
     Matrix mat(2, 2, {0, 1, 1, 0}); 
     EXPECT_EQ(mat.det(), -1);    
+}
+
+TEST_F(MatrixTest, inverse_nonSquare) {
+    Matrix mat(2, 3, {1, 2, 3, 4, 5, 6});
+    EXPECT_THROW(mat.inverse(),
+                 astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, inverse_singular) {
+    Matrix singular(2, 2, {1, 2, 2, 4});
+    EXPECT_THROW(singular.inverse(),
+                 astra::internals::exceptions::singular_matrix);
+}
+
+TEST_F(MatrixTest, inverse_identity) {
+    Matrix identity(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix inverse = identity.inverse();
+
+    EXPECT_EQ(inverse, identity);
+}
+
+TEST_F(MatrixTest, inverse_2x2) {
+    Matrix mat(2, 2, {1, 2, 3, 4});
+    Matrix inverse = mat.inverse();
+
+    Matrix expected(2, 2, {-2, 1, 1.5, -0.5});
+
+    EXPECT_EQ(inverse, expected);
+}
+
+TEST_F(MatrixTest, inverse_3x3) {
+    Matrix mat(3, 3, {1, 2, 3, 
+                      0, 1, 4,
+                      5, 6, 0});
+    Matrix inverse = mat.inverse();
+
+    Matrix expected(3, 3,
+                    {-24, 18, 5, 
+                     20, -15, -4, 
+                     -5, 4, 1});
+
+    EXPECT_EQ(inverse, expected);
+}
+
+TEST_F(MatrixTest, inverse_singleton) {
+    Matrix singleton(1, 1, {5});
+    Matrix inverse = singleton.inverse();
+
+    Matrix expected(1, 1, {0.2});
+
+    EXPECT_EQ(inverse, expected);
 }
 
 TEST_F(MatrixTest, single_row_submatrix) {

@@ -94,4 +94,11 @@ class variable_and_value_number_mismatch : public std::exception {
     }
 };
 
+class singular_matrix : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  singular matrix provided for the operation";
+    }
+};
+
 }  // namespace astra::internals::exceptions

@@ -4,6 +4,8 @@
 #include "Utils.h"
 #include "Decomposer.h"
 #include "MathUtils.h"
+#include "Solver.h"
+#include "Vector.h"
 
 #include <iostream>
 #include <iomanip>
@@ -619,7 +621,7 @@ Matrix Matrix::rref(double tol) const {
 
 }
 
-double Matrix::det() {
+double Matrix::det() const{
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
     }
@@ -632,6 +634,71 @@ double Matrix::det() {
     det *= (plu.swaps % 2 == 0) ? 1 : -1;
 
     return det;
+}
+
+bool Matrix::is_singular() const { 
+    return internals::mathutils::nearly_equal(det(), 0.0); 
+}
+
+
+Matrix Matrix::inverse() const {
+    if (!is_square()) {
+        throw astra::internals::exceptions::non_square_matrix();
+    }
+    if (is_singular()) {
+        throw astra::internals::exceptions::singular_matrix();
+    }
+    // taking an identity matrix
+    Matrix inverse = Matrix::identity(rows);
+    // making copy of the given matrix
+    Matrix mat_copy(*this);
+
+    // making mat_copy to upper triangular form
+    for (int i = 0; i < rows; i++) {
+        // taking the diagonal elements
+        double current_val = mat_copy(i, i);
+        
+        for (int j = i + 1; j < rows; j++) {
+            // to eleminate the ith element, how should we add ith row to jth
+            // row
+            double mult = -mat_copy(j, i) / current_val;
+
+            for (int k = 0; k < rows; k++) {
+                // eleminating the ith element and updating the inverse
+                // accordingly
+                mat_copy(j, k) += mult * mat_copy(i, k);
+                inverse(j, k) += mult * inverse(i, k);
+            }
+        }
+    }
+
+    // making mat_copy to diagonal form
+    for (int i = rows - 1; i >= 0; i--) {
+        double current_val = mat_copy(i, i);
+
+        for (int j = i - 1; j >= 0; j--) {
+            double mult = -mat_copy(j, i) / current_val;
+
+            for (int k = 0; k < rows; k++) {
+                mat_copy(j, k) += mult * mat_copy(i, k);
+                inverse(j, k) += mult * inverse(i, k);
+            }
+        }
+    }
+
+    // scaling to identity
+    for (int i = 0; i < rows; i++) {
+    
+        double current_val = mat_copy(i, i);
+        mat_copy(i, i) /= current_val;
+
+        for (int j = 0; j < rows; j++) {
+            inverse(i, j) /= current_val;
+        }
+    }
+
+    return inverse;
+
 }
 
 Matrix astra::operator*(const Matrix& mat, double scalar) {
