@@ -641,7 +641,7 @@ bool Matrix::is_singular() const {
 }
 
 
-Matrix Matrix::inverse() const {
+Matrix Matrix::inv() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
     }

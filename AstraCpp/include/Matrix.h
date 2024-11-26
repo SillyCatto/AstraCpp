@@ -389,7 +389,7 @@ class Matrix {
 
     bool is_singular() const;
     
-    Matrix inverse() const;
+    Matrix inv() const;
 
     /**
      * @brief Multiplies each element of the matrix by a scalar.
