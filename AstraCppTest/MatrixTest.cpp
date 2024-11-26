@@ -1154,6 +1154,32 @@ TEST_F(MatrixTest, submatrix_invalid) {
                  astra::internals::exceptions::invalid_argument);
 }
 
+TEST_F(MatrixTest, submatrix_single_element) {
+    Matrix mat(1, 1, {5});
+
+    Matrix submat = mat.submatrix(0, 0, 0, 0);
+
+    EXPECT_EQ(submat, mat);
+}
+
+TEST_F(MatrixTest, submatrix_single_row) {
+    Matrix mat(1, 3, {1, 2, 3});
+
+    Matrix submat = mat.submatrix(0, 0, 0, 2);
+
+    EXPECT_EQ(submat, mat);
+}
+
+TEST_F(MatrixTest, submatrix_single_column) {
+    Matrix mat(3, 1, {1, 2, 3});
+
+    Matrix submat = mat.submatrix(0, 0, 2, 0);
+
+    EXPECT_EQ(submat, mat);
+}
+
+
+
 TEST_F(MatrixTest, Determinant2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
