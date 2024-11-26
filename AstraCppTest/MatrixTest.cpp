@@ -35,7 +35,8 @@ TEST_F(MatrixTest, invalid_matrix_creation) {
 
 TEST_F(MatrixTest, comma_initializer) {
     Matrix m(2, 2);
-    m << 1.0, 2.0, 3.0, 4.0;
+    m << 1.0, 2.0, 
+         3.0, 4.0;
 
     EXPECT_EQ(m(0, 0), 1.0);
     EXPECT_EQ(m(0, 1), 2.0);
@@ -69,8 +70,11 @@ TEST_F(MatrixTest, matrix_addition) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4; 
-    matB << 5 << 6 << 7 << 8; 
+    matA << 1 << 2 
+         << 3 << 4; 
+
+    matB << 5 << 6 
+         << 7 << 8; 
 
     Matrix result = matA + matB;
 
@@ -84,7 +88,8 @@ TEST_F(MatrixTest, matrix_addition_size_mismatch) {
     Matrix matA(2, 2);
     Matrix matB(3, 3);
 
-    matA << 1 << 2 << 3 << 4; 
+    matA << 1 << 2 
+         << 3 << 4; 
 
     EXPECT_THROW(matA + matB, astra::internals::exceptions::matrix_size_mismatch);
 }
@@ -93,8 +98,11 @@ TEST_F(MatrixTest, matrix_addition_empty) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4;
-    matB << 0 << 0 << 0 << 0; 
+    matA << 1 << 2 
+         << 3 << 4;
+
+    matB << 0 << 0 
+         << 0 << 0; 
 
     Matrix result = matA + matB;
 
@@ -108,8 +116,11 @@ TEST_F(MatrixTest, matrix_subtraction) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 5 << 6 << 7 << 8; 
-    matB << 1 << 2 << 3 << 4; 
+    matA << 5 << 6 
+         << 7 << 8; 
+
+    matB << 1 << 2 
+         << 3 << 4; 
 
     Matrix result = matA - matB;
 
@@ -123,7 +134,9 @@ TEST_F(MatrixTest, matrix_subtraction_size_mismatch) {
     Matrix matA(3, 3);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9; 
+    matA << 1 << 2 << 3 
+         << 4 << 5 << 6 
+         << 7 << 8 << 9; 
 
     EXPECT_THROW(matA - matB, astra::internals::exceptions::matrix_size_mismatch);
 }
@@ -132,8 +145,11 @@ TEST_F(MatrixTest, matrix_subtraction_empty) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4; 
-    matB << 0 << 0 << 0 << 0; 
+    matA << 1 << 2 
+         << 3 << 4; 
+
+    matB << 0 << 0 
+         << 0 << 0; 
 
     Matrix result = matA - matB;
 
@@ -147,8 +163,10 @@ TEST_F(MatrixTest, matrix_multiplication) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4;
-    matB << 5 << 6 << 7 << 8;
+    matA << 1 << 2 
+         << 3 << 4;
+    matB << 5 << 6 
+         << 7 << 8;
 
     Matrix result = matA * matB;
 
@@ -162,7 +180,8 @@ TEST_F(MatrixTest, matrix_multiplication_size_mismatch) {
     Matrix matA(2, 2);
     Matrix matB(3, 3);
 
-    matA << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 4;
 
     EXPECT_THROW(
         matA * matB,
@@ -173,8 +192,11 @@ TEST_F(MatrixTest, matrix_multiplication_empty) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4;
-    matB << 0 << 0 << 0 << 0;
+    matA << 1 << 2 
+         << 3 << 4;
+
+    matB << 0 << 0 
+         << 0 << 0;
 
     Matrix result = matA * matB;
 
@@ -188,7 +210,8 @@ TEST_F(MatrixTest, matrix_multiplication_identity) {
     Matrix matA(2, 2);
     Matrix matB = Matrix::identity(2);
 
-    matA << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 4;
 
     Matrix result = matA * matB;
 
@@ -202,7 +225,8 @@ TEST_F(MatrixTest, matrix_multiplication_identity_reverse) {
     Matrix matA(2, 2);
     Matrix matB = Matrix::identity(2);
 
-    matA << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 4;
 
     Matrix result = matB * matA;
 
@@ -213,7 +237,8 @@ TEST_F(MatrixTest, matrix_multiplication_identity_reverse) {
 }
 
 TEST_F(MatrixTest, transpose_square_matrix_in_place) {
-    Matrix mat(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix mat(2, 2, {1.0, 2.0, 
+                      3.0, 4.0});
     mat.transpose();
 
     EXPECT_EQ(mat.num_row(), 2);
@@ -225,7 +250,8 @@ TEST_F(MatrixTest, transpose_square_matrix_in_place) {
 }
 
 TEST_F(MatrixTest, transpose_nonsquare_matrix_in_place) {
-    Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
+    Matrix mat(2, 3, {1.0, 2.0, 3.0, 
+                      4.0, 5.0, 6.0});
     mat.transpose();
 
     EXPECT_EQ(mat.num_row(), 3);
@@ -250,7 +276,9 @@ TEST_F(MatrixTest, transpose_single_row_matrix) {
 }
 
 TEST_F(MatrixTest, transpose_single_column_matrix) {
-    Matrix mat(3, 1, {1.0, 2.0, 3.0});
+    Matrix mat(3, 1, {1.0, 
+                      2.0, 
+                      3.0});
     mat.transpose();
 
     EXPECT_EQ(mat.num_row(), 1);
@@ -261,7 +289,8 @@ TEST_F(MatrixTest, transpose_single_column_matrix) {
 }
 
 TEST_F(MatrixTest, transpose_already_transposed_matrix) {
-    Matrix mat(2, 3, {1.0, 2.0, 3.0, 4.0, 5.0, 6.0});
+    Matrix mat(2, 3, {1.0, 2.0, 3.0,
+                      4.0, 5.0, 6.0});
     mat.transpose();
     mat.transpose();
 
@@ -277,7 +306,8 @@ TEST_F(MatrixTest, transpose_already_transposed_matrix) {
 
 TEST_F(MatrixTest, row_swap_square) { 
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     mat.row_swap(0, 1);
 
@@ -289,7 +319,8 @@ TEST_F(MatrixTest, row_swap_square) {
 
 TEST_F(MatrixTest, row_swap_not_square) {
     Matrix mat(2, 3);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
 
     mat.row_swap(0, 1);
 
@@ -304,7 +335,9 @@ TEST_F(MatrixTest, row_swap_not_square) {
 
 TEST_F(MatrixTest, row_swap_not_square_test) {
     Matrix mat(3, 2);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 
+        << 3 << 4 
+        << 5 << 6;
 
     mat.row_swap(0, 1);
 
@@ -317,7 +350,8 @@ TEST_F(MatrixTest, row_swap_not_square_test) {
 }
 TEST_F(MatrixTest, row_swap_not_square_greater) {
     Matrix mat(2, 3);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
 
     EXPECT_THROW(mat.row_swap(2, 1),
                  astra::internals::exceptions::index_out_of_range);
@@ -326,7 +360,8 @@ TEST_F(MatrixTest, row_swap_not_square_greater) {
 
 TEST_F(MatrixTest, partial_row_swap_square) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     mat.partial_row_swap(0, 1, 1);
 
@@ -338,7 +373,8 @@ TEST_F(MatrixTest, partial_row_swap_square) {
 
 TEST_F(MatrixTest, partial_row_swap_not_square) {
     Matrix mat(2, 3);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
 
     mat.partial_row_swap(0, 1, 2);
 
@@ -352,7 +388,8 @@ TEST_F(MatrixTest, partial_row_swap_not_square) {
 
 TEST_F(MatrixTest, partial_row_swap_not_square_greater) {
     Matrix mat(2, 3);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
 
     EXPECT_THROW(mat.partial_row_swap(2, 1, 1),
                  astra::internals::exceptions::index_out_of_range);
@@ -360,7 +397,8 @@ TEST_F(MatrixTest, partial_row_swap_not_square_greater) {
 
 TEST_F(MatrixTest, partial_row_swap_not_square_smaller) {
     Matrix mat(2, 3);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
 
     EXPECT_THROW(mat.partial_row_swap(0, 1, 4),
                  astra::internals::exceptions::index_out_of_range);
@@ -368,7 +406,8 @@ TEST_F(MatrixTest, partial_row_swap_not_square_smaller) {
 
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
     Matrix mat(2, 2);
-    mat << 1.0, 2.0, 3.0, 4.0;
+    mat << 1.0, 2.0, 
+           3.0, 4.0;
     Matrix result = mat * 2.0;
 
     EXPECT_DOUBLE_EQ(result(0, 0), 2.0);
@@ -379,7 +418,8 @@ TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
 
 TEST_F(MatrixTest, scalar_multiplication_scalar_times_matrix) {
     Matrix mat(2, 2);
-    mat << 1.0, 2.0, 3.0, 4.0;
+    mat << 1.0, 2.0, 
+           3.0, 4.0;
     Matrix result = 3.0 * mat;
 
     EXPECT_DOUBLE_EQ(result(0, 0), 3.0);
@@ -390,7 +430,8 @@ TEST_F(MatrixTest, scalar_multiplication_scalar_times_matrix) {
 
 TEST_F(MatrixTest, scalar_multiplication_negative_scalar) {
     Matrix mat(2, 2);
-    mat << 1.0, -2.0, 3.0, -4.0;
+    mat << 1.0, -2.0, 
+           3.0, -4.0;
     Matrix result = mat * -1.0;
 
     EXPECT_DOUBLE_EQ(result(0, 0), -1.0);
@@ -401,7 +442,8 @@ TEST_F(MatrixTest, scalar_multiplication_negative_scalar) {
 
 TEST_F(MatrixTest, scalar_multiplication_zero_scalar) {
     Matrix mat(2, 2);
-    mat << 1.0, 2.0, 3.0, 4.0;
+    mat << 1.0, 2.0, 
+           3.0, 4.0;
     Matrix result = mat * 0.0;
 
     EXPECT_DOUBLE_EQ(result(0, 0), 0.0);
@@ -412,7 +454,8 @@ TEST_F(MatrixTest, scalar_multiplication_zero_scalar) {
 
 TEST_F(MatrixTest, scalar_multiplication_one_scalar) {
     Matrix mat(2, 2);
-    mat << 1.0, 2.0, 3.0, 4.0;
+    mat << 1.0, 2.0, 
+           3.0, 4.0;
     Matrix result = mat * 1.0;
 
     EXPECT_DOUBLE_EQ(result(0, 0), 1.0);
@@ -423,7 +466,8 @@ TEST_F(MatrixTest, scalar_multiplication_one_scalar) {
 
 TEST_F(MatrixTest, scalar_division) {
     Matrix mat(2, 2);
-    mat << 4.0, 8.0, 12.0, 16.0;
+    mat << 4.0, 8.0, 
+          12.0, 16.0;
 
     Matrix result = mat / 4.0;
 
@@ -435,7 +479,8 @@ TEST_F(MatrixTest, scalar_division) {
 
 TEST_F(MatrixTest, scalar_division_by_one) {
     Matrix mat(2, 2);
-    mat << 3.0, 6.0, 9.0, 12.0;
+    mat << 3.0, 6.0, 
+           9.0, 12.0;
 
     Matrix result = mat / 1.0;
 
@@ -447,7 +492,8 @@ TEST_F(MatrixTest, scalar_division_by_one) {
 
 TEST_F(MatrixTest, scalar_division_fraction) {
     Matrix mat(2, 2);
-    mat << 2.0, 4.0, 6.0, 8.0;
+    mat << 2.0, 4.0, 
+           6.0, 8.0;
 
     Matrix result = mat / 0.5;
 
@@ -459,14 +505,16 @@ TEST_F(MatrixTest, scalar_division_fraction) {
 
 TEST_F(MatrixTest, division_by_zero) {
     Matrix mat(2, 2);
-    mat << 5.0, 10.0, 15.0, 20.0;
+    mat << 5.0, 10.0, 
+          15.0, 20.0;
 
     EXPECT_THROW(mat / 0.0, astra::internals::exceptions::zero_division);
 }
 
 TEST_F(MatrixTest, scalar_division_negative_values) {
     Matrix mat(2, 2);
-    mat << -10.0, -20.0, 30.0, 40.0;
+    mat << -10.0, -20.0, 
+            30.0, 40.0;
 
     Matrix result = mat / 10.0;
 
@@ -478,7 +526,8 @@ TEST_F(MatrixTest, scalar_division_negative_values) {
 
 TEST_F(MatrixTest, scalar_division_small_result) {
     Matrix mat(2, 2);
-    mat << 1e-6, 2e-6, 3e-6, 4e-6;
+    mat << 1e-6, 2e-6, 
+           3e-6, 4e-6;
 
     Matrix result = mat / 1e6;
 
@@ -502,7 +551,8 @@ TEST_F(MatrixTest, matrix_assignment_equal) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 4;
     matB = matA;
 
     EXPECT_EQ(matB(0, 0), 1);
@@ -515,7 +565,8 @@ TEST_F(MatrixTest, matrix_assignment_different_size) {
     Matrix matA(2, 2);
     Matrix matB(3, 3);
 
-    matA << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 4;
 
     matB = matA;
 
@@ -529,8 +580,11 @@ TEST_F(MatrixTest, matrix_equality) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4;
-    matB << 1 << 2 << 3 << 4;
+    matA << 1 << 2
+         << 3 << 4;
+
+    matB << 1 << 2
+         << 3 << 4;
 
     EXPECT_TRUE(matA == matB);
 }
@@ -539,8 +593,11 @@ TEST_F(MatrixTest, matrix_equality_false) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 6;
-    matB << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 6;
+
+    matB << 1 << 2 
+         << 3 << 4;
 
     EXPECT_FALSE(matA == matB);
 }
@@ -549,8 +606,11 @@ TEST_F(MatrixTest, matrix_equality_diff_size) {
     Matrix matA(2, 3);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 6 << 5 << 7;
-    matB << 1 << 2 << 3 << 4;
+    matA << 1 << 2 << 3 
+         << 6 << 5 << 7;
+
+    matB << 1 << 2 
+         << 3 << 4;
 
     EXPECT_FALSE(matA == matB);
 }
@@ -559,8 +619,11 @@ TEST_F(MatrixTest, matrix_inequality_true) {
     Matrix matA(2, 3);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 6 << 5 << 7;
-    matB << 1 << 2 << 3 << 4;
+    matA << 1 << 2 << 3 
+         << 6 << 5 << 7;
+
+    matB << 1 << 2 
+         << 3 << 4;
 
     EXPECT_TRUE(matA != matB);
 }
@@ -569,8 +632,11 @@ TEST_F(MatrixTest, matrix_inequality_false) {
     Matrix matA(2, 2);
     Matrix matB(2, 2);
 
-    matA << 1 << 2 << 3 << 4;
-    matB << 1 << 2 << 3 << 4;
+    matA << 1 << 2 
+         << 3 << 4;
+
+    matB << 1 << 2 
+         << 3 << 4;
 
     EXPECT_FALSE(matA != matB);
 }
@@ -578,7 +644,9 @@ TEST_F(MatrixTest, matrix_inequality_false) {
 
 TEST_F(MatrixTest, matrix_replace) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+
+    mat << 1 << 2 
+        << 3 << 4;
 
     mat.replace(2, 5);
 
@@ -590,7 +658,8 @@ TEST_F(MatrixTest, matrix_replace) {
 
 TEST_F(MatrixTest, matrix_replace_all) { 
     Matrix mat(2, 2);
-    mat << 4 << 4 << 4 << 4;
+    mat << 4 << 4 
+        << 4 << 4;
     
     mat.replace(4, 9);
 
@@ -601,7 +670,9 @@ TEST_F(MatrixTest, matrix_replace_all) {
 }
 
 TEST_F(MatrixTest, replace_nonexistent_value) {
-    Matrix mat(2, 2, {1, 2, 3, 4});
+    Matrix mat(2, 2, {1, 2, 
+                      3, 4});
+
     mat.replace(99, 8);
 
     EXPECT_EQ(mat(0, 0), 1);
@@ -612,70 +683,80 @@ TEST_F(MatrixTest, replace_nonexistent_value) {
 
 TEST_F(MatrixTest, matrix_sum_positive) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.sum(), 10);
 }
 
 TEST_F(MatrixTest, matrix_sum_negative) {
     Matrix mat(2, 2);
-    mat << -1 << -2 << -3 << -4;
+    mat << -1 << -2 
+        << -3 << -4;
 
     EXPECT_DOUBLE_EQ(mat.sum(), -10);
 }
 
 TEST_F(MatrixTest, matrix_sum_zero) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << -6;
+    mat << 1 << 2 
+        << 3 << -6;
 
     EXPECT_DOUBLE_EQ(mat.sum(), 0);
 }
 
 TEST_F(MatrixTest, matrix_sum_large) {
     Matrix mat(2, 2);
-    mat << 1e6 << 2e6 << 3e6 << 4e6;
+    mat << 1e6 << 2e6 
+        << 3e6 << 4e6;
 
     EXPECT_DOUBLE_EQ(mat.sum(), 10e6);
 }
 
 TEST_F(MatrixTest, matrix_prod_positive) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.prod(), 24);
 }
 
 TEST_F(MatrixTest, matrix_prod_negative) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << -4;
+    mat << 1 << 2 
+        << 3 << -4;
 
     EXPECT_DOUBLE_EQ(mat.prod(), -24);
 }
 
 TEST_F(MatrixTest, matrix_prod_zero) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 0;
+    mat << 1 << 2 
+        << 3 << 0;
 
     EXPECT_DOUBLE_EQ(mat.prod(), 0);
 }
 
 TEST_F(MatrixTest, matrix_prod_large) {
     Matrix mat(2, 2);
-    mat << 1e6 << 2e6 << 3e6 << 4e6;
+    mat << 1e6 << 2e6 
+        << 3e6 << 4e6;
 
     EXPECT_DOUBLE_EQ(mat.prod(), 24e24);
 }
 
 TEST_F(MatrixTest, matrix_trace_square) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.trace(), 5);
 }
 
 TEST_F(MatrixTest, matrix_trace_non_square) {
     Matrix mat(2, 3);
-    mat << 1 << 2 << 3 << 4 << 5 << 6;
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
 
     EXPECT_THROW(mat.trace(),
                  astra::internals::exceptions::non_square_matrix);
@@ -689,7 +770,8 @@ TEST_F(MatrixTest, matrix_trace_singleton) {
 }
 
 TEST_F(MatrixTest, PrincipalProd2x2) {
-    Matrix mat(2, 2, {1, 2, 3, 4});
+    Matrix mat(2, 2, {1, 2,
+                      3, 4});
     EXPECT_EQ(mat.principal_prod(), 4); 
 }
 
@@ -703,21 +785,24 @@ TEST_F(MatrixTest, PrincipalProdDiagonalMatrix) {
 
 TEST_F(MatrixTest, matrix_avg_positive) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.avg(), 2.5);
 }
 
 TEST_F(MatrixTest, matrix_avg_negative) {
     Matrix mat(2, 2);
-    mat << -1 << -2 << -3 << -4;
+    mat << -1 << -2 
+        << -3 << -4;
 
     EXPECT_DOUBLE_EQ(mat.avg(), -2.5);
 }
 
 TEST_F(MatrixTest, matrix_avg_zero) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << -6;
+    mat << 1 << 2 
+        << 3 << -6;
 
     EXPECT_DOUBLE_EQ(mat.avg(), 0);
 }
@@ -738,21 +823,24 @@ TEST_F(MatrixTest, matrix_min_singleton) {
 
 TEST_F(MatrixTest, matrix_min_zero) {
     Matrix mat(2, 2);
-    mat << 1 << 0 << 3 << 4;
+    mat << 1 << 0 
+        << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.min(), 0);
 }
 
 TEST_F(MatrixTest, matrix_min_same) {
     Matrix mat(2, 2);
-    mat << 1 << 1 << 1 << 1;
+    mat << 1 << 1 
+        << 1 << 1;
 
     EXPECT_DOUBLE_EQ(mat.min(), 1);
 }
 
 TEST_F(MatrixTest, matrix_max_same) {
     Matrix mat(2, 2);
-    mat << 1 << 1 << 1 << 1;
+    mat << 1 << 1 
+        << 1 << 1;
 
     EXPECT_DOUBLE_EQ(mat.max(), 1);
 }
@@ -766,21 +854,24 @@ TEST_F(MatrixTest, matrix_max_singleton) {
 
 TEST_F(MatrixTest, matrix_max_zero) {
     Matrix mat(2, 2);
-    mat << -10 << 0 << -45 << -1;
+    mat << -10 << 0 
+        << -45 << -1;
 
     EXPECT_DOUBLE_EQ(mat.max(), 0);
 }
 
 TEST_F(MatrixTest, matrix_max_positive) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
 
     EXPECT_DOUBLE_EQ(mat.max(), 4);
 }
 
 TEST_F(MatrixTest, matrix_max_negative) {
     Matrix mat(2, 2);
-    mat << -1 << -2 << -3 << -4;
+    mat << -1 << -2 
+        << -3 << -4;
 
     EXPECT_DOUBLE_EQ(mat.max(), -1);
 }
@@ -813,35 +904,43 @@ TEST_F(MatrixTest, is_identity_true) {
 
 TEST_F(MatrixTest, is_identity_false) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
     EXPECT_FALSE(mat.is_identity());
 }
 
 TEST_F(MatrixTest, is_identity_non1) { 
     Matrix mat(2, 2); 
-    mat << 2 << 0 << 0 << 2;
+    mat << 2 << 0
+        << 0 << 2;
     EXPECT_FALSE(mat.is_identity());
 }
 
 TEST_F(MatrixTest, is_symmetric_true) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 2 << 5;
+    mat << 1 << 2 
+        << 2 << 5;
     EXPECT_TRUE(mat.is_symmetric());
 }
 
 TEST_F(MatrixTest, is_symmetric_false) {
     Matrix mat(2, 2);
-    mat << 1 << 2 << 3 << 4;
+    mat << 1 << 2 
+        << 3 << 4;
     EXPECT_FALSE(mat.is_symmetric());
 }
 
 TEST_F(MatrixTest, true_diagonal_matrix) {
-    Matrix diag_matrix(3, 3, {1, 0, 0, 0, 2, 0, 0, 0, 3});
+    Matrix diag_matrix(3, 3, {1, 0, 0, 
+                              0, 2, 0, 
+                              0, 0, 3});
     EXPECT_TRUE(diag_matrix.is_diagonal());
 }
 
 TEST_F(MatrixTest, false_diagonal_matrix) {
-    Matrix non_diag_matrix(3, 3, {1, 2, 0, 0, 2, 0, 0, 1, 3});
+    Matrix non_diag_matrix(3, 3, {1, 2, 0, 
+                                  0, 2, 0, 
+                                  0, 1, 3});
     EXPECT_FALSE(non_diag_matrix.is_diagonal());
 }
 
@@ -851,22 +950,29 @@ TEST_F(MatrixTest, single_element_matrix) {
 }
 
 TEST_F(MatrixTest, non_square_matrix) {
-    Matrix non_square_matrix(2, 3, {1, 0, 0, 0, 2, 0});
+    Matrix non_square_matrix(2, 3, {1, 0, 0, 
+                                    0, 2, 0});
     EXPECT_FALSE(non_square_matrix.is_diagonal());
 }
 
 TEST_F(MatrixTest, true_upper_triangular_matrix) {
-    Matrix upper_triangular_matrix(3, 3, {1, 2, 3, 0, 5, 6, 0, 0, 9});
+    Matrix upper_triangular_matrix(3, 3, {1, 2, 3, 
+                                          0, 5, 6, 
+                                          0, 0, 9});
     EXPECT_TRUE(upper_triangular_matrix.is_upper_triangular());
 }
 
 TEST_F(MatrixTest, zero_upper_triangular_matrix) {
-    Matrix zero_upper_triangular_matrix(3, 3, {0, 2, 3, 0, 0, 6, 0, 0, 0});
+    Matrix zero_upper_triangular_matrix(3, 3, {0, 2, 3, 
+                                               0, 0, 6, 
+                                               0, 0, 0});
     EXPECT_TRUE(zero_upper_triangular_matrix.is_upper_triangular());
 }
 
 TEST_F(MatrixTest, upper_triangular_with_zero_on_diagonal) {
-    Matrix zero_diag_upper_triangular_matrix(3, 3, {1, 2, 3, 0, 0, 6, 0, 0, 9});
+    Matrix zero_diag_upper_triangular_matrix(3, 3, {1, 2, 3, 
+                                                    0, 0, 6, 
+                                                    0, 0, 9});
     EXPECT_TRUE(zero_diag_upper_triangular_matrix.is_upper_triangular());
 }
 
@@ -882,17 +988,23 @@ TEST_F(MatrixTest, true_lower_triangular_matrix) {
 }
 
 TEST_F(MatrixTest, zero_lower_triangular_matrix) {
-    Matrix zero_lower_triangular_matrix(3, 3, {0, 0, 0, 4, 0, 0, 7, 8, 0});
+    Matrix zero_lower_triangular_matrix(3, 3, {0, 0, 0, 
+                                               4, 0, 0, 
+                                               7, 8, 0});
     EXPECT_TRUE(zero_lower_triangular_matrix.is_lower_triangular());
 }
 
 TEST_F(MatrixTest, lower_triangular_with_zero_on_diagonal) {
-    Matrix zero_diag_lower_triangular_matrix(3, 3, {1, 0, 0, 4, 0, 0, 7, 8, 0});
+    Matrix zero_diag_lower_triangular_matrix(3, 3, {1, 0, 0, 
+                                                    4, 0, 0,
+                                                    7, 8, 0});
     EXPECT_TRUE(zero_diag_lower_triangular_matrix.is_lower_triangular());
 }
 
 TEST_F(MatrixTest, identity_matrix_is_triangular) {
-    Matrix identity_matrix(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix identity_matrix(3, 3, {1, 0, 0, 
+                                  0, 1, 0, 
+                                  0, 0, 1});
     EXPECT_TRUE(identity_matrix.is_triangular());
     EXPECT_TRUE(identity_matrix.is_upper_triangular());
     EXPECT_TRUE(identity_matrix.is_lower_triangular());
@@ -900,7 +1012,9 @@ TEST_F(MatrixTest, identity_matrix_is_triangular) {
 }
 
 TEST_F(MatrixTest, zero_matrix_is_triangular_and_diagonal) {
-    Matrix zero_matrix(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    Matrix zero_matrix(3, 3, {0, 0, 0, 
+                              0, 0, 0, 
+                              0, 0, 0});
     EXPECT_TRUE(zero_matrix.is_triangular());
     EXPECT_TRUE(zero_matrix.is_diagonal());
 }
@@ -989,8 +1103,10 @@ TEST_F(MatrixTest, resize_smaller) {
 }
 
 TEST_F(MatrixTest, matrix_join_same_rows) {
-    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
-    Matrix matB = Matrix(2, 3, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 
+                                3.0, 4.0});
+    Matrix matB = Matrix(2, 3, {5.0, 6.0, 7.0, 
+                                8.0, 9.0, 10.0});
 
     matA.join(matB);
 
@@ -1011,8 +1127,11 @@ TEST_F(MatrixTest, matrix_join_same_rows) {
 }
 
 TEST_F(MatrixTest, matrix_join_mismatched_rows) {
-    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
-    Matrix matB = Matrix(3, 2, {5.0, 6.0, 7.0, 8.0, 9.0, 10.0});
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 
+                                3.0, 4.0});
+    Matrix matB = Matrix(3, 2, {5.0, 6.0, 
+                                7.0, 8.0, 
+                                9.0, 10.0});
 
     EXPECT_THROW(matA.join(matB),
                  astra::internals::exceptions::matrix_join_size_mismatch);
@@ -1035,8 +1154,12 @@ TEST_F(MatrixTest, matrix_join_single_row_matrices) {
 }
 
 TEST_F(MatrixTest, matrix_join_single_column_matrices) {
-    Matrix matA = Matrix(3, 1, {1.0, 2.0, 3.0});
-    Matrix matB = Matrix(3, 2, {4.0, 5.0, 6.0, 7.0, 8.0, 9.0});
+    Matrix matA = Matrix(3, 1, {1.0, 
+                                2.0, 
+                                3.0});
+    Matrix matB = Matrix(3, 2, {4.0, 5.0, 
+                                6.0, 7.0, 
+                                8.0, 9.0});
 
     matA.join(matB);
 
@@ -1057,10 +1180,14 @@ TEST_F(MatrixTest, matrix_join_single_column_matrices) {
 }
 
 TEST_F(MatrixTest, matrix_join_large_matrices) {
-    double valuesA[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    double valuesA[] = {1,  2,  3,  4, 
+                        5,  6,  7,  8, 
+                        9, 10, 11, 12, 
+                       13, 14, 15, 16};
     Matrix matA(4, 4, valuesA);
 
-    double valuesB[] = {17, 18, 19, 20, 21, 22, 23, 24};
+    double valuesB[] = {17, 18, 19, 20, 
+                        21, 22, 23, 24};
     Matrix matB(4, 2, valuesB);
 
     matA.join(matB);
@@ -1074,7 +1201,8 @@ TEST_F(MatrixTest, matrix_join_large_matrices) {
 }
 
 TEST_F(MatrixTest, matrix_join_with_empty_other_matrix) {
-    Matrix matA = Matrix(2, 2, {1.0, 2.0, 3.0, 4.0});
+    Matrix matA = Matrix(2, 2, {1.0, 2.0, 
+                                3.0, 4.0});
     Matrix matB = Matrix(2, 1);
 
     matA.join(matB);
@@ -1099,8 +1227,11 @@ TEST_F(MatrixTest, matrix_join_both_empty_matrices) {
 }
 
 TEST_F(MatrixTest, matrix_join_with_negative_values) {
-    Matrix matA = Matrix(2, 2, {-1.0, -2.0, -3.0, -4.0});
-    Matrix matB = Matrix(2, 2, {5.0, -6.0, 7.0, -8.0});
+    Matrix matA = Matrix(2, 2, {-1.0, -2.0, 
+                                -3.0, -4.0});
+
+    Matrix matB = Matrix(2, 2, {5.0, -6.0,
+                                7.0, -8.0});
 
     matA.join(matB);
 
@@ -1131,8 +1262,8 @@ TEST_F(MatrixTest, valid_submatrix) {
     Matrix submat = mat.submatrix(1, 1, 2, 2);
     Matrix expected(2, 2, 
         {
-            6, 7, 
-            10, 11
+            6,  7, 
+           10, 11
         }
     );
 
@@ -1140,7 +1271,14 @@ TEST_F(MatrixTest, valid_submatrix) {
 }
 
 TEST_F(MatrixTest, submatrix_out_of_bounds) {
-    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+    Matrix mat(4, 4, 
+        {  
+            1,  2,  3,  4, 
+            5,  6,  7,  8, 
+            9, 10, 11, 12, 
+           13, 14, 15, 16
+        }
+    );
 
     EXPECT_THROW(mat.submatrix(1, 1, 5, 5),
                  astra::internals::exceptions::index_out_of_range);
@@ -1148,7 +1286,14 @@ TEST_F(MatrixTest, submatrix_out_of_bounds) {
 
 TEST_F(MatrixTest, submatrix_invalid) {
 
-    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+    Matrix mat(4, 4, 
+        {
+            1,  2,  3,  4, 
+            5,  6,  7,  8, 
+            9, 10, 11, 12, 
+            13, 14, 15, 16
+        }
+    );
 
     EXPECT_THROW(mat.submatrix(1, 1, 0, 0),
                  astra::internals::exceptions::invalid_argument);
@@ -1163,7 +1308,13 @@ TEST_F(MatrixTest, submatrix_single_element) {
 }
 
 TEST_F(MatrixTest, submatrix_single_row) {
-    Matrix mat(1, 3, {1, 2, 3});
+    Matrix mat(1, 3, 
+        {
+            1, 
+            2, 
+            3
+        }
+    );
 
     Matrix submat = mat.submatrix(0, 0, 0, 2);
 
@@ -1202,15 +1353,24 @@ TEST_F(MatrixTest, rref_identity) {
 }
 
 TEST_F(MatrixTest, rref_diagonal) {
-    Matrix diagonal(3, 3, {1, 0, 0, 0, 2, 0, 0, 0, 3});
+    Matrix diagonal(3, 3, {1, 0, 0, 
+                           0, 2, 0, 
+                           0, 0, 3});
+
     Matrix rref = diagonal.rref();
-    Matrix expected(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+
+    Matrix expected(3, 3, {1, 0, 0, 
+                           0, 1, 0, 
+                           0, 0, 1});
 
     EXPECT_EQ(rref, expected);
 }
 
 TEST_F(MatrixTest, rref_upper_triangular) {
-    Matrix upper_triangular(3, 3, {1, 2, 3, 0, 5, 6, 0, 0, 9});
+    Matrix upper_triangular(3, 3, {1, 2, 3,
+                                   0, 5, 6, 
+                                   0, 0, 9});
+
     Matrix rref = upper_triangular.rref();
     Matrix expected = Matrix::identity(3);
 
@@ -1218,7 +1378,10 @@ TEST_F(MatrixTest, rref_upper_triangular) {
 }
 
 TEST_F(MatrixTest, rref_lower_triangular) {
-    Matrix lower_triangular(3, 3, {1, 0, 0, 4, 5, 0, 7, 8, 9});
+    Matrix lower_triangular(3, 3, {1, 0, 0, 
+                                   4, 5, 0,
+                                   7, 8, 9});
+
     Matrix rref = lower_triangular.rref();
     Matrix expected = Matrix::identity(3);
 
@@ -1226,17 +1389,27 @@ TEST_F(MatrixTest, rref_lower_triangular) {
 }
 
 TEST_F(MatrixTest, rref_non_square) {
-    Matrix non_square(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix non_square(2, 3, {1, 2, 3, 
+                             4, 5, 6});
+
     Matrix rref = non_square.rref();
-    Matrix expected(2, 3, {1, 0, -1, 0, 1, 2});
+
+    Matrix expected(2, 3, {1, 0, -1, 
+                           0, 1, 2});
 
     EXPECT_EQ(rref, expected);
 }
 
 TEST_F(MatrixTest, rref_non_square2) {
-    Matrix non_square(3, 2, {1, 2, 3, 4, 5, 6});
+    Matrix non_square(3, 2, {1, 2, 
+                             3, 4,
+                             5, 6});
+
     Matrix rref = non_square.rref();
-    Matrix expected(3, 2, {1, 0, 0, 1, 0, 0});
+
+    Matrix expected(3, 2, {1, 0, 
+                           0, 1, 
+                           0, 0});
 
     EXPECT_EQ(rref, expected);
 }
@@ -1245,63 +1418,89 @@ TEST_F(MatrixTest, rref_non_square2) {
 TEST_F(MatrixTest, Determinant2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
+
     EXPECT_EQ(mat.det(), -2); // det = 1*4 - 2*3 = -2
 }
 
 TEST_F(MatrixTest, DeterminantIdentityMatrix) {
-    Matrix identity(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix identity(3, 3, {1, 0, 0, 
+                           0, 1, 0, 
+                           0, 0, 1});
+
     EXPECT_EQ(identity.det(), 1); // Determinant of identity matrix is 1
 }
 
 TEST_F(MatrixTest, DeterminantSingularMatrix) {
-    Matrix singular(2, 2, {1, 2, 2, 4});
+    Matrix singular(2, 2, {1, 2, 
+                           2, 4});
+
     EXPECT_EQ(singular.det(), 0); // Rows are linearly dependent, determinant is 0
 }
 
 TEST_F(MatrixTest, DeterminantNonSquareMatrix) {
-    Matrix non_square(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix non_square(2, 3, {1, 2, 3,
+                             4, 5, 6});
+
     EXPECT_THROW(non_square.det(), astra::internals::exceptions::non_square_matrix);
 }
 
 TEST_F(MatrixTest, Determinant3x3) {
-    Matrix mat(3, 3, {6, 1, 1, 4, -2, 5, 2, 8, 7});
+    Matrix mat(3, 3, {6, 1, 1, 
+                      4, -2, 5,
+                      2, 8, 7});
+
     EXPECT_EQ(mat.det(), -306); 
 }
 
 TEST_F(MatrixTest, Determinant3x3second) {
-    Matrix mat(3, 3, {3, 7, 0, 8, 0, -2, 0, -4, -5});
+    Matrix mat(3, 3, {3, 7, 0, 
+                      8, 0, -2, 
+                      0, -4, -5});
+
     EXPECT_EQ(mat.det(), 256);
 }
 
 TEST_F(MatrixTest, DeterminantWithRowSwaps) {
-    Matrix mat(2, 2, {0, 1, 1, 0}); 
+    Matrix mat(2, 2, {0, 1, 
+                      1, 0}); 
+
     EXPECT_EQ(mat.det(), -1);    
 }
 
 TEST_F(MatrixTest, inverse_nonSquare) {
-    Matrix mat(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix mat(2, 3, {1, 2, 3, 
+                      4, 5, 6});
+
     EXPECT_THROW(mat.inverse(),
                  astra::internals::exceptions::non_square_matrix);
 }
 
 TEST_F(MatrixTest, inverse_singular) {
-    Matrix singular(2, 2, {1, 2, 2, 4});
+    Matrix singular(2, 2, {1, 2, 
+                           2, 4});
+
     EXPECT_THROW(singular.inverse(),
                  astra::internals::exceptions::singular_matrix);
 }
 
 TEST_F(MatrixTest, inverse_identity) {
-    Matrix identity(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix identity(3, 3, {1, 0, 0,
+                           0, 1, 0, 
+                           0, 0, 1});
+
     Matrix inverse = identity.inverse();
 
     EXPECT_EQ(inverse, identity);
 }
 
 TEST_F(MatrixTest, inverse_2x2) {
-    Matrix mat(2, 2, {1, 2, 3, 4});
+    Matrix mat(2, 2, {1, 2, 
+                      3, 4});
+
     Matrix inverse = mat.inverse();
 
-    Matrix expected(2, 2, {-2, 1, 1.5, -0.5});
+    Matrix expected(2, 2, {-2, 1, 
+                          1.5, -0.5});
 
     EXPECT_EQ(inverse, expected);
 }
@@ -1330,7 +1529,9 @@ TEST_F(MatrixTest, inverse_singleton) {
 }
 
 TEST_F(MatrixTest, single_row_submatrix) {
-    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix mat(3, 3, {1, 2, 3, 
+                      4, 5, 6, 
+                      7, 8, 9});
 
     Matrix submat = mat.submatrix(1, 0, 1, 2);
     Matrix expected(1, 3, {4, 5, 6});
@@ -1339,16 +1540,22 @@ TEST_F(MatrixTest, single_row_submatrix) {
 }
 
 TEST_F(MatrixTest, single_column_submatrix) {
-    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix mat(3, 3, {1, 2, 3, 
+                      4, 5, 6, 
+                      7, 8, 9});
 
     Matrix submat = mat.submatrix(0, 1, 2, 1);
-    Matrix expected(3, 1, {2, 5, 8});
+    Matrix expected(3, 1, {2, 
+                           5, 
+                           8});
 
     EXPECT_EQ(submat, expected);
 }
 
 TEST_F(MatrixTest, one_by_one_submatrix) {
-    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix mat(3, 3, {1, 2, 3,
+                      4, 5, 6, 
+                      7, 8, 9});
 
     Matrix submat = mat.submatrix(1, 1, 1, 1);
     Matrix expected(1, 1, {5});
@@ -1357,14 +1564,18 @@ TEST_F(MatrixTest, one_by_one_submatrix) {
 }
 
 TEST_F(MatrixTest, out_of_bounds_submatrix) {
-    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix mat(3, 3, {1, 2, 3, 
+                      4, 5, 6, 
+                      7, 8, 9});
 
     EXPECT_THROW(mat.submatrix(-1, 0, 1, 1), astra::internals::exceptions::index_out_of_range);
     EXPECT_THROW(mat.submatrix(0, 0, 3, 3), astra::internals::exceptions::index_out_of_range);
 }
 
 TEST_F(MatrixTest, reverse_indices_submatrix) {
-    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix mat(3, 3, {1, 2, 3, 
+                      4, 5, 6, 
+                      7, 8, 9});
 
     EXPECT_THROW(mat.submatrix(2, 2, 1, 1), astra::internals::exceptions::invalid_argument);
 }
