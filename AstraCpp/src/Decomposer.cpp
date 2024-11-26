@@ -25,7 +25,8 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
         
         // finding the largest value in the column and selecting it as the pivot
         for (int y = x + 1; y < m; y++) {
-            if (abs(U(y, x)) > abs(U(pivot_row, x))) {
+            if (internals::mathutils::abs(U(y, x)) >
+                internals::mathutils::abs(U(pivot_row, x))) {
                 pivot_row = y;
             }
         }
