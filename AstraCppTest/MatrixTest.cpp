@@ -1175,6 +1175,57 @@ TEST_F(MatrixTest, DeterminantWithRowSwaps) {
     EXPECT_EQ(mat.det(), -1);    
 }
 
+TEST_F(MatrixTest, inverse_nonSquare) {
+    Matrix mat(2, 3, {1, 2, 3, 4, 5, 6});
+    EXPECT_THROW(mat.inverse(),
+                 astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, inverse_singular) {
+    Matrix singular(2, 2, {1, 2, 2, 4});
+    EXPECT_THROW(singular.inverse(),
+                 astra::internals::exceptions::singular_matrix);
+}
+
+TEST_F(MatrixTest, inverse_identity) {
+    Matrix identity(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix inverse = identity.inverse();
+
+    EXPECT_EQ(inverse, identity);
+}
+
+TEST_F(MatrixTest, inverse_2x2) {
+    Matrix mat(2, 2, {1, 2, 3, 4});
+    Matrix inverse = mat.inverse();
+
+    Matrix expected(2, 2, {-2, 1, 1.5, -0.5});
+
+    EXPECT_EQ(inverse, expected);
+}
+
+TEST_F(MatrixTest, inverse_3x3) {
+    Matrix mat(3, 3, {1, 2, 3, 
+                      0, 1, 4,
+                      5, 6, 0});
+    Matrix inverse = mat.inverse();
+
+    Matrix expected(3, 3,
+                    {-24, 18, 5, 
+                     20, -15, -4, 
+                     -5, 4, 1});
+
+    EXPECT_EQ(inverse, expected);
+}
+
+TEST_F(MatrixTest, inverse_singleton) {
+    Matrix singleton(1, 1, {5});
+    Matrix inverse = singleton.inverse();
+
+    Matrix expected(1, 1, {0.2});
+
+    EXPECT_EQ(inverse, expected);
+}
+
 TEST_F(MatrixTest, single_row_submatrix) {
     Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
 
