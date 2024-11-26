@@ -49,7 +49,7 @@ TEST_F(DecomposerTest, HandlesNonInvertibleMatrix) {
 
     auto result = Decomposer::palu(mat);
 
-    EXPECT_EQ(result.U.principal_prod(), 0)
+    EXPECT_EQ(result.U.principal_prod(), 0.0)
         << "The determinant must be zero for singular "
            "matrices.";
     EXPECT_EQ(result.swaps % 2, 0) << "Swaps count parity is consistent.";
