@@ -22,10 +22,12 @@ class DecomposerTest : public ::testing::Test {
 TEST_F(DecomposerTest, square_matrix) {
     
     Matrix mat(3, 3,
-        { 2, 1, 1, 
-          4, -6, 0,
-         -2, 7, 2 
-        });
+        { 
+            2, 1, 1, 
+            4, -6, 0,
+            -2, 7, 2 
+        }
+    );
     
     auto result = Decomposer::palu(mat);
 
@@ -41,9 +43,12 @@ TEST_F(DecomposerTest, square_matrix) {
 TEST_F(DecomposerTest, non_invertible_matrix) {
 
     Matrix mat(3, 3, 
-        {1, 2, 3, 
-         4, 5, 6, 
-         7, 8, 9});
+        {
+            1, 2, 3,
+            4, 5, 6,
+            7, 8, 9
+        }
+    );
 
     auto result = Decomposer::palu(mat);
 
