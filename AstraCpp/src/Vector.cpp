@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-using namespace astra;
+namespace astra {
 
 Vector::Vector(int size) : size(size), current_index(0), values(nullptr) {
     if (size <= 0) {
@@ -52,14 +52,12 @@ Vector::Vector(std::initializer_list<double> values)
     }
 }
 
-Vector::~Vector() { 
+Vector::~Vector() {
     delete[] values;
     values = nullptr;
 }
 
-int Vector::get_size() const { 
-    return size; 
-}
+int Vector::get_size() const { return size; }
 
 Vector& Vector::operator<<(double val) {
     if (current_index < size) {
@@ -84,8 +82,7 @@ double Vector::operator*(const Vector& other) const {
     return result;
 }
 
-
-Vector astra::operator*(const Vector& vec, double scalar) {
+Vector operator*(const Vector& vec, double scalar) {
     Vector result(vec.size);
     for (int i = 0; i < vec.size; i++) {
         result.values[i] = vec.values[i] * scalar;
@@ -93,7 +90,7 @@ Vector astra::operator*(const Vector& vec, double scalar) {
     return result;
 }
 
-Vector astra::operator*(double scalar, const Vector& vec) {
+Vector operator*(double scalar, const Vector& vec) {
     return vec * scalar;
 }
 
@@ -107,7 +104,6 @@ Vector Vector::operator/(double scalar) const {
     }
     return result;
 }
-
 
 Vector Vector::operator+(const Vector& other) const {
     if (this->size != other.size) {
@@ -162,7 +158,7 @@ Vector Vector::operator^(const Vector& other) const {
     return result;
 }
 
-Vector& Vector::operator=(const Vector& other) {  
+Vector& Vector::operator=(const Vector& other) {
     if (this == &other) {
         return *this;
     }
@@ -191,9 +187,7 @@ bool Vector::operator==(const Vector& other) const {
     return true;
 }
 
-bool Vector::operator!=(const Vector& other) const { 
-    return !(*this == other); 
-}
+bool Vector::operator!=(const Vector& other) const { return !(*this == other); }
 
 double Vector::magnitude() const {
     double sum_of_squares = 0.0;
@@ -211,9 +205,7 @@ double Vector::sum() const {
     return sum;
 }
 
-double Vector::avg() const { 
-	return sum() / size; 
-}
+double Vector::avg() const { return sum() / size; }
 
 double Vector::min() const {
     double min = values[0];
@@ -235,15 +227,15 @@ double Vector::max() const {
     return max;
 }
 
-Vector Vector::normalize() const { 
-	double mag = magnitude();
+Vector Vector::normalize() const {
+    double mag = magnitude();
     if (mag == 0) {
         throw astra::internals::exceptions::zero_division();
     }
     return *this / mag;
 }
 
-std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
+std::ostream& operator<<(std::ostream& ost, const Vector& v) {
     ost << "[";
     for (int i = 0; i < v.size; ++i) {
         ost << v.values[i];
@@ -255,7 +247,7 @@ std::ostream& astra::operator<<(std::ostream& ost, const Vector& v) {
     return ost;
 }
 
-std::istream& astra::operator>>(std::istream& in, Vector& v) {
+std::istream& operator>>(std::istream& in, Vector& v) {
     int i = 0;
     while (i < v.size && in >> v.values[i]) {
         ++i;
@@ -267,9 +259,9 @@ std::istream& astra::operator>>(std::istream& in, Vector& v) {
     return in;
 }
 
-Vector astra::operator*(const Matrix& mat, const Vector& v) { 
+Vector operator*(const Matrix& mat, const Vector& v) {
     if (mat.num_col() != v.get_size()) {
-            throw astra::internals::exceptions::matrix_size_mismatch();
+        throw astra::internals::exceptions::matrix_size_mismatch();
     }
     Vector result(mat.num_row());
 
@@ -283,7 +275,6 @@ Vector astra::operator*(const Matrix& mat, const Vector& v) {
     }
     return result;
 }
-
 
 double Vector::angle(const Vector& v1, const Vector& v2) {
     if (v1.get_size() != v2.get_size()) {
@@ -311,4 +302,4 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
 double Vector::angle_deg(const Vector& v1, const Vector& v2) {
     return astra::internals::mathutils::rad_to_deg(angle(v1, v2));
 }
-
+} // namespace astra

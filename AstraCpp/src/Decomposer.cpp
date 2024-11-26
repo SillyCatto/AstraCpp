@@ -5,7 +5,7 @@
 #include "Decomposer.h"
 #include "MathUtils.h"
 
-using namespace astra;
+namespace astra {
 
 Decomposer::PLUResult Decomposer::palu(Matrix A) {
     int m = A.num_row();
@@ -21,8 +21,8 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
     int swaps = 0;
 
     for (int x = 0; x < m; x++) {
-        int pivot_row = x; 
-        
+        int pivot_row = x;
+
         // finding the largest value in the column and selecting it as the pivot
         for (int y = x + 1; y < m; y++) {
             if (internals::mathutils::abs(U(y, x)) >
@@ -36,13 +36,13 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
             continue;
         }
 
-
         if (pivot_row != x) {
             // pivot is not in the diagonal so we need to
             // swap rows
-            U.row_swap(x, pivot_row); // swaping U 
+            U.row_swap(x, pivot_row); // swaping U
             P.row_swap(x, pivot_row); // swaping P
-            L.partial_row_swap(x, pivot_row, x); // partial swapping L till diagonal
+            L.partial_row_swap(x, pivot_row,
+                               x); // partial swapping L till diagonal
             swaps++;
         }
 
@@ -72,11 +72,9 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
 
             // put the pivot factor in appropriate position of L
             L(y, x) = pivot_factor;
-
         }
-
-
     }
 
     return PLUResult(P, L, U, swaps);
 }
+} // namespace astra
