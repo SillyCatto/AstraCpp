@@ -132,18 +132,42 @@ int main() {
 
     std::cout << "\nDet(mat1): " << mat1.det() << "\n";*/
 
-    astra::Matrix mat1(2, 2, 
+    astra::Matrix mat1(4, 4, 
         {
-            1, 0, 
-            3, 4
+            1, 2, -1, 5, 
+            3, 6, -3, -2,
+            7, -5, 3, -1,
+            5, 10, 2, -7
         }
             
     );
 
-    astra::Vector vect {1, 2};
+    astra::Vector vec{22, -2, 2, 3};
 
-    auto res = astra::Solver::forward_sub(mat1, vect);
+    auto res = astra::Solver::solve(mat1, vec);
     std::cout << res;
+
+    std::cout << "\n\n";
+
+    astra::Matrix mat2(3, 4,
+        {
+            1, 2, 3, 3, 
+            2, 2, 1, 4, 
+            3, 4, 4, 7
+        }
+    
+    );
+
+    astra::Matrix mat3(3, 4,
+        {
+            1, 1, 1, 2, 
+            0, 1, 2, 3, 
+            1, 2, 3, 5
+        }
+    );
+
+    auto res2 = mat2.rref();
+    std::cout << res2;
 
     std::cin.get();
 

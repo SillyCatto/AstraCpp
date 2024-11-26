@@ -3,6 +3,7 @@
 #include "Exceptions.h"
 #include "Utils.h"
 #include "Decomposer.h"
+#include "MathUtils.h"
 
 #include <iostream>
 #include <iomanip>
@@ -200,7 +201,7 @@ double Matrix::prod() const {
 
 double Matrix::trace() const {
     if (!is_square()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
     double sum = 0.0;
     for (int i = 0; i < rows; ++i) {
@@ -211,7 +212,7 @@ double Matrix::trace() const {
 
 double astra::Matrix::principal_prod() const { 
     if (!is_square()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
     double prod = 1.0;
     for (int i = 0; i < rows; ++i) {
@@ -256,23 +257,29 @@ bool Matrix::is_square() const { return rows == cols; }
 
 bool Matrix::is_rectangular() const { return rows != cols; }
 
-bool Matrix::is_identity() const { 
+bool Matrix::is_identity() const {
     if (!is_square()) {
         return false;
     }
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (i == j && values[i * cols + j] != 1.0) {
-                return false;
+            if (i == j) { // diagonal
+                if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                           1.0)) {
+                    return false;
+                }
             }
-            if (i != j && values[i * cols + j] != 0.0) {
-                return false;
+            else { // non-diagonal
+                if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                           0.0)) {
+                    return false;
+                }
             }
         }
     }
-    return true;
 
+    return true;
 }
 
 bool Matrix::is_symmetric() const { 
@@ -282,7 +289,8 @@ bool Matrix::is_symmetric() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (values[i * cols + j] != values[j * cols + i]) {
+            if (!internals::mathutils::nearly_equal(
+                    values[i * cols + j], values[j * cols + i])) {
                 return false;
             }
         }
@@ -297,7 +305,8 @@ bool Matrix::is_diagonal() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (i != j && values[i * cols + j] != 0.0) {
+            if (i != j && !internals::mathutils::nearly_equal(
+                              values[i * cols + j], 0.0)) {
                 return false;
             }
         }
@@ -312,7 +321,8 @@ bool Matrix::is_upper_triangular() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < i; ++j) {
-            if (values[i * cols + j] != 0.0) {
+            if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                    0.0)) {
                 return false;
             }
         }
@@ -327,7 +337,8 @@ bool Matrix::is_lower_triangular() const {
 
     for (int i = 0; i < rows; ++i) {
         for (int j = i + 1; j < cols; ++j) {
-            if (values[i * cols + j] != 0.0) {
+            if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                    0.0)) {
                 return false;
             }
         }
@@ -343,7 +354,7 @@ bool Matrix::is_triangular() const {
 
 bool Matrix::is_zero() const {
     for (int i = 0; i < rows * cols; ++i) {
-        if (values[i] != 0.0) {
+        if (!internals::mathutils::nearly_equal(values[i], 0.0)) {
             return false;
         }
     }
@@ -479,8 +490,9 @@ void Matrix::join(const Matrix& other) {
     this->cols = num_col_1 + num_col_2;
     this->rows = num_row_1;
 
+    double* new_val = new double[rows * cols];
     delete[] values;
-    values = new double[rows * cols];
+    values = new_val;
 
     for (int i = 0; i < rows * cols; ++i) {
         values[i] = join_values[i];
@@ -511,9 +523,105 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
     return submat;
 }
 
+Matrix Matrix::rref(double tol) const { 
+    /*int n_rows = rows;
+    int n_cols = cols;*/
+    int r = 0;
+    int pivot_row = 0;
+    int pivot_col = 0;
+    double pivot_val = 0.0;
+    double factor = 0.0;
+    bool pivot_found = false;
+
+    Matrix rref(*this);
+
+    for (int c = 0; c < cols; c++) {
+        pivot_found = false;
+        pivot_row = 0;
+        pivot_val = 0.0;
+        factor = 0.0;
+
+        for (int i = r; i < rows; i++) {
+            if (internals::mathutils::abs(rref(i, c)) > tol) {
+                pivot_row = i;
+                pivot_found = true;
+                break;
+            }
+        }
+
+        if (!pivot_found) {
+            continue;
+        }
+
+        // swap rows to move selected pivot to current row
+        for (int k = 0; k < cols; ++k) {
+            astra::internals::utils::swap(values[r * cols + k],
+                                          values[pivot_row * cols + k]);
+        }
+
+        // normalize the pivot row
+        pivot_val = rref(r, c);
+        for (int i = 0; i < cols; i++) {
+            rref(r, i) = rref(r, i) / pivot_val;
+        }
+
+        // eliminate entries below pivot
+        for (int i = r + 1; i < rows; i++) {
+            factor = rref(i, c);
+            for (int j = 0; j < cols; j++) {
+                rref(i, j) = rref(i, j) - factor * rref(r, j);
+            }
+        }
+
+        r++; // move to next row
+
+    }
+
+
+    // backward elimination
+    for (int i = r - 1; i > -1 ; i--) {
+        pivot_found = false;
+        pivot_col = 0.0;
+        pivot_val = 0.0;
+        factor = 0.0;
+
+        for (int c = 0; c < cols; c++) {
+            if (internals::mathutils::abs(rref(i, c) - 1) < tol) {
+                pivot_col = c;
+                pivot_found = true;
+                break;
+            }
+        }
+
+        if (!pivot_found) {
+            continue;
+        }
+
+        // eliminate entries above pivot
+        for (int j = i - 1; j > -1; j--) {
+            factor = rref(j, pivot_col);
+            for (int k = 0; k < cols; k++) {
+                rref(j, k) = rref(j, k) - factor * rref(i, k);
+            }
+        }
+    }
+
+    // stabilize the zero entry
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (internals::mathutils::abs(rref(i, j)) < tol) {
+                rref(i, j) = 0.0;
+            }
+        }
+    }
+
+    return rref;
+
+}
+
 double Matrix::det() {
     if (!is_square()) {
-        throw astra::internals::exceptions::non_sqauare_matrix();
+        throw astra::internals::exceptions::non_square_matrix();
     }
     auto plu = astra::Decomposer::palu(*this);
 
@@ -545,7 +653,7 @@ Matrix astra::operator*(double scalar, const Matrix& mat) {
 
 
 Matrix astra::operator/(const Matrix& mat, double scalar) {
-    if (scalar == 0.0) {
+    if (internals::mathutils::nearly_equal(scalar, 0.0)) {
         throw astra::internals::exceptions::zero_division();
     }
 

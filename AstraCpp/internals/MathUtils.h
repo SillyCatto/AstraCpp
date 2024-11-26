@@ -7,7 +7,11 @@ namespace astra::internals::mathutils {
     const double PI = 3.14159265358979323846;
     const double EPSILON = 1e-6; 
 
-	inline double abs(double x) { return (x < 0) ? -x : x; }
+	inline double abs(double x) { return (x < 0.0) ? -x : x; }
+
+    inline bool nearly_equal(double a, double b, double eps = 1e-6) {
+        return abs(a - b) <= eps;
+    }
 
     inline double fmax(double a, double b) { return (a > b) ? a : b; }
 

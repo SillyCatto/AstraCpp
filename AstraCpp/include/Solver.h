@@ -21,7 +21,8 @@ class Solver {
 
   public:
     static Vector forward_sub(Matrix L, Vector b);
-    
+    static Vector backward_sub(Matrix U, Vector b);
+    static Vector solve(Matrix A, Vector b);
 };
 
 }

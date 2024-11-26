@@ -678,7 +678,7 @@ TEST_F(MatrixTest, matrix_trace_non_square) {
     mat << 1 << 2 << 3 << 4 << 5 << 6;
 
     EXPECT_THROW(mat.trace(),
-                 astra::internals::exceptions::non_sqauare_matrix);
+                 astra::internals::exceptions::non_square_matrix);
 }
 
 TEST_F(MatrixTest, matrix_trace_singleton) { 
@@ -686,6 +686,19 @@ TEST_F(MatrixTest, matrix_trace_singleton) {
     mat << 5;
 
     EXPECT_DOUBLE_EQ(mat.trace(), 5);
+}
+
+TEST_F(MatrixTest, PrincipalProd2x2) {
+    Matrix mat(2, 2, {1, 2, 3, 4});
+    EXPECT_EQ(mat.principal_prod(), 4); 
+}
+
+TEST_F(MatrixTest, PrincipalProdDiagonalMatrix) {
+    Matrix mat(3, 3, { 2, 0, 0, 
+                       0, 3, 0, 
+                       0, 0, 5 }
+               );
+    EXPECT_EQ(mat.principal_prod(), 30); 
 }
 
 TEST_F(MatrixTest, matrix_avg_positive) {
@@ -1130,6 +1143,36 @@ TEST_F(MatrixTest, Determinant2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
     EXPECT_EQ(mat.det(), -2); // det = 1*4 - 2*3 = -2
+}
+
+TEST_F(MatrixTest, DeterminantIdentityMatrix) {
+    Matrix identity(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_EQ(identity.det(), 1); // Determinant of identity matrix is 1
+}
+
+TEST_F(MatrixTest, DeterminantSingularMatrix) {
+    Matrix singular(2, 2, {1, 2, 2, 4});
+    EXPECT_EQ(singular.det(), 0); // Rows are linearly dependent, determinant is 0
+}
+
+TEST_F(MatrixTest, DeterminantNonSquareMatrix) {
+    Matrix non_square(2, 3, {1, 2, 3, 4, 5, 6});
+    EXPECT_THROW(non_square.det(), astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, Determinant3x3) {
+    Matrix mat(3, 3, {6, 1, 1, 4, -2, 5, 2, 8, 7});
+    EXPECT_EQ(mat.det(), -306); 
+}
+
+TEST_F(MatrixTest, Determinant3x3second) {
+    Matrix mat(3, 3, {3, 7, 0, 8, 0, -2, 0, -4, -5});
+    EXPECT_EQ(mat.det(), 256);
+}
+
+TEST_F(MatrixTest, DeterminantWithRowSwaps) {
+    Matrix mat(2, 2, {0, 1, 1, 0}); 
+    EXPECT_EQ(mat.det(), -1);    
 }
 
 TEST_F(MatrixTest, single_row_submatrix) {

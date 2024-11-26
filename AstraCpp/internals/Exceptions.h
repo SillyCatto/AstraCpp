@@ -59,7 +59,7 @@ class matrix_size_mismatch : public std::exception {
     }
 };
 
-class non_sqauare_matrix : public std::exception {
+class non_square_matrix : public std::exception {
   public:
     const char* what() const override {
         return "[ASTRA]  given matrix is not a sqaure matrix for the operation";
@@ -84,6 +84,13 @@ class matrix_multiplication_size_mismatch : public std::exception {
   public:
     const char* what() const override {
         return "[ASTRA]  matrix's column number and other matrix's row number should be same";
+    }
+};
+
+class variable_and_value_number_mismatch : public std::exception {
+  public:
+    const char* what() const override {
+        return "[ASTRA]  number of variables and number of values should be same for solver";
     }
 };
 
