@@ -385,8 +385,11 @@ class Matrix {
      * not square.
      * @return double The determinant of the matrix.
      */
-    double det();
+    double det() const;
 
+    bool is_singular() const;
+    
+    Matrix inverse() const;
 
     /**
      * @brief Multiplies each element of the matrix by a scalar.
