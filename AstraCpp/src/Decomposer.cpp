@@ -41,8 +41,7 @@ Decomposer::PLUResult Decomposer::palu(Matrix A) {
             // swap rows
             U.row_swap(x, pivot_row); // swaping U
             P.row_swap(x, pivot_row); // swaping P
-            L.partial_row_swap(x, pivot_row,
-                               x); // partial swapping L till diagonal
+            L.partial_row_swap(x, pivot_row, x); // partial swapping L till diagonal
             swaps++;
         }
 
