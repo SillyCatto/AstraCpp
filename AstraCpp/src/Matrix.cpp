@@ -4,8 +4,8 @@
 #include "Utils.h"
 #include "Decomposer.h"
 #include "MathUtils.h"
-#include "Solver.h"
-#include "Vector.h"
+//#include "Solver.h"
+//#include "Vector.h"
 
 #include <iostream>
 #include <iomanip>
