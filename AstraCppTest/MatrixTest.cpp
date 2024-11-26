@@ -1139,6 +1139,21 @@ TEST_F(MatrixTest, valid_submatrix) {
     EXPECT_EQ(submat, expected);
 }
 
+TEST_F(MatrixTest, submatrix_out_of_bounds) {
+    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+
+    EXPECT_THROW(mat.submatrix(1, 1, 5, 5),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, submatrix_invalid) {
+
+    Matrix mat(4, 4, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+
+    EXPECT_THROW(mat.submatrix(1, 1, 0, 0),
+                 astra::internals::exceptions::invalid_argument);
+}
+
 TEST_F(MatrixTest, Determinant2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });

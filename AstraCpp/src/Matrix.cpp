@@ -640,7 +640,7 @@ bool Matrix::is_singular() const {
     return internals::mathutils::nearly_equal(det(), 0.0); 
 }
 
-// need is_singular() method
+
 Matrix Matrix::inverse() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
