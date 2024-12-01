@@ -4,8 +4,6 @@
 #include "Utils.h"
 #include "Decomposer.h"
 #include "MathUtils.h"
-//#include "Solver.h"
-//#include "Vector.h"
 
 #include <iostream>
 #include <iomanip>
@@ -519,8 +517,6 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
 }
 
 Matrix Matrix::rref(double tol) const {
-    /*int n_rows = rows;
-    int n_cols = cols;*/
     int r = 0;
     int pivot_row = 0;
     int pivot_col = 0;
