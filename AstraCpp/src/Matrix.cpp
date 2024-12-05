@@ -613,7 +613,7 @@ astra::Vector Matrix::get_row(int i) const {
         throw astra::internals::exceptions::index_out_of_range();
     }
     
-    double arr[cols];
+    double* arr = new double[cols];
     for (int j = 0; j < cols; ++j) {
         arr[j] = (*this)(i, j);
     }
