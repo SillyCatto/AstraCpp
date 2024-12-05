@@ -132,7 +132,7 @@ int main() {
 
     std::cout << "\nDet(mat1): " << mat1.det() << "\n";*/
 
-    astra::Matrix mat1(4, 4, 
+    /*astra::Matrix mat1(4, 4, 
         {
             1, 2, -1, 5, 
             3, 6, -3, -2,
@@ -147,9 +147,9 @@ int main() {
     auto res = astra::Solver::solve(mat1, vec);
     std::cout << res;
 
-    std::cout << "\n\n";
+    std::cout << "\n\n";*/
 
-    astra::Matrix mat2(3, 4,
+    /*astra::Matrix mat2(3, 4,
         {
             1, 2, 3, 3, 
             2, 2, 1, 4, 
@@ -164,10 +164,31 @@ int main() {
             0, 1, 2, 3, 
             1, 2, 3, 5
         }
+    );*/
+
+    astra::Matrix mat4(3, 3, 
+        {
+            1, 2, 3, 
+            4, 5, 6, 
+            7, 8, 9
+        }
     );
 
-    auto res2 = mat2.rref();
-    std::cout << res2;
+    auto plu_res = astra::Decomposer::palu(mat4);
+
+    std::cout << "P:\n";
+    std::cout << plu_res.P;
+
+    std::cout << "\nPA:\n";
+    std::cout << plu_res.P * mat4;
+
+    std::cout << "\nLU:\n";
+    std::cout << plu_res.L * plu_res.U;
+
+    
+
+    /*auto res2 = mat2.rref();
+    std::cout << res2;*/
 
     std::cin.get();
 
