@@ -56,6 +56,19 @@ TEST_F(DecomposerTest, non_invertible_matrix) {
     EXPECT_EQ(result.swaps % 2, 0);
 }
 
+TEST_F(DecomposerTest, identity_matrix) {
+   
+    Matrix mat = Matrix::identity(4);
+
+    auto result = Decomposer::palu(mat);
+
+    EXPECT_EQ(result.P, Matrix::identity(4));
+    EXPECT_EQ(result.L, Matrix::identity(4));
+    EXPECT_EQ(result.U, Matrix::identity(4));
+    EXPECT_EQ(result.swaps, 0);
+        
+}
+
 
 
 } // namespace astra
