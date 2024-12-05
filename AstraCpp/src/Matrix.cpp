@@ -4,6 +4,7 @@
 #include "Utils.h"
 #include "Decomposer.h"
 #include "MathUtils.h"
+#include "Vector.h"
 
 #include <iostream>
 #include <iomanip>
@@ -605,6 +606,19 @@ Matrix Matrix::rref(double tol) const {
     }
 
     return rref;
+}
+
+astra::Vector Matrix::get_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    
+    double* arr = new double[cols];
+    for (int j = 0; j < cols; ++j) {
+        arr[j] = (*this)(i, j);
+    }
+    Vector row(cols, arr);
+    return row;
 }
 
 double Matrix::det() const {
