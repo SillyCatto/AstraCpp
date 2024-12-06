@@ -1495,6 +1495,11 @@ TEST_F(MatrixTest, rank_rectangular_matrix) {
     EXPECT_EQ(mat2.rank(), 2); 
 }
 
+TEST_F(MatrixTest, rank_zero_matrix) {
+    Matrix mat3(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    EXPECT_EQ(mat3.rank(), 0); 
+}
+
 
 
 TEST_F(MatrixTest, determinant_2x2) {
