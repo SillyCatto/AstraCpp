@@ -673,6 +673,28 @@ bool Matrix::is_pivot_row(int i) const {
     return false; // No pivot in this row
 }
 
+int Matrix::rank() const {
+    Matrix rref_matrix = this->rref(); 
+    int rank = 0;
+
+    for (int i = 0; i < rows; ++i) {
+        // Checking if the row is non-zero
+        bool non_zero_row = false;
+        for (int j = 0; j < cols; ++j) {
+            if (internals::mathutils::abs(rref_matrix(i, j)) >
+                1e-6) { // Avoiding floating-point errors
+                non_zero_row = true;
+                break;
+            }
+        }
+        if (non_zero_row) {
+            rank++;
+        }
+    }
+
+    return rank;
+}
+
 double Matrix::det() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
