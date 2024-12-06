@@ -659,8 +659,8 @@ bool Matrix::is_pivot_row(int i) const {
         if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
             // Ensuring if it's the only non-zero value in its column
             for (int k = 0; k < rows; ++k) {
-                if (k != i && !internals::mathutils::nearly_equal(
-                                  rref_matrix(i, k), 0.0)) {
+                if (k != i &&
+                    !internals::mathutils::nearly_equal(rref_matrix(k, j), 0.0)) {
                     return false; // Another row has a non-zero in this column
                 }
             }
