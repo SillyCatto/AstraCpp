@@ -652,6 +652,27 @@ bool Matrix::is_pivot_col(int j) const {
     return false;
 }
 
+bool Matrix::is_pivot_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    Matrix rref_matrix = this->rref();
+
+    // Checking if this row contains a pivot
+    for (int j = 0; j < cols; ++j) {
+        if (rref_matrix(i, j) == 1) {
+            // Ensuring if it's the only non-zero value in its column
+            for (int k = 0; k < rows; ++k) {
+                if (k != i && rref_matrix(k, j) != 0) {
+                    return false; // Another row has a non-zero in this column
+                }
+            }
+            return true; // Found a valid pivot
+        }
+    }
+    return false; // No pivot in this row
+}
+
 double Matrix::det() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();

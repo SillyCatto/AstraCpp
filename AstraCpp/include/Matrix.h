@@ -369,6 +369,8 @@ class Matrix {
 
     bool is_pivot_col(int j) const;
 
+    bool is_pivot_row(int i) const;
+
     /**
      * @brief Computes the determinant of the matrix using PLU decomposition.
      *
