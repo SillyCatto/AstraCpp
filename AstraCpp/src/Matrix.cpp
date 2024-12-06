@@ -635,10 +635,10 @@ bool Matrix::is_pivot_col(int j) const {
     }
     Matrix rref_matrix = this->rref();
     for (int i = 0; i < rows; ++i) {
-        if (rref_matrix(i, j) == 1) {
+        if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
             // Ensuring if it's the leading entry in this row
             for (int k = 0; k < j; ++k) {
-                if (rref_matrix(i, k) != 0) {
+                if (!internals::mathutils::nearly_equal(rref_matrix(i, k), 0)) {
                     return false;
                 }
             }
