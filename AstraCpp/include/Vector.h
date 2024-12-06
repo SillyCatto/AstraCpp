@@ -7,9 +7,9 @@
 #pragma once
 #include <iostream>
 
-#include "Matrix.h"
-
 namespace astra {
+
+class Matrix;
 
 /**
  * @class Vector

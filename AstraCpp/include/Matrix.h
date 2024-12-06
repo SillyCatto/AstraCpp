@@ -6,9 +6,10 @@
 
 #pragma once
 #include <iostream>
-#include "Vector.h"
 
 namespace astra {
+
+class Vector;
 
 /**
  * @class Matrix
