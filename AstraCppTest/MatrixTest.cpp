@@ -1460,6 +1460,31 @@ TEST_F(MatrixTest, is_pivot_col) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, is_pivot_row) {
+    // Full rank RREF matrix
+    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_TRUE(mat1.is_pivot_row(0)); // Row 0 contains a pivot
+    EXPECT_TRUE(mat1.is_pivot_row(1)); // Row 1 contains a pivot
+    EXPECT_TRUE(mat1.is_pivot_row(2)); // Row 2 contains a pivot
+
+    // Zero row and non-pivot row
+    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 0, 0, 0});
+    EXPECT_FALSE(mat2.is_pivot_row(1)); // Row 1 is zero
+    EXPECT_FALSE(mat2.is_pivot_row(2)); // Row 2 is zero
+
+    // Partially reduced matrix
+    Matrix mat3(3, 3, {1, 0, 2, 0, 1, 0, 0, 0, 0});
+    EXPECT_TRUE(mat3.is_pivot_row(0));  // Row 0 has a valid pivot
+    EXPECT_TRUE(mat3.is_pivot_row(1));  // Row 1 has a valid pivot
+    EXPECT_FALSE(mat3.is_pivot_row(2)); // Row 2 is zero
+
+    // Boundary tests
+    EXPECT_THROW(mat1.is_pivot_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat1.is_pivot_row(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
 TEST_F(MatrixTest, determinant_2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
