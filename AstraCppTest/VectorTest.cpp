@@ -383,31 +383,31 @@ TEST_F(VectorTest, equality_operator_floating_point_precision) {
 TEST_F(VectorTest, magnitude_normal_vector) {
     double arr[] = {3.0, 4.0};
     Vector v(2, arr);
-    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+    EXPECT_DOUBLE_EQ(v.mag(), 5.0);
 }
 
 TEST_F(VectorTest, magnitude_zero_vector) {
     double arr[] = {0.0, 0.0, 0.0};
     Vector v(3, arr);
-    EXPECT_DOUBLE_EQ(v.magnitude(), 0.0);
+    EXPECT_DOUBLE_EQ(v.mag(), 0.0);
 }
 
 TEST_F(VectorTest, magnitude_single_element_vector) {
     double arr[] = {5.0};
     Vector v(1, arr);
-    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+    EXPECT_DOUBLE_EQ(v.mag(), 5.0);
 }
 
 TEST_F(VectorTest, magnitude_large_vector) {
     double arr[] = {1.0, 2.0, 2.0};
     Vector v(3, arr);
-    EXPECT_DOUBLE_EQ(v.magnitude(), 3.0);
+    EXPECT_DOUBLE_EQ(v.mag(), 3.0);
 }
 
 TEST_F(VectorTest, magnitude_negative_components) {
     double arr[] = {-3.0, -4.0};
     Vector v(2, arr);
-    EXPECT_DOUBLE_EQ(v.magnitude(), 5.0);
+    EXPECT_DOUBLE_EQ(v.mag(), 5.0);
 }
 
 TEST_F(VectorTest, angle_almost_parallel_vectors) {
@@ -643,7 +643,7 @@ TEST_F(VectorTest, normalize_normal_vector) {
     Vector v(2, arr);
     Vector result = v.normalize();
 
-    EXPECT_DOUBLE_EQ(result.magnitude(), 1.0);
+    EXPECT_DOUBLE_EQ(result.mag(), 1.0);
     EXPECT_DOUBLE_EQ(result[0], 0.6);
     EXPECT_DOUBLE_EQ(result[1], 0.8);
 }

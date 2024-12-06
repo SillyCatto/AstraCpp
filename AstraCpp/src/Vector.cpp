@@ -190,7 +190,7 @@ bool Vector::operator==(const Vector& other) const {
 
 bool Vector::operator!=(const Vector& other) const { return !(*this == other); }
 
-double Vector::magnitude() const {
+double Vector::mag() const {
     double sum_of_squares = 0.0;
     for (int i = 0; i < size; ++i) {
         sum_of_squares += values[i] * values[i];
@@ -229,7 +229,7 @@ double Vector::max() const {
 }
 
 Vector Vector::normalize() const {
-    double mag = magnitude();
+    double mag = this->mag();
     if (mag == 0) {
         throw astra::internals::exceptions::zero_division();
     }
@@ -282,8 +282,8 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
         throw astra::internals::exceptions::vector_size_mismatch();
     }
 
-    double mag_v1 = v1.magnitude();
-    double mag_v2 = v2.magnitude();
+    double mag_v1 = v1.mag();
+    double mag_v2 = v2.mag();
 
     if (mag_v1 == 0 || mag_v2 == 0) {
         throw astra::internals::exceptions::null_vector();

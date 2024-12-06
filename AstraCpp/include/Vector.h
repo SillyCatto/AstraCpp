@@ -164,7 +164,7 @@ class Vector {
      *
      * @return The magnitude (length) of the vector as a double.
      */
-    double magnitude() const;
+    double mag() const;
 
     /**
      * @brief Calculates the angle between two vectors in radians.
