@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __DECOMPOSER_H__
+#define __DECOMPOSER_H__
+
 #include "Matrix.h"
 
 namespace astra {
@@ -18,5 +20,5 @@ class Decomposer {
 
     static PLUResult palu(Matrix A);
 };
-
 } // namespace astra
+#endif // !__DECOMPOSER_H__

@@ -4,7 +4,9 @@
  * operations for linear algebra.
  */
 
-#pragma once
+#ifndef __MATRIX_H__
+#define __MATRIX_H__
+
 #include <iostream>
 
 namespace astra {
@@ -441,3 +443,4 @@ class Matrix {
     friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra
+#endif // !__MATRIX_H__

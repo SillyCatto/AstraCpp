@@ -4,7 +4,9 @@
  * operations for linear algebra.
  */
 
-#pragma once
+#ifndef __VECTOR_H__
+#define __VECTOR_H__
+
 #include <iostream>
 
 namespace astra {
@@ -85,7 +87,7 @@ class Vector {
      */
     double operator*(const Vector& other) const;
 
-     /**
+    /**
      * @brief Adds this vector to another vector.
      * @param other The vector to add.
      * @return A new vector resulting from the addition.
@@ -94,7 +96,7 @@ class Vector {
      */
     Vector operator+(const Vector& other) const;
 
-     /**
+    /**
      * @brief Subtracts another vector from this vector.
      * @param other The vector to subtract.
      * @return A new vector resulting from the subtraction.
@@ -122,7 +124,8 @@ class Vector {
     const double& operator[](int i) const;
 
     /**
-     * @brief Calculates the cross product of a 3d vector with another 3d vector.
+     * @brief Calculates the cross product of a 3d vector with another 3d
+     * vector.
      * @param other The vector to calculate the cross product with.
      * @return A new vector as the cross product result.
      * @throws std::invalid_argument if either vector is not 3-dimensional.
@@ -219,8 +222,6 @@ class Vector {
      */
     Vector normalize() const;
 
-
-
     /**
      * @brief Multiplies each element of the vector by a scalar.
      * @param vec The vector to be scaled.
@@ -242,6 +243,7 @@ class Vector {
     friend std::istream& operator>>(std::istream& in, Vector& v);
 };
 
-    Vector operator*(const Matrix& mat, const Vector& v);
+Vector operator*(const Matrix& mat, const Vector& v);
 
-}
+} // namespace astra
+#endif // !__VECTOR_H__
