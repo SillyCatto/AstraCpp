@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Vector.h"
+#include "Matrix.h"
 #include "Exceptions.h"
 #include "MathUtils.h"
 
