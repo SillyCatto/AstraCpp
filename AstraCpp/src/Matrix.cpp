@@ -624,7 +624,7 @@ Vector Matrix::get_col(int j) const {
 
     Vector col(rows);
     for (int i = 0; i < rows; ++i) {
-        col[i] = (*this)(i, j);
+        col[i] = values[i * cols + j];
     }
     return col;
 }

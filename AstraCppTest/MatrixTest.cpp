@@ -1522,7 +1522,7 @@ TEST_F(MatrixTest, rank_full_rank_square_matrix) {
 
 TEST_F(MatrixTest, rank_rectangular_matrix) {
     Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 4, 5, 6});
-    EXPECT_EQ(mat2.rank(), 1); 
+    EXPECT_EQ(mat2.rank(), 2); 
 }
 
 TEST_F(MatrixTest, rank_zero_matrix) {
