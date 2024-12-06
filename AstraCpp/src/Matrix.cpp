@@ -519,29 +519,25 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
 
 Matrix Matrix::rref(double tol) const {
     int r = 0;
-    int pivot_row = 0;
-    int pivot_col = 0;
+    int pivot_row = -1;
+    int pivot_col = -1;
     double pivot_val = 0.0;
     double factor = 0.0;
-    bool pivot_found = false;
 
     Matrix rref(*this);
 
     for (int c = 0; c < cols; c++) {
-        pivot_found = false;
-        pivot_row = 0;
-        pivot_val = 0.0;
-        factor = 0.0;
+        pivot_row = -1;
 
         for (int i = r; i < rows; i++) {
             if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_row = i;
-                pivot_found = true;
                 break;
             }
         }
 
-        if (!pivot_found) {
+        // pivot not found
+        if (pivot_row == -1) {
             continue;
         }
 
@@ -553,9 +549,12 @@ Matrix Matrix::rref(double tol) const {
 
         // normalize the pivot row
         pivot_val = rref(r, c);
-        for (int i = 0; i < cols; i++) {
-            rref(r, i) = rref(r, i) / pivot_val;
+        if (internals::mathutils::abs(pivot_val) > tol) {
+            for (int i = 0; i < cols; i++) {
+                rref(r, i) = rref(r, i) / pivot_val;
+            }
         }
+        
 
         // eliminate entries below pivot
         for (int i = r + 1; i < rows; i++) {
@@ -569,26 +568,23 @@ Matrix Matrix::rref(double tol) const {
     }
 
     // backward elimination
-    for (int i = r - 1; i > -1; i--) {
-        pivot_found = false;
-        pivot_col = 0;
-        pivot_val = 0.0;
-        factor = 0.0;
+    for (int i = r - 1; i >= 0; i--) {
+        pivot_col = -1;
 
         for (int c = 0; c < cols; c++) {
             if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_col = c;
-                pivot_found = true;
                 break;
             }
         }
 
-        if (!pivot_found) {
+        // pivot not found
+        if (pivot_col == -1) {
             continue;
         }
 
         // eliminate entries above pivot
-        for (int j = i - 1; j > -1; j--) {
+        for (int j = i - 1; j >= 0; j--) {
             factor = rref(j, pivot_col);
             for (int k = 0; k < cols; k++) {
                 rref(j, k) = rref(j, k) - factor * rref(i, k);
@@ -596,7 +592,7 @@ Matrix Matrix::rref(double tol) const {
         }
     }
 
-    // stabilize the zero entry
+    // stabilize the near-zero entry to exactly zero
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if (internals::mathutils::abs(rref(i, j)) < tol) {
