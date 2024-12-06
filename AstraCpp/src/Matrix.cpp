@@ -633,6 +633,25 @@ Vector Matrix::get_col(int j) const {
     return col;
 }
 
+bool Matrix::is_pivot_col(int j) const {
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    Matrix rref_matrix = this->rref();
+    for (int i = 0; i < rows; ++i) {
+        if (rref_matrix(i, j) == 1) {
+            // Ensuring if it's the leading entry in this row
+            for (int k = 0; k < j; ++k) {
+                if (rref_matrix(i, k) != 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
 double Matrix::det() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
