@@ -547,8 +547,8 @@ Matrix Matrix::rref(double tol) const {
 
         // swap rows to move selected pivot to current row
         for (int k = 0; k < cols; ++k) {
-            astra::internals::utils::swap(values[r * cols + k],
-                                          values[pivot_row * cols + k]);
+            astra::internals::utils::swap(rref.values[r * cols + k],
+                                          rref.values[pivot_row * cols + k]);
         }
 
         // normalize the pivot row
@@ -571,12 +571,12 @@ Matrix Matrix::rref(double tol) const {
     // backward elimination
     for (int i = r - 1; i > -1; i--) {
         pivot_found = false;
-        pivot_col = 0.0;
+        pivot_col = 0;
         pivot_val = 0.0;
         factor = 0.0;
 
         for (int c = 0; c < cols; c++) {
-            if (internals::mathutils::abs(rref(i, c) - 1) < tol) {
+            if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_col = c;
                 pivot_found = true;
                 break;
