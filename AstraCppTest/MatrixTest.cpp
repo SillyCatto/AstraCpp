@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Matrix.h"
+#include "Vector.h" 
 #include "gtest/gtest.h"
 
 #include "Exceptions.h"
@@ -1414,6 +1415,95 @@ TEST_F(MatrixTest, rref_non_square2) {
     EXPECT_EQ(rref, expected);
 }
 
+TEST_F(MatrixTest, get_row) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Vector row = mat.get_row(1); 
+    EXPECT_EQ(row.get_size(), 3);
+    EXPECT_EQ(row[0], 4);
+    EXPECT_EQ(row[1], 5);
+    EXPECT_EQ(row[2], 6);
+
+    EXPECT_THROW(mat.get_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.get_row(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, get_col) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Vector row = mat.get_col(2);
+    EXPECT_EQ(row.get_size(), 3);
+    EXPECT_EQ(row[0], 3);
+    EXPECT_EQ(row[1], 6);
+    EXPECT_EQ(row[2], 9);
+
+    EXPECT_THROW(mat.get_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.get_row(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, is_pivot_col) {
+    Matrix mat(3, 3, {1, 2, 0, 0, 1, 3, 0, 0, 1});
+    EXPECT_TRUE(mat.is_pivot_col(0));
+    EXPECT_TRUE(mat.is_pivot_col(1));
+    EXPECT_TRUE(mat.is_pivot_col(2));
+
+    Matrix non_pivot(3, 3, {1, 2, 3, 0, 0, 0, 0, 0, 0});
+    EXPECT_FALSE(non_pivot.is_pivot_col(1));
+
+    EXPECT_THROW(mat.is_pivot_col(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.is_pivot_col(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, is_pivot_row) {
+    // Full rank RREF matrix
+    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_TRUE(mat1.is_pivot_row(0)); // Row 0 contains a pivot
+    EXPECT_TRUE(mat1.is_pivot_row(1)); // Row 1 contains a pivot
+    EXPECT_TRUE(mat1.is_pivot_row(2)); // Row 2 contains a pivot
+
+    // Zero row and non-pivot row
+    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 0, 0, 0});
+    EXPECT_FALSE(mat2.is_pivot_row(1)); // Row 1 is zero
+    EXPECT_FALSE(mat2.is_pivot_row(2)); // Row 2 is zero
+
+    // Partially reduced matrix
+    Matrix mat3(3, 3, {1, 0, 2, 0, 1, 0, 0, 0, 0});
+    EXPECT_TRUE(mat3.is_pivot_row(0));  // Row 0 has a valid pivot
+    EXPECT_TRUE(mat3.is_pivot_row(1));  // Row 1 has a valid pivot
+    EXPECT_FALSE(mat3.is_pivot_row(2)); // Row 2 is zero
+
+    // Boundary tests
+    EXPECT_THROW(mat1.is_pivot_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat1.is_pivot_row(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, rank_full_rank_square_matrix) {
+    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_EQ(mat1.rank(), 3); 
+}
+
+TEST_F(MatrixTest, rank_rectangular_matrix) {
+    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 4, 5, 6});
+    EXPECT_EQ(mat2.rank(), 1); 
+}
+
+TEST_F(MatrixTest, rank_zero_matrix) {
+    Matrix mat3(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    EXPECT_EQ(mat3.rank(), 0); 
+}
+
+TEST_F(MatrixTest, rank_non_square_matrix) {
+    Matrix mat4(2, 3, {1, 2, 3, 4, 5, 6});
+    EXPECT_EQ(mat4.rank(), 2); 
+}
 
 TEST_F(MatrixTest, determinant_2x2) {
     Matrix mat(2, 2,{ 1, 2, 

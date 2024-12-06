@@ -363,7 +363,15 @@ class Matrix {
 
     Matrix rref(double tol = 1e-6) const;
 
-    astra::Vector get_row(int i) const;
+    Vector get_row(int i) const;
+
+    Vector get_col(int j) const;
+
+    bool is_pivot_col(int j) const;
+
+    bool is_pivot_row(int i) const;
+
+    int rank() const;
 
     /**
      * @brief Computes the determinant of the matrix using PLU decomposition.

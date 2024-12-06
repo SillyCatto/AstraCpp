@@ -621,6 +621,80 @@ Vector Matrix::get_row(int i) const {
     return row;
 }
 
+Vector Matrix::get_col(int j) const {
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    Vector col(rows);
+    for (int i = 0; i < rows; ++i) {
+        col[i] = (*this)(i, j);
+    }
+    return col;
+}
+
+bool Matrix::is_pivot_col(int j) const {
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    Matrix rref_matrix = this->rref();
+    for (int i = 0; i < rows; ++i) {
+        if (rref_matrix(i, j) == 1) {
+            // Ensuring if it's the leading entry in this row
+            for (int k = 0; k < j; ++k) {
+                if (rref_matrix(i, k) != 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Matrix::is_pivot_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    Matrix rref_matrix = this->rref();
+
+    // Checking if this row contains a pivot
+    for (int j = 0; j < cols; ++j) {
+        if (rref_matrix(i, j) == 1) {
+            // Ensuring if it's the only non-zero value in its column
+            for (int k = 0; k < rows; ++k) {
+                if (k != i && rref_matrix(k, j) != 0) {
+                    return false; // Another row has a non-zero in this column
+                }
+            }
+            return true; // Found a valid pivot
+        }
+    }
+    return false; // No pivot in this row
+}
+
+int Matrix::rank() const {
+    Matrix rref_matrix = this->rref(); 
+    int rank = 0;
+
+    for (int i = 0; i < rows; ++i) {
+        // Checking if the row is non-zero
+        bool non_zero_row = false;
+        for (int j = 0; j < cols; ++j) {
+            if (internals::mathutils::abs(rref_matrix(i, j)) >
+                1e-6) { // Avoiding floating-point errors
+                non_zero_row = true;
+                break;
+            }
+        }
+        if (non_zero_row) {
+            rank++;
+        }
+    }
+
+    return rank;
+}
+
 double Matrix::det() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
