@@ -621,6 +621,18 @@ Vector Matrix::get_row(int i) const {
     return row;
 }
 
+Vector Matrix::get_col(int j) const {
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    Vector col(rows);
+    for (int i = 0; i < rows; ++i) {
+        col[i] = (*this)(i, j);
+    }
+    return col;
+}
+
 double Matrix::det() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
