@@ -638,7 +638,7 @@ bool Matrix::is_pivot_col(int j) const {
         if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
             // Ensuring if it's the leading entry in this row
             for (int k = 0; k < j; ++k) {
-                if (!internals::mathutils::nearly_equal(rref_matrix(i, k), 0)) {
+                if (!internals::mathutils::nearly_equal(rref_matrix(i, k), 0.0)) {
                     return false;
                 }
             }
@@ -656,10 +656,11 @@ bool Matrix::is_pivot_row(int i) const {
 
     // Checking if this row contains a pivot
     for (int j = 0; j < cols; ++j) {
-        if (rref_matrix(i, j) == 1) {
+        if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
             // Ensuring if it's the only non-zero value in its column
             for (int k = 0; k < rows; ++k) {
-                if (k != i && rref_matrix(k, j) != 0) {
+                if (k != i && !internals::mathutils::nearly_equal(
+                                  rref_matrix(i, k), 0.0)) {
                     return false; // Another row has a non-zero in this column
                 }
             }
