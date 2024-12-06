@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Matrix.h"
+#include "Vector.h" 
 #include "gtest/gtest.h"
 
 #include "Exceptions.h"
@@ -1414,6 +1415,35 @@ TEST_F(MatrixTest, rref_non_square2) {
     EXPECT_EQ(rref, expected);
 }
 
+TEST_F(MatrixTest, get_row) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Vector row = mat.get_row(1); 
+    EXPECT_EQ(row.get_size(), 3);
+    EXPECT_EQ(row[0], 4);
+    EXPECT_EQ(row[1], 5);
+    EXPECT_EQ(row[2], 6);
+
+    EXPECT_THROW(mat.get_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.get_row(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, get_col) {
+    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+
+    Vector row = mat.get_col(2);
+    EXPECT_EQ(row.get_size(), 3);
+    EXPECT_EQ(row[0], 3);
+    EXPECT_EQ(row[1], 6);
+    EXPECT_EQ(row[2], 9);
+
+    EXPECT_THROW(mat.get_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.get_row(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
 
 TEST_F(MatrixTest, determinant_2x2) {
     Matrix mat(2, 2,{ 1, 2, 
