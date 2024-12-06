@@ -1445,6 +1445,21 @@ TEST_F(MatrixTest, get_col) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, is_pivot_col) {
+    Matrix mat(3, 3, {1, 2, 0, 0, 1, 3, 0, 0, 1});
+    EXPECT_TRUE(mat.is_pivot_col(0));
+    EXPECT_TRUE(mat.is_pivot_col(1));
+    EXPECT_TRUE(mat.is_pivot_col(2));
+
+    Matrix non_pivot(3, 3, {1, 2, 3, 0, 0, 0, 0, 0, 0});
+    EXPECT_FALSE(non_pivot.is_pivot_col(1));
+
+    EXPECT_THROW(mat.is_pivot_col(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(mat.is_pivot_col(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
 TEST_F(MatrixTest, determinant_2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
