@@ -1485,6 +1485,11 @@ TEST_F(MatrixTest, is_pivot_row) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, rank_full_rank_square_matrix) {
+    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    EXPECT_EQ(mat1.rank(), 3); 
+}
+
 TEST_F(MatrixTest, determinant_2x2) {
     Matrix mat(2, 2,{ 1, 2, 
                       3, 4 });
