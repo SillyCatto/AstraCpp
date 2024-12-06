@@ -608,16 +608,16 @@ Matrix Matrix::rref(double tol) const {
     return rref;
 }
 
-astra::Vector Matrix::get_row(int i) const {
+Vector Matrix::get_row(int i) const {
     if (i < 0 || i >= rows) {
         throw astra::internals::exceptions::index_out_of_range();
     }
     
-    double* arr = new double[cols];
+    Vector row(cols);
     for (int j = 0; j < cols; ++j) {
-        arr[j] = (*this)(i, j);
+        row[j] = values[i * cols + j];
     }
-    Vector row(cols, arr);
+    
     return row;
 }
 
