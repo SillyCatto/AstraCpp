@@ -691,6 +691,18 @@ bool Matrix::is_zero_row(int i) const {
     return true;
 }
 
+bool Matrix::is_zero_col(int j) const { 
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    for (int i = 0; i < rows; ++i) {
+        if (!internals::mathutils::nearly_equal(values[i * cols + j], 0.0)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int Matrix::rank() const {
     Matrix rref_matrix = this->rref(); 
     int rank = 0;
