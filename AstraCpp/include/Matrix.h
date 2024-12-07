@@ -275,8 +275,16 @@ class Matrix {
     */
     bool is_zero() const;
 
+    /**
+     * @brief Checks if the matrix is singular.
+     * @return True if the matrix is singular, false otherwise.
+     */
     bool is_singular() const;
 
+    /**
+     * @brief Checks if the matrix is invertible.
+     * @return True if the matrix is invertible, false otherwise.
+     */
     bool is_invertible() const;
 
 
@@ -374,7 +382,7 @@ class Matrix {
     /**
      * @brief Computes the row reduced echelon form of the matrix.
      *
-     * @param tol The tolerance value for floating point comparison. (optional)
+     * @param tol (optional) The tolerance value for floating point comparison. Default is 1e-6.
      * @return Matrix The row reduced echelon form of the matrix.
      */
     Matrix rref(double tol = 1e-6) const;
@@ -431,7 +439,14 @@ class Matrix {
      */
     double det() const;
 
-    
+    /**
+     * @brief Computes the inverse of the matrix by Gauss-Jordan method.
+     * @return Matrix The inverse of the matrix.
+     * @throws astra::internals::exceptions::non_sqauare_matrix if the matrix is
+     * not square.
+     * @throws astra::internals::exceptions::singular_matrix if the matrix is
+     * singular.
+     */
     Matrix inv() const;
 
     /**
