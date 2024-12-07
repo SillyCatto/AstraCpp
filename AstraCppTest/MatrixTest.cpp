@@ -1561,23 +1561,82 @@ TEST_F(MatrixTest, is_pivot_row) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, is_zero_row_true) {
+    Matrix zero_row(1, 3, {0, 0, 0});
+
+    EXPECT_TRUE(zero_row.is_zero_row(0));
+
+}
+
+TEST_F(MatrixTest, is_zero_row_false) {
+    Matrix non_zero_row(1, 3, {0, 0, 1});
+
+    EXPECT_FALSE(non_zero_row.is_zero_row(0));
+}
+
+TEST_F(MatrixTest, is_zero_row_out_of_bounds) {
+    Matrix zero_row(1, 3, {0, 0, 0});
+
+    EXPECT_THROW(zero_row.is_zero_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(zero_row.is_zero_row(1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, is_zero_col_true) {
+    Matrix zero_col(3, 3, {0, 7, 20,
+                           0, 2, 3,
+                           0, 9, 4});
+
+    EXPECT_TRUE(zero_col.is_zero_col(0));
+}
+
+TEST_F(MatrixTest, is_zero_col_false) {
+    Matrix non_zero_col(3, 3, {0, 1, 6, 
+                               0, 2, 9, 
+                               0, 3, 4});
+
+    EXPECT_FALSE(non_zero_col.is_zero_col(1));
+}
+
+TEST_F(MatrixTest, is_zero_col_out_of_bounds) {
+    Matrix zero_col(3, 3, {0, 0, 0, 
+                           1, 2, 3, 
+                           6, 9, 4});
+
+    EXPECT_THROW(zero_col.is_zero_col(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(zero_col.is_zero_col(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
 TEST_F(MatrixTest, rank_full_rank_square_matrix) {
-    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix mat1(3, 3, 
+        {
+            1, 0, 0, 
+            0, 1, 0, 
+            0, 0, 1
+        }
+    );
     EXPECT_EQ(mat1.rank(), 3); 
 }
 
 TEST_F(MatrixTest, rank_rectangular_matrix) {
-    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 4, 5, 6});
+    Matrix mat2(3, 3, {1, 2, 3, 
+                       0, 0, 0, 
+                       4, 5, 6});
     EXPECT_EQ(mat2.rank(), 2); 
 }
 
 TEST_F(MatrixTest, rank_zero_matrix) {
-    Matrix mat3(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    Matrix mat3(3, 3, {0, 0, 0, 
+                       0, 0, 0,     
+                       0, 0, 0});
     EXPECT_EQ(mat3.rank(), 0); 
 }
 
 TEST_F(MatrixTest, rank_non_square_matrix) {
-    Matrix mat4(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix mat4(2, 3, {1, 2, 3, 
+                       4, 5, 6});
     EXPECT_EQ(mat4.rank(), 2); 
 }
 
