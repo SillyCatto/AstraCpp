@@ -4,10 +4,14 @@
  * operations for linear algebra.
  */
 
-#pragma once
+#ifndef __MATRIX_H__
+#define __MATRIX_H__
+
 #include <iostream>
 
 namespace astra {
+
+class Vector;
 
 /**
  * @class Matrix
@@ -196,9 +200,6 @@ class Matrix {
      * @brief Computes the product of the principal diagonal elements of the
      * matrix.
      *
-     * This function calculates the product of the elements along the main
-     * diagonal (top-left to bottom-right) of the matrix. If the matrix is not
-     * square, the behavior is undefined.
      *
      * @return The product of the diagonal elements.
      */
@@ -336,13 +337,8 @@ class Matrix {
     void resize(int r, int c);
 
     /**
-     * @brief Concatenates another matrix to the right of the current matrix.
+     * @brief Horizontally concatenates another matrix to the right of the current matrix.
      *
-     * This function horizontally joins the `other` matrix to the current matrix
-     * (`this`), effectively increasing the number of columns. Both matrices
-     * must have the same number of rows. After the operation, the current
-     * matrix (`this`) will have its columns expanded by the number of columns
-     * in the `other` matrix, and the `other` matrix remains unchanged.
      *
      * @param other The matrix to be joined to the right of the current matrix.
      * @throws astra::internals::exceptions::matrix_join_size_mismatch if the
@@ -356,10 +352,10 @@ class Matrix {
     /**
      * @brief Extracts a submatrix from the matrix.
      *
-     * @param r1 The starting row index of the submatrix.
-     * @param c1 The starting column index of the submatrix.
-     * @param r2 The ending row index of the submatrix.
-     * @param c2 The ending column index of the submatrix.
+     * @param r1 The starting row index of the submatrix. (inclusive)
+     * @param c1 The starting column index of the submatrix. (inclusive)
+     * @param r2 The ending row index of the submatrix. (inclusive)
+     * @param c2 The ending column index of the submatrix. (inclusive)
      * @return Matrix A new matrix that is the submatrix defined by the
      * coordinates.
      * @throws astra::internals::exceptions::index_out_of_range if the specified indices are out of bounds or
@@ -369,17 +365,19 @@ class Matrix {
 
     Matrix rref(double tol = 1e-6) const;
 
+    Vector get_row(int i) const;
+
+    Vector get_col(int j) const;
+
+    bool is_pivot_col(int j) const;
+
+    bool is_pivot_row(int i) const;
+
+    int rank() const;
+
     /**
      * @brief Computes the determinant of the matrix using PLU decomposition.
      *
-     * This function computes the determinant of a square matrix. If the matrix
-     * is non-square, it throws a
-     * `astra::internals::exceptions::non_sqauare_matrix` exception.
-     *
-     * The determinant is calculated using the PLU decomposition method. The
-     * product of the principal diagonal elements of the upper triangular matrix
-     * (U) is multiplied by -1 raised to the number of row swaps performed
-     * during decomposition.
      *
      * @throws astra::internals::exceptions::non_sqauare_matrix If the matrix is
      * not square.
@@ -389,7 +387,7 @@ class Matrix {
 
     bool is_singular() const;
     
-    Matrix inverse() const;
+    Matrix inv() const;
 
     /**
      * @brief Multiplies each element of the matrix by a scalar.
@@ -417,21 +415,14 @@ class Matrix {
      * @brief Prints the matrix to the standard output with specified column
      * width.
      *
-     * This function displays the matrix in a formatted layout, where each row
-     * is printed on a new line with elements separated by commas. Each element
-     * occupies a specified width, aligning the output for improved readability.
      *
-     * @param width The width allocated for each matrix element when printed.
+     * @param width The width allocated for each matrix element when printed. (optional)
      */
     void print(int width = 7) const;
 
     /**
      * @brief Outputs the matrix to an output stream.
      *
-     * This operator overloads the << operator, allowing matrices to be
-     * displayed through an output stream such as `std::cout`. The function
-     * formats each row of the matrix with elements separated by commas and
-     * enclosed in square brackets.
      *
      * @param os The output stream to which the matrix will be sent.
      * @param mat The matrix to output.
@@ -443,11 +434,6 @@ class Matrix {
     /**
      * @brief Reads matrix values from an input stream.
      *
-     * This operator overloads the >> operator, enabling input of matrix
-     * elements from an input stream such as `std::cin`. Elements are read
-     * sequentially, filling the matrix in row-major order. If there are fewer
-     * elements than required, remaining entries are filled with zero. Excess
-     * elements are ignored.
      *
      * @param in The input stream from which to read matrix values.
      * @param mat The matrix to populate with values from the input stream.
@@ -457,3 +443,4 @@ class Matrix {
     friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra
+#endif // !__MATRIX_H__

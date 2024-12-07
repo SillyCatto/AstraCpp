@@ -1,16 +1,15 @@
 #include "pch.h"
-#include "Matrix.h"
-#include "Exceptions.h"
-#include "Utils.h"
-#include "Decomposer.h"
-#include "MathUtils.h"
-#include "Solver.h"
 #include "Vector.h"
+#include "Matrix.h"
+#include "Utils.h"
+#include "MathUtils.h"
+#include "Exceptions.h"
+#include "Decomposer.h"
 
 #include <iostream>
 #include <iomanip>
 
-using namespace astra;
+namespace astra {
 
 Matrix::Matrix(int r, int c)
     : rows(r), cols(c), current_index(0), values(nullptr) {
@@ -52,8 +51,6 @@ Matrix::Matrix(int r, int c, std::initializer_list<double> values)
     }
 }
 
-
-
 Matrix::Matrix(const Matrix& other)
     : rows(other.rows), cols(other.cols), current_index(other.current_index),
       values(new double[other.rows * other.cols]) {
@@ -62,8 +59,7 @@ Matrix::Matrix(const Matrix& other)
     }
 }
 
-
-Matrix::~Matrix() { 
+Matrix::~Matrix() {
     delete[] values;
     values = nullptr;
 }
@@ -78,9 +74,9 @@ Matrix& Matrix::operator<<(double val) {
     return *this;
 }
 
-Matrix& Matrix::operator,(double val) { return (*this << val); }
+Matrix &Matrix::operator,(double val) { return (*this << val); }
 
-double& Matrix::operator()(int i, int j) { 
+double& Matrix::operator()(int i, int j) {
     if (i >= rows || i < 0 || j >= cols || j < 0) {
         throw astra::internals::exceptions::index_out_of_range();
     }
@@ -116,7 +112,7 @@ Matrix Matrix::operator-(const Matrix& other) const {
     return result;
 }
 
-Matrix Matrix::operator*(const Matrix& other) const { 
+Matrix Matrix::operator*(const Matrix& other) const {
     if (cols != other.rows) {
         throw astra::internals::exceptions::
             matrix_multiplication_size_mismatch();
@@ -157,8 +153,7 @@ Matrix& Matrix::operator=(const Matrix& other) {
     return *this;
 }
 
-
-bool Matrix::operator==(const Matrix& other) const { 
+bool Matrix::operator==(const Matrix& other) const {
     if (rows != other.rows || cols != other.cols) {
         return false;
     }
@@ -172,8 +167,8 @@ bool Matrix::operator==(const Matrix& other) const {
     return true;
 }
 
-bool astra::Matrix::operator!=(const Matrix& other) const { 
-	return !(*this == other);
+bool Matrix::operator!=(const Matrix& other) const {
+    return !(*this == other);
 }
 
 void Matrix::replace(double old_val, double new_val) {
@@ -183,7 +178,6 @@ void Matrix::replace(double old_val, double new_val) {
         }
     }
 }
-
 
 double Matrix::sum() const {
     double total = 0.0;
@@ -212,7 +206,7 @@ double Matrix::trace() const {
     return sum;
 }
 
-double astra::Matrix::principal_prod() const { 
+double astra::Matrix::principal_prod() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
     }
@@ -268,13 +262,13 @@ bool Matrix::is_identity() const {
         for (int j = 0; j < cols; ++j) {
             if (i == j) { // diagonal
                 if (!internals::mathutils::nearly_equal(values[i * cols + j],
-                                                           1.0)) {
+                                                        1.0)) {
                     return false;
                 }
             }
             else { // non-diagonal
                 if (!internals::mathutils::nearly_equal(values[i * cols + j],
-                                                           0.0)) {
+                                                        0.0)) {
                     return false;
                 }
             }
@@ -284,15 +278,15 @@ bool Matrix::is_identity() const {
     return true;
 }
 
-bool Matrix::is_symmetric() const { 
+bool Matrix::is_symmetric() const {
     if (!is_square()) {
         return false;
     }
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            if (!internals::mathutils::nearly_equal(
-                    values[i * cols + j], values[j * cols + i])) {
+            if (!internals::mathutils::nearly_equal(values[i * cols + j],
+                                                    values[j * cols + i])) {
                 return false;
             }
         }
@@ -300,7 +294,7 @@ bool Matrix::is_symmetric() const {
     return true;
 }
 
-bool Matrix::is_diagonal() const { 
+bool Matrix::is_diagonal() const {
     if (!is_square()) {
         return false;
     }
@@ -332,7 +326,7 @@ bool Matrix::is_upper_triangular() const {
     return true;
 }
 
-bool Matrix::is_lower_triangular() const { 
+bool Matrix::is_lower_triangular() const {
     if (!is_square()) {
         return false;
     }
@@ -347,10 +341,9 @@ bool Matrix::is_lower_triangular() const {
     }
 
     return true;
-
 }
 
-bool Matrix::is_triangular() const { 
+bool Matrix::is_triangular() const {
     return is_lower_triangular() || is_upper_triangular();
 }
 
@@ -381,7 +374,7 @@ void Matrix::transpose() {
         // sqaure
         for (int i = 0; i < rows; ++i) {
             for (int j = i + 1; j < cols; ++j) {
-                astra::internals::utils::swap(values[i * cols + j], 
+                astra::internals::utils::swap(values[i * cols + j],
                                               values[j * cols + i]);
             }
         }
@@ -417,8 +410,7 @@ void Matrix::row_swap(int row1, int row2) {
 }
 
 void Matrix::partial_row_swap(int row1, int row2, int limit_col) {
-    if (row1 >= rows || row2 >= rows || 
-        row1 < 0 || row2 < 0 ||
+    if (row1 >= rows || row2 >= rows || row1 < 0 || row2 < 0 ||
         limit_col >= cols || limit_col < 0) {
         throw astra::internals::exceptions::index_out_of_range();
     }
@@ -458,7 +450,7 @@ void astra::Matrix::resize(int r, int c) {
     fill(0);
 }
 
-void Matrix::join(const Matrix& other) { 
+void Matrix::join(const Matrix& other) {
     int num_row_1 = this->rows;
     int num_col_1 = this->cols;
     int num_row_2 = other.rows;
@@ -525,47 +517,44 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
     return submat;
 }
 
-Matrix Matrix::rref(double tol) const { 
-    /*int n_rows = rows;
-    int n_cols = cols;*/
+Matrix Matrix::rref(double tol) const {
     int r = 0;
-    int pivot_row = 0;
-    int pivot_col = 0;
+    int pivot_row = -1;
+    int pivot_col = -1;
     double pivot_val = 0.0;
     double factor = 0.0;
-    bool pivot_found = false;
 
     Matrix rref(*this);
 
     for (int c = 0; c < cols; c++) {
-        pivot_found = false;
-        pivot_row = 0;
-        pivot_val = 0.0;
-        factor = 0.0;
+        pivot_row = -1;
 
         for (int i = r; i < rows; i++) {
             if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_row = i;
-                pivot_found = true;
                 break;
             }
         }
 
-        if (!pivot_found) {
+        // pivot not found
+        if (pivot_row == -1) {
             continue;
         }
 
         // swap rows to move selected pivot to current row
         for (int k = 0; k < cols; ++k) {
-            astra::internals::utils::swap(values[r * cols + k],
-                                          values[pivot_row * cols + k]);
+            astra::internals::utils::swap(rref.values[r * cols + k],
+                                          rref.values[pivot_row * cols + k]);
         }
 
         // normalize the pivot row
         pivot_val = rref(r, c);
-        for (int i = 0; i < cols; i++) {
-            rref(r, i) = rref(r, i) / pivot_val;
+        if (internals::mathutils::abs(pivot_val) > tol) {
+            for (int i = 0; i < cols; i++) {
+                rref(r, i) = rref(r, i) / pivot_val;
+            }
         }
+        
 
         // eliminate entries below pivot
         for (int i = r + 1; i < rows; i++) {
@@ -576,31 +565,26 @@ Matrix Matrix::rref(double tol) const {
         }
 
         r++; // move to next row
-
     }
 
-
     // backward elimination
-    for (int i = r - 1; i > -1 ; i--) {
-        pivot_found = false;
-        pivot_col = 0.0;
-        pivot_val = 0.0;
-        factor = 0.0;
+    for (int i = r - 1; i >= 0; i--) {
+        pivot_col = -1;
 
         for (int c = 0; c < cols; c++) {
-            if (internals::mathutils::abs(rref(i, c) - 1) < tol) {
+            if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_col = c;
-                pivot_found = true;
                 break;
             }
         }
 
-        if (!pivot_found) {
+        // pivot not found
+        if (pivot_col == -1) {
             continue;
         }
 
         // eliminate entries above pivot
-        for (int j = i - 1; j > -1; j--) {
+        for (int j = i - 1; j >= 0; j--) {
             factor = rref(j, pivot_col);
             for (int k = 0; k < cols; k++) {
                 rref(j, k) = rref(j, k) - factor * rref(i, k);
@@ -608,7 +592,7 @@ Matrix Matrix::rref(double tol) const {
         }
     }
 
-    // stabilize the zero entry
+    // stabilize the near-zero entry to exactly zero
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if (internals::mathutils::abs(rref(i, j)) < tol) {
@@ -618,10 +602,97 @@ Matrix Matrix::rref(double tol) const {
     }
 
     return rref;
-
 }
 
-double Matrix::det() const{
+Vector Matrix::get_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    
+    Vector row(cols);
+    for (int j = 0; j < cols; ++j) {
+        row[j] = values[i * cols + j];
+    }
+    
+    return row;
+}
+
+Vector Matrix::get_col(int j) const {
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    Vector col(rows);
+    for (int i = 0; i < rows; ++i) {
+        col[i] = values[i * cols + j];
+    }
+    return col;
+}
+
+bool Matrix::is_pivot_col(int j) const {
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    Matrix rref_matrix = this->rref();
+    for (int i = 0; i < rows; ++i) {
+        if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
+            // Ensuring if it's the leading entry in this row
+            for (int k = 0; k < j; ++k) {
+                if (!internals::mathutils::nearly_equal(rref_matrix(i, k), 0.0)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Matrix::is_pivot_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    Matrix rref_matrix = this->rref();
+
+    // Checking if this row contains a pivot
+    for (int j = 0; j < cols; ++j) {
+        if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
+            // Ensuring if it's the only non-zero value in its column
+            for (int k = 0; k < rows; ++k) {
+                if (k != i &&
+                    !internals::mathutils::nearly_equal(rref_matrix(k, j), 0.0)) {
+                    return false; // Another row has a non-zero in this column
+                }
+            }
+            return true; // Found a valid pivot
+        }
+    }
+    return false; // No pivot in this row
+}
+
+int Matrix::rank() const {
+    Matrix rref_matrix = this->rref(); 
+    int rank = 0;
+
+    for (int i = 0; i < rows; ++i) {
+        // Checking if the row is non-zero
+        bool non_zero_row = false;
+        for (int j = 0; j < cols; ++j) {
+            if (internals::mathutils::abs(rref_matrix(i, j)) >
+                1e-6) { // Avoiding floating-point errors
+                non_zero_row = true;
+                break;
+            }
+        }
+        if (non_zero_row) {
+            rank++;
+        }
+    }
+
+    return rank;
+}
+
+double Matrix::det() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
     }
@@ -636,12 +707,11 @@ double Matrix::det() const{
     return det;
 }
 
-bool Matrix::is_singular() const { 
-    return internals::mathutils::nearly_equal(det(), 0.0); 
+bool Matrix::is_singular() const {
+    return internals::mathutils::nearly_equal(det(), 0.0);
 }
 
-
-Matrix Matrix::inverse() const {
+Matrix Matrix::inv() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
     }
@@ -657,7 +727,7 @@ Matrix Matrix::inverse() const {
     for (int i = 0; i < rows; i++) {
         // taking the diagonal elements
         double current_val = mat_copy(i, i);
-        
+
         for (int j = i + 1; j < rows; j++) {
             // to eleminate the ith element, how should we add ith row to jth
             // row
@@ -688,7 +758,7 @@ Matrix Matrix::inverse() const {
 
     // scaling to identity
     for (int i = 0; i < rows; i++) {
-    
+
         double current_val = mat_copy(i, i);
         mat_copy(i, i) /= current_val;
 
@@ -698,11 +768,10 @@ Matrix Matrix::inverse() const {
     }
 
     return inverse;
-
 }
 
-Matrix astra::operator*(const Matrix& mat, double scalar) {
-   
+Matrix operator*(const Matrix& mat, double scalar) {
+
     int rows = mat.num_row();
     int cols = mat.num_col();
 
@@ -714,12 +783,11 @@ Matrix astra::operator*(const Matrix& mat, double scalar) {
     return result;
 }
 
-Matrix astra::operator*(double scalar, const Matrix& mat) {
-    return mat * scalar; 
+Matrix operator*(double scalar, const Matrix& mat) {
+    return mat * scalar;
 }
 
-
-Matrix astra::operator/(const Matrix& mat, double scalar) {
+Matrix operator/(const Matrix& mat, double scalar) {
     if (internals::mathutils::nearly_equal(scalar, 0.0)) {
         throw astra::internals::exceptions::zero_division();
     }
@@ -751,13 +819,11 @@ void Matrix::print(int width) const {
     }
 }
 
-
-std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
+std::ostream& operator<<(std::ostream& os, const Matrix& mat) {
     for (int i = 0; i < mat.rows; ++i) {
         os << "[";
         for (int j = 0; j < mat.cols; ++j) {
-            os << std::setw(8)
-               << mat.values[i * mat.cols + j];
+            os << std::setw(8) << mat.values[i * mat.cols + j];
             if (j < mat.cols - 1)
                 os << ", ";
         }
@@ -766,7 +832,7 @@ std::ostream& astra::operator<<(std::ostream& os, const Matrix& mat) {
     return os;
 }
 
-std::istream& astra::operator>>(std::istream& in, Matrix& mat) {
+std::istream& operator>>(std::istream& in, Matrix& mat) {
     int size = mat.rows * mat.cols;
     int i = 0;
     while (i < size && in >> mat.values[i]) {
@@ -778,3 +844,4 @@ std::istream& astra::operator>>(std::istream& in, Matrix& mat) {
     }
     return in;
 }
+} // namespace astra
