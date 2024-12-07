@@ -376,7 +376,7 @@ class Matrix {
     /**
      * @brief Computes the row reduced echelon form of the matrix.
      *
-     * @param tol The tolerance value for floating point comparison.
+     * @param tol The tolerance value for floating point comparison. (optional)
      * @return Matrix The row reduced echelon form of the matrix.
      */
     Matrix rref(double tol = 1e-6) const;
@@ -404,21 +404,21 @@ class Matrix {
     Vector get_col(int j) const;
 
     /**
-     * @brief Checks if a column is a pivot column.
+     * @brief Checks if the jth column is a pivot column.
      * @param j The index of the column to check.
      * @return True if the column is a pivot column, false otherwise.
      */
     bool is_pivot_col(int j) const;
 
     /**
-     * @brief Checks if a row is a pivot row.
+     * @brief Checks if the ith row is a pivot row.
      * @param i The index of the row to check.
      * @return True if the row is a pivot row, false otherwise.
      */
     bool is_pivot_row(int i) const;
 
     /**
-     * @brief Computes the rank of the matrix.
+     * @brief Computes the rank of the matrix from its rref.
      * @return The rank of the matrix.
      */
     int rank() const;
