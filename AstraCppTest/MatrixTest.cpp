@@ -1582,6 +1582,33 @@ TEST_F(MatrixTest, is_zero_row_out_of_bounds) {
     EXPECT_THROW(zero_row.is_zero_row(1),
                  astra::internals::exceptions::index_out_of_range);
 }
+
+TEST_F(MatrixTest, is_zero_col_true) {
+    Matrix zero_col(3, 3, {0, 7, 20,
+                           0, 2, 3,
+                           0, 9, 4});
+
+    EXPECT_TRUE(zero_col.is_zero_col(0));
+}
+
+TEST_F(MatrixTest, is_zero_col_false) {
+    Matrix non_zero_col(3, 3, {0, 1, 6, 
+                               0, 2, 9, 
+                               0, 3, 4});
+
+    EXPECT_FALSE(non_zero_col.is_zero_col(1));
+}
+
+TEST_F(MatrixTest, is_zero_col_out_of_bounds) {
+    Matrix zero_col(3, 3, {0, 0, 0, 
+                           1, 2, 3, 
+                           6, 9, 4});
+
+    EXPECT_THROW(zero_col.is_zero_col(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(zero_col.is_zero_col(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
 TEST_F(MatrixTest, rank_full_rank_square_matrix) {
     Matrix mat1(3, 3, 
         {
