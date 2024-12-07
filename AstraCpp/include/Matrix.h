@@ -317,6 +317,15 @@ class Matrix {
 
 
     /**
+     * @brief Swaps two columns of the matrix in place.
+     * @param col1 The index of the first column.
+     * @param col2 The index of the second column.
+     * @throws astra::internals::exceptions::index_out_of_range if i or j is
+     * out of bounds.
+     */
+    void col_swap(int col1, int col2);
+
+    /**
      * @brief Makes all elements of the matrix zero.
     */
     void clear();
@@ -363,16 +372,55 @@ class Matrix {
      */
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
 
+
+    /**
+     * @brief Computes the row reduced echelon form of the matrix.
+     *
+     * @param tol The tolerance value for floating point comparison.
+     * @return Matrix The row reduced echelon form of the matrix.
+     */
     Matrix rref(double tol = 1e-6) const;
 
+
+    /*
+     * @brief returns the ith row of the matrix in form of vector
+     * 
+     * @param i The index of the row to extract.
+     * @return Vector The ith row of the matrix.
+     * @throws astra::internals::exceptions::index_out_of_range if i is out of
+     * bounds.
+    */
     Vector get_row(int i) const;
 
+
+    /*
+     * @brief returns the jth column of the matrix in form of vector
+     *
+     * @param j The index of the column to extract.
+     * @return Vector The jth column of the matrix.
+     * @throws astra::internals::exceptions::index_out_of_range if j is out of
+     * bounds.
+     */
     Vector get_col(int j) const;
 
+    /**
+     * @brief Checks if a column is a pivot column.
+     * @param j The index of the column to check.
+     * @return True if the column is a pivot column, false otherwise.
+     */
     bool is_pivot_col(int j) const;
 
+    /**
+     * @brief Checks if a row is a pivot row.
+     * @param i The index of the row to check.
+     * @return True if the row is a pivot row, false otherwise.
+     */
     bool is_pivot_row(int i) const;
 
+    /**
+     * @brief Computes the rank of the matrix.
+     * @return The rank of the matrix.
+     */
     int rank() const;
 
     /**

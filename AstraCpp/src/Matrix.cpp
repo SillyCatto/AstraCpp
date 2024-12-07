@@ -421,6 +421,17 @@ void Matrix::partial_row_swap(int row1, int row2, int limit_col) {
     }
 }
 
+void Matrix::col_swap(int col1, int col2) {
+    if (col1 >= cols || col2 >= cols || col1 < 0 || col2 < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    for (int k = 0; k < rows; ++k) {
+        astra::internals::utils::swap(values[k * cols + col1],
+                                      values[k * cols + col2]);
+    }
+}
+
 void Matrix::clear() {
     for (int i = 0; i < rows * cols; ++i) {
         values[i] = 0.0;
