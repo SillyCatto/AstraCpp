@@ -251,8 +251,6 @@ double Matrix::max() const {
 
 bool Matrix::is_square() const { return rows == cols; }
 
-bool Matrix::is_rectangular() const { return rows != cols; }
-
 bool Matrix::is_identity() const {
     if (!is_square()) {
         return false;

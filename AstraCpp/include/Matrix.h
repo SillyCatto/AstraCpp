@@ -234,12 +234,6 @@ class Matrix {
     bool is_square() const;
 
     /**
-     * @brief Checks if this matrix is rectangular.
-     * @return True if the matrix is rectangular, false otherwise.
-     */
-    bool is_rectangular() const;
-
-    /**
      * @brief Checks if this matrix is identity matrix.
      * @return True if the matrix is identity matrix, false otherwise.
      */
