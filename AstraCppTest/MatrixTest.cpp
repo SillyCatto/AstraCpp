@@ -405,6 +405,62 @@ TEST_F(MatrixTest, partial_row_swap_not_square_smaller) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, col_swap_square) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 
+        << 3 << 4;
+
+    mat.col_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 2);
+    EXPECT_EQ(mat(0, 1), 1);
+    EXPECT_EQ(mat(1, 0), 4);
+    EXPECT_EQ(mat(1, 1), 3);
+    
+}
+
+TEST_F(MatrixTest, col_swap_not_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
+
+    mat.col_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 2);
+    EXPECT_EQ(mat(0, 1), 1);
+    EXPECT_EQ(mat(0, 2), 3);
+    EXPECT_EQ(mat(1, 0), 5);
+    EXPECT_EQ(mat(1, 1), 4);
+    EXPECT_EQ(mat(1, 2), 6);
+
+}
+
+TEST_F(MatrixTest, col_swap_not_square_greater) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.col_swap(3, 1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, col_swap_invalid_index) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.col_swap(1, 3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, col_swap_negative_index) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.col_swap(1, -1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
     Matrix mat(2, 2);
     mat << 1.0, 2.0, 
@@ -1593,6 +1649,43 @@ TEST_F(MatrixTest, inverse_nonSquare) {
 
     EXPECT_THROW(mat.inv(),
                  astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, is_singular_square) {
+    Matrix singular(2, 2, {1, 2, 
+                           2, 4});
+
+    EXPECT_TRUE(singular.is_singular());
+}
+
+TEST_F(MatrixTest, is_singular_identity) {
+    Matrix identity(3, 3, {1, 0, 0, 
+                           0, 1, 0, 
+                           0, 0, 1});
+
+    EXPECT_FALSE(identity.is_singular());
+}
+
+TEST_F(MatrixTest, is_singular_zero) {
+    Matrix zero(2, 2);
+
+    EXPECT_TRUE(zero.is_singular());
+}
+
+TEST_F(MatrixTest, is_singular_non_square) {
+    Matrix non_square(2, 3, {1, 2, 3, 
+                             4, 5, 6});
+
+    EXPECT_THROW(non_square.is_singular(),
+                 astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, is_singular_3x3) {
+    Matrix singular(3, 3, {1, 2, 3, 
+                           4, 5, 6, 
+                           7, 8, 9});
+
+    EXPECT_TRUE(singular.is_singular());
 }
 
 TEST_F(MatrixTest, inverse_singular) {
