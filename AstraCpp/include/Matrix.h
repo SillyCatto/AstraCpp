@@ -234,12 +234,6 @@ class Matrix {
     bool is_square() const;
 
     /**
-     * @brief Checks if this matrix is rectangular.
-     * @return True if the matrix is rectangular, false otherwise.
-     */
-    bool is_rectangular() const;
-
-    /**
      * @brief Checks if this matrix is identity matrix.
      * @return True if the matrix is identity matrix, false otherwise.
      */
@@ -280,6 +274,18 @@ class Matrix {
      * @return True if all elements are zero, false otherwise.
     */
     bool is_zero() const;
+
+    /**
+     * @brief Checks if the matrix is singular.
+     * @return True if the matrix is singular, false otherwise.
+     */
+    bool is_singular() const;
+
+    /**
+     * @brief Checks if the matrix is invertible.
+     * @return True if the matrix is invertible, false otherwise.
+     */
+    bool is_invertible() const;
 
 
     /**
@@ -376,7 +382,7 @@ class Matrix {
     /**
      * @brief Computes the row reduced echelon form of the matrix.
      *
-     * @param tol The tolerance value for floating point comparison.
+     * @param tol (optional) The tolerance value for floating point comparison. Default is 1e-6.
      * @return Matrix The row reduced echelon form of the matrix.
      */
     Matrix rref(double tol = 1e-6) const;
@@ -404,21 +410,21 @@ class Matrix {
     Vector get_col(int j) const;
 
     /**
-     * @brief Checks if a column is a pivot column.
+     * @brief Checks if the jth column is a pivot column.
      * @param j The index of the column to check.
      * @return True if the column is a pivot column, false otherwise.
      */
     bool is_pivot_col(int j) const;
 
     /**
-     * @brief Checks if a row is a pivot row.
+     * @brief Checks if the ith row is a pivot row.
      * @param i The index of the row to check.
      * @return True if the row is a pivot row, false otherwise.
      */
     bool is_pivot_row(int i) const;
 
     /**
-     * @brief Computes the rank of the matrix.
+     * @brief Computes the rank of the matrix from its rref.
      * @return The rank of the matrix.
      */
     int rank() const;
@@ -433,8 +439,14 @@ class Matrix {
      */
     double det() const;
 
-    bool is_singular() const;
-    
+    /**
+     * @brief Computes the inverse of the matrix by Gauss-Jordan method.
+     * @return Matrix The inverse of the matrix.
+     * @throws astra::internals::exceptions::non_sqauare_matrix if the matrix is
+     * not square.
+     * @throws astra::internals::exceptions::singular_matrix if the matrix is
+     * singular.
+     */
     Matrix inv() const;
 
     /**

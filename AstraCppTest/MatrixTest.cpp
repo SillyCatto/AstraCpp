@@ -943,16 +943,6 @@ TEST_F(MatrixTest, is_square_false) {
     EXPECT_FALSE(mat.is_square());
 }
 
-TEST_F(MatrixTest, is_rectangular_true) { 
-    Matrix mat(2, 1);
-    EXPECT_TRUE(mat.is_rectangular());
-}
-
-TEST_F(MatrixTest, is_rectangular_false) {
-    Matrix mat(2, 2);
-    EXPECT_FALSE(mat.is_rectangular());
-}
-
 TEST_F(MatrixTest, is_identity_true) {
     Matrix mat = Matrix::identity(3);
     EXPECT_TRUE(mat.is_identity());
