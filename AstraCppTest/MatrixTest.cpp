@@ -1583,22 +1583,33 @@ TEST_F(MatrixTest, is_zero_row_out_of_bounds) {
                  astra::internals::exceptions::index_out_of_range);
 }
 TEST_F(MatrixTest, rank_full_rank_square_matrix) {
-    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix mat1(3, 3, 
+        {
+            1, 0, 0, 
+            0, 1, 0, 
+            0, 0, 1
+        }
+    );
     EXPECT_EQ(mat1.rank(), 3); 
 }
 
 TEST_F(MatrixTest, rank_rectangular_matrix) {
-    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 4, 5, 6});
+    Matrix mat2(3, 3, {1, 2, 3, 
+                       0, 0, 0, 
+                       4, 5, 6});
     EXPECT_EQ(mat2.rank(), 2); 
 }
 
 TEST_F(MatrixTest, rank_zero_matrix) {
-    Matrix mat3(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    Matrix mat3(3, 3, {0, 0, 0, 
+                       0, 0, 0,     
+                       0, 0, 0});
     EXPECT_EQ(mat3.rank(), 0); 
 }
 
 TEST_F(MatrixTest, rank_non_square_matrix) {
-    Matrix mat4(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix mat4(2, 3, {1, 2, 3, 
+                       4, 5, 6});
     EXPECT_EQ(mat4.rank(), 2); 
 }
 
