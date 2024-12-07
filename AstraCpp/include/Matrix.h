@@ -424,6 +424,15 @@ class Matrix {
     bool is_pivot_row(int i) const;
 
     /**
+     * @brief Checks if the ith row has all zero elements.
+     * @param i The index of the row to check.
+     * @return True if the row has all zero elements, false otherwise.
+     * @throws astra::internals::exceptions::index_out_of_range if i is out of
+     * bounds.
+     */
+    bool is_zero_row(int i) const;
+
+    /**
      * @brief Computes the rank of the matrix from its rref.
      * @return The rank of the matrix.
      */

@@ -679,6 +679,18 @@ bool Matrix::is_pivot_row(int i) const {
     return false; // No pivot in this row
 }
 
+bool Matrix::is_zero_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    for (int j = 0; j < cols; ++j) {
+        if (!internals::mathutils::nearly_equal(values[i * cols + j], 0.0)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int Matrix::rank() const {
     Matrix rref_matrix = this->rref(); 
     int rank = 0;
