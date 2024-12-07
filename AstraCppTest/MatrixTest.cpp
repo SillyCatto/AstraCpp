@@ -1561,6 +1561,27 @@ TEST_F(MatrixTest, is_pivot_row) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, is_zero_row_true) {
+    Matrix zero_row(1, 3, {0, 0, 0});
+
+    EXPECT_TRUE(zero_row.is_zero_row(0));
+
+}
+
+TEST_F(MatrixTest, is_zero_row_false) {
+    Matrix non_zero_row(1, 3, {0, 0, 1});
+
+    EXPECT_FALSE(non_zero_row.is_zero_row(0));
+}
+
+TEST_F(MatrixTest, is_zero_row_out_of_bounds) {
+    Matrix zero_row(1, 3, {0, 0, 0});
+
+    EXPECT_THROW(zero_row.is_zero_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(zero_row.is_zero_row(1),
+                 astra::internals::exceptions::index_out_of_range);
+}
 TEST_F(MatrixTest, rank_full_rank_square_matrix) {
     Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
     EXPECT_EQ(mat1.rank(), 3); 
