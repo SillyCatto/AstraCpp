@@ -281,6 +281,10 @@ class Matrix {
     */
     bool is_zero() const;
 
+    bool is_singular() const;
+
+    bool is_invertible() const;
+
 
     /**
      * @brief Creates an identity matrix of a specified size.
@@ -433,7 +437,6 @@ class Matrix {
      */
     double det() const;
 
-    bool is_singular() const;
     
     Matrix inv() const;
 

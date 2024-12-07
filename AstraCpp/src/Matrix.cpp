@@ -722,6 +722,16 @@ bool Matrix::is_singular() const {
     return internals::mathutils::nearly_equal(det(), 0.0);
 }
 
+bool Matrix::is_invertible() const { 
+    if (!is_square()) {
+        return false;
+    }
+    if (is_singular()) {
+        return false;
+    }
+    return true;
+}
+
 Matrix Matrix::inv() const {
     if (!is_square()) {
         throw astra::internals::exceptions::non_square_matrix();
