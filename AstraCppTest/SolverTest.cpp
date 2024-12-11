@@ -167,6 +167,17 @@ TEST_F(SolverTest, eqn_solve_test_forward_sub_4_4x4) {
     EXPECT_EQ(actual_ans, expected_ans);
 }
 
+TEST_F(SolverTest, eqn_solve_test_forward_sub_5_notLower) {
+    Matrix L(3, 3, {1, 0, 0, 
+                    0, 2, 1, 
+                    0, 0, 3}
+    );
+
+    Vector b{1, 2, 3};
+    EXPECT_THROW(Solver::forward_sub(L, b),
+                 internals::exceptions::matrix_not_lower_triangular);
+}
+
 TEST_F(SolverTest, eqn_solve_test_backward_sub_1) {
     Matrix U(3, 3, {1, 2, 3, 
                     0, 1, 4, 
@@ -216,6 +227,17 @@ TEST_F(SolverTest, eqn_solve_test_backward_sub_4_4x4) {
     Vector expected_ans{0, 0, -50, 40};
 
     EXPECT_EQ(actual_ans, expected_ans);
+}
+
+TEST_F(SolverTest, eqn_solve_test_backward_sub_5_notUpper) {
+    Matrix U(3, 3, {1, 0, 0, 
+                    2, 1, 0, 
+                    3, 4, 1}
+    );
+
+    Vector b{1, 2, 3};
+    EXPECT_THROW(Solver::backward_sub(U, b),
+                 internals::exceptions::matrix_not_upper_triangular);
 }
 
 
