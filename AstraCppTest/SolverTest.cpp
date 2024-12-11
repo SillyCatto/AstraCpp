@@ -153,6 +153,20 @@ TEST_F(SolverTest, eqn_solve_test_forward_sub_3_invalid) {
                  internals::exceptions::variable_and_value_number_mismatch);
 }
 
+TEST_F(SolverTest, eqn_solve_test_forward_sub_4_4x4) {
+    Matrix L(4, 4, {1, 0, 0, 0, 
+                    2, 1, 0, 0, 
+                    3, 4, 1, 0,
+                    4, 5, 6, 1}
+    );
+
+    Vector b{1, 2, 3, 4};
+    Vector actual_ans = Solver::forward_sub(L, b);
+    Vector expected_ans{1, 0, 0, 0};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
 TEST_F(SolverTest, eqn_solve_test_backward_sub_1) {
     Matrix U(3, 3, {1, 2, 3, 
                     0, 1, 4, 
