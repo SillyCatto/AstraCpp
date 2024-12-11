@@ -15,6 +15,9 @@ Vector Solver::forward_sub(Matrix L, Vector b) {
         throw astra::internals::exceptions::
             variable_and_value_number_mismatch();
     }
+    else if (!L.is_lower_triangular()) {
+        throw astra::internals::exceptions::matrix_not_lower_triangular();
+    }
 
     Vector x(m);
 
