@@ -83,7 +83,10 @@ TEST_F(SolverTest, eqn_solve_test_5_invalid) {
 }
 
 TEST_F(SolverTest, eqn_solve_test_6_invalid) {
-    Matrix coeff_mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 10});
+    Matrix coeff_mat(3, 3, {1, 2, 3, 
+                            4, 5, 6, 
+                            7, 8, 10}
+    );
 
     Vector constants{14, 32};
     EXPECT_THROW(Solver::solve(coeff_mat, constants),
@@ -101,7 +104,10 @@ TEST_F(SolverTest, eqn_solve_test_7_singleton) {
 }
 
 TEST_F(SolverTest, eqn_solve_test_8_zero) {
-    Matrix coeff_mat(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    Matrix coeff_mat(3, 3, {0, 0, 0, 
+                            0, 0, 0, 
+                            0, 0, 0}
+    );
 
     Vector constants{0, 0, 0};
     Vector actual_ans = Solver::solve(coeff_mat, constants);
@@ -109,6 +115,42 @@ TEST_F(SolverTest, eqn_solve_test_8_zero) {
 
     EXPECT_EQ(actual_ans, expected_ans);
 }
+
+TEST_F(SolverTest, eqn_solve_test_forward_sub_1) {
+    Matrix L(3, 3, {1, 0, 0, 
+                    2, 1, 0, 
+                    3, 4, 1}
+    );
+
+    Vector b{1, 2, 3};
+    Vector actual_ans = Solver::forward_sub(L, b);
+    Vector expected_ans{1, 0, 0};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
+TEST_F(SolverTest, eqn_solve_test_forward_sub_2) {
+    Matrix L(3, 3, {1, 0, 0, 
+                    2, 1, 0, 
+                    3, 4, 1}
+    );
+
+    Vector b{1, 3, 3};
+    Vector actual_ans = Solver::forward_sub(L, b);
+    Vector expected_ans{1, 1, -4};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
+TEST_F(SolverTest, eqn_solve_test_forward_sub_3_invalid) {
+    Matrix L(3, 3, {1, 0, 0, 2, 1, 0, 3, 4, 1});
+
+    Vector b{1, 3};
+    EXPECT_THROW(Solver::forward_sub(L, b),
+                 internals::exceptions::variable_and_value_number_mismatch);
+}
+
+
 
 
 } // namespace astra
