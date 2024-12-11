@@ -63,6 +63,11 @@ Vector Solver::solve(Matrix A, Vector b) {
     if (!A.is_square()) {
         throw internals::exceptions::non_square_matrix();
     }
+    else if (A.num_col() != b.get_size()) {
+        throw internals::exceptions::variable_and_value_number_mismatch();
+    }
+
+
 
     int m = A.num_col();
     Vector y(m);
