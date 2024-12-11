@@ -143,12 +143,67 @@ TEST_F(SolverTest, eqn_solve_test_forward_sub_2) {
 }
 
 TEST_F(SolverTest, eqn_solve_test_forward_sub_3_invalid) {
-    Matrix L(3, 3, {1, 0, 0, 2, 1, 0, 3, 4, 1});
+    Matrix L(3, 3, {1, 0, 0, 
+                    2, 1, 0, 
+                    3, 4, 1}
+    );
 
     Vector b{1, 3};
     EXPECT_THROW(Solver::forward_sub(L, b),
                  internals::exceptions::variable_and_value_number_mismatch);
 }
+
+TEST_F(SolverTest, eqn_solve_test_backward_sub_1) {
+    Matrix U(3, 3, {1, 2, 3, 
+                    0, 1, 4, 
+                    0, 0, 1}
+    );
+
+    Vector b{1, 2, 3};
+    Vector actual_ans = Solver::backward_sub(U, b);
+    Vector expected_ans{12, -10, 3};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
+TEST_F(SolverTest, eqn_solve_test_backward_sub_2) {
+    Matrix U(3, 3, {6, 8, 9, 
+                    0, 3, 7, 
+                    0, 0, 1}
+    );
+
+    Vector b{98, 30, 0};
+    Vector actual_ans = Solver::backward_sub(U, b);
+    Vector expected_ans{3, 10, 0};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
+TEST_F(SolverTest, eqn_solve_test_backward_sub_3_invalid) {
+    Matrix U(3, 3, {1, 2, 3, 
+                    0, 1, 4, 
+                    0, 0, 1}
+    );
+
+    Vector b{1, 3};
+    EXPECT_THROW(Solver::backward_sub(U, b),
+                 internals::exceptions::variable_and_value_number_mismatch);
+}
+
+TEST_F(SolverTest, eqn_solve_test_backward_sub_4_4x4) {
+    Matrix U(4, 4, {1, 2, 3, 4, 
+                    0, 1, 2, 3, 
+                    0, 0, 1, 2, 
+                    0, 0, 0, 1}
+    );
+
+    Vector b{10, 20, 30, 40};
+    Vector actual_ans = Solver::backward_sub(U, b);
+    Vector expected_ans{0, 0, -50, 40};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
 
 
 
