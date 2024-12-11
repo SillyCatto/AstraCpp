@@ -101,4 +101,18 @@ class singular_matrix : public std::exception {
     }
 };
 
+class matrix_not_lower_triangular : public std::exception {
+  public:
+    const char* what() const noexcept override {
+        return "[ASTRA]  matrix is not lower triangular for the operation";
+    }
+};
+
+class matrix_not_upper_triangular : public std::exception {
+  public:
+    const char* what() const noexcept override {
+        return "[ASTRA]  matrix is not upper triangular for the operation";
+    }
+};
+
 }  // namespace astra::internals::exceptions
