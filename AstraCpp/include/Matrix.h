@@ -35,7 +35,7 @@ class Matrix {
      * @param c The number of columns in the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
-    Matrix(int r, int c);
+    Matrix(int row, int col);
 
     /**
      * @brief Constructs a matrix from an array of values.
@@ -44,7 +44,7 @@ class Matrix {
      * @param values An array of values to initialize the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
-    Matrix(int r, int c, const double values[]);
+    Matrix(int row, int col, const double values[]);
 
     /**
      * @brief Constructs a matrix from an initializer list of values.
@@ -53,7 +53,7 @@ class Matrix {
      * @param values An initializer list of values to initialize the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
-    Matrix(int r, int c, std::initializer_list<double> values);
+    Matrix(int row, int col, std::initializer_list<double> values);
 
     /**
      * @brief Copy constructor for deep copying another matrix.

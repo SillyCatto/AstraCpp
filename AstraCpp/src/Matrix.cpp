@@ -11,8 +11,8 @@
 
 namespace astra {
 
-Matrix::Matrix(int r, int c)
-    : rows(r), cols(c), current_index(0), values(nullptr) {
+Matrix::Matrix(int row, int col)
+    : rows(row), cols(col), current_index(0), values(nullptr) {
 
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -24,8 +24,8 @@ Matrix::Matrix(int r, int c)
     }
 }
 
-Matrix::Matrix(int r, int c, const double values[])
-    : rows(r), cols(c), current_index(0) {
+Matrix::Matrix(int row, int col, const double values[])
+    : rows(row), cols(col), current_index(0) {
 
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -37,16 +37,16 @@ Matrix::Matrix(int r, int c, const double values[])
     }
 }
 
-Matrix::Matrix(int r, int c, std::initializer_list<double> values)
-    : rows(r), cols(c), current_index(0), values(new double[r * c]) {
+Matrix::Matrix(int row, int col, std::initializer_list<double> values)
+    : rows(row), cols(col), current_index(0), values(new double[row * col]) {
 
-    if (values.size() != static_cast<size_t>(r * c)) {
+    if (values.size() != static_cast<size_t>(row * col)) {
         throw astra::internals::exceptions::invalid_size();
     }
 
     int i = 0;
     for (double val : values) {
-        if (i < r * c)
+        if (i < row * col)
             this->values[i++] = val;
     }
 }
