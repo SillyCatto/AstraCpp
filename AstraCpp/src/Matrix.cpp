@@ -1,10 +1,11 @@
 #include "pch.h"
-#include "Vector.h"
-#include "Matrix.h"
-#include "Utils.h"
-#include "MathUtils.h"
-#include "Exceptions.h"
-#include "Decomposer.h"
+
+#include "../include/Vector.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../internals/Utils.h"
+#include "../include/Decomposer.h"
+#include "../internals/MathUtils.h"
 
 #include <iostream>
 #include <iomanip>

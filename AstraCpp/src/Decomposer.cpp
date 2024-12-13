@@ -1,9 +1,9 @@
 #include "pch.h"
 
-#include "Matrix.h"
-#include "Exceptions.h"
-#include "Decomposer.h"
-#include "MathUtils.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../include/Decomposer.h"
+#include "../internals/MathUtils.h"
 
 namespace astra {
 
