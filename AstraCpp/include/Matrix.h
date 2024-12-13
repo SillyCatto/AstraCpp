@@ -104,20 +104,6 @@ class Matrix {
      */
     const double& operator()(int i, int j) const;
 
-
-    /**
-     * @brief Returns the number of rows in the matrix.
-     * @return The number of rows.
-     */
-    int num_row() const;
-
-    /**
-     * @brief Returns the number of columns in the matrix.
-     * @return The number of columns.
-     */
-    int num_col() const;
-
-
     /**
      * @brief Overloaded operator to add two matrices.
      * @param other The matrix to add.
@@ -166,6 +152,18 @@ class Matrix {
      * @return True if the matrices are not equal, false otherwise.
      */
     bool operator!=(const Matrix& other) const;
+
+    /**
+     * @brief Returns the number of rows in the matrix.
+     * @return The number of rows.
+     */
+    int num_row() const;
+
+    /**
+     * @brief Returns the number of columns in the matrix.
+     * @return The number of columns.
+     */
+    int num_col() const;
 
     /**
      * @brief Replace all occurrences of a value with another value.
