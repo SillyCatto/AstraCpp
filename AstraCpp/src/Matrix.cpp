@@ -814,6 +814,36 @@ Matrix Matrix::inv() const {
     return inverse;
 }
 
+Matrix Matrix::nullspace() const { 
+    // get the rref form
+    Matrix rref_matrix = this->rref();
+
+    int m = num_row();
+    int n = num_col();
+
+    // bool array to keep track of pivot cols
+    bool* is_pivot_col = new bool[n](); // init to false
+    int r = 0; // current row index in rref
+
+    // traverse through columns of each row and mark the pivot cols
+    for (int c = 0; c < n; ++c) {
+        if (r < m && internals::mathutils::abs(rref_matrix(r, c)) > 1e-6) {
+            is_pivot_col[c] = true; // mark as a pivot column
+            ++r; // move to the next row
+        }
+    }
+
+    // identify free cols
+    int* free_cols = new int[n]; // store index of free cols
+    int free_count = 0;
+
+    for (int c = 0; c < n; ++c) {
+        if (!is_pivot_col[c]) {
+            free_cols[free_count++] = c;
+        }
+    }
+}
+
 Matrix operator*(const Matrix& mat, double scalar) {
 
     int rows = mat.num_row();

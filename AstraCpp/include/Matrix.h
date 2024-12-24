@@ -472,6 +472,8 @@ class Matrix {
      */
     Matrix inv() const;
 
+    Matrix nullspace() const;
+
     /**
      * @brief Multiplies each element of the matrix by a scalar.
      * @param mat The matrix to multiply.
