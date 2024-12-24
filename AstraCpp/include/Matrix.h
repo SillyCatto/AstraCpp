@@ -31,16 +31,16 @@ class Matrix {
     /**
      * @brief Constructs a matrix of a specified size, initializing all elements
      * to zero.
-     * @param r The number of rows in the matrix.
-     * @param c The number of columns in the matrix.
+     * @param row The number of rows in the matrix.
+     * @param col The number of columns in the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
     Matrix(int row, int col);
 
     /**
      * @brief Constructs a matrix from an array of values.
-     * @param r The number of rows in the matrix.
-     * @param c The number of columns in the matrix.
+     * @param row The number of rows in the matrix.
+     * @param col The number of columns in the matrix.
      * @param values An array of values to initialize the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
@@ -48,8 +48,8 @@ class Matrix {
 
     /**
      * @brief Constructs a matrix from an initializer list of values.
-     * @param r The number of rows in the matrix.
-     * @param c The number of columns in the matrix.
+     * @param row The number of rows in the matrix.
+     * @param col The number of columns in the matrix.
      * @param values An initializer list of values to initialize the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
@@ -133,7 +133,7 @@ class Matrix {
     Matrix operator*(const Matrix& other) const;
 
     /**
-     * @brif Assign another matrix to this matrix (deep copy).
+     * @brief Assign another matrix to this matrix (deep copy).
      * @param other The matrix to assign from.
      * @return Reference to this matrix after assignment.
      */
@@ -310,12 +310,19 @@ class Matrix {
     void row_swap(int row1, int row2);
 
     /**
-     * @breif Swaps two columns of the matrix until the specified column.
-     * @param col1 The index of the first column.
-     * @param col2 The index of the second column.
-     * @param limit_row The index of the row to stop swapping.
-     * @throws astra::internals::exceptions::index_out_of_range if i or j or limit_row
-     * is out of bounds.
+     * @brief Partially swaps two rows of the matrix up to a specified column
+     * index.
+     *
+     * This function swaps the elements of `row1` and `row2` for all columns
+     * from the beginning of the row up to (but not including) the specified
+     * `limit_col`. It is primarily used during PLU decomposition to update the
+     * L matrix when performing row swaps.
+     *
+     * @param row1 The index of the first row to be swapped.
+     * @param row2 The index of the second row to be swapped.
+     * @param limit_col The column index up to which the rows will be swapped.
+     * @throws astra::internals::exceptions::index_out_of_range if `row1`,
+     * `row2`, or `limit_col` are out of bounds.
      */
     void partial_row_swap(int row1, int row2, int limit_col);
 
@@ -386,7 +393,7 @@ class Matrix {
     Matrix rref(double tol = 1e-6) const;
 
 
-    /*
+    /**
      * @brief returns the ith row of the matrix in form of vector
      * 
      * @param i The index of the row to extract.
@@ -397,7 +404,7 @@ class Matrix {
     Vector get_row(int i) const;
 
 
-    /*
+    /**
      * @brief returns the jth column of the matrix in form of vector
      *
      * @param j The index of the column to extract.
