@@ -260,8 +260,8 @@ std::istream& operator>>(std::istream& in, Vector& v) {
     return in;
 }
 
-Vector operator*(const Matrix& mat, const Vector& v) {
-    if (mat.num_col() != v.get_size()) {
+Vector operator*(const Matrix& mat, const Vector& vec) {
+    if (mat.num_col() != vec.get_size()) {
         throw astra::internals::exceptions::matrix_size_mismatch();
     }
     Vector result(mat.num_row());
@@ -270,7 +270,7 @@ Vector operator*(const Matrix& mat, const Vector& v) {
         double sum = 0.0;
 
         for (int j = 0; j < mat.num_col(); ++j) {
-            sum += mat(i, j) * v[j];
+            sum += mat(i, j) * vec[j];
         }
         result[i] = sum;
     }

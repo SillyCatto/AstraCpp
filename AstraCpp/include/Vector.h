@@ -240,10 +240,19 @@ class Vector {
      * @return The output stream with the vector representation.
      */
     friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
-    friend std::istream& operator>>(std::istream& in, Vector& v);
+    friend std::istream& operator>>(std::istream& in, Vector& vec);
 };
 
-Vector operator*(const Matrix& mat, const Vector& v);
+/**
+ * @brief Multiplies a matrix with a vector.
+ *
+ * @param mat The matrix to multiply.
+ * @param vec The vector to multiply.
+ * @return A new vector resulting from the matrix-vector multiplication.
+ * @throws astra::internals::exceptions::matrix_size_mismatch if the number of
+ * columns in the matrix does not equal the size of the vector.
+ */
+Vector operator*(const Matrix& mat, const Vector& vec);
 
 } // namespace astra
 #endif // !__VECTOR_H__
