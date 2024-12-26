@@ -842,6 +842,8 @@ Matrix Matrix::nullspace() const {
             free_cols[free_count++] = c;
         }
     }
+
+    return Matrix(3, 3); // dummy return
 }
 
 Matrix operator*(const Matrix& mat, double scalar) {

@@ -154,6 +154,26 @@ class Vector {
     bool operator!=(const Vector& other) const;
 
     /**
+     * @brief Multiplies each element of the vector by a scalar.
+     * @param vec The vector to be scaled.
+     * @param scalar The scalar value to multiply with each element of the
+     * vector.
+     * @return A new vector that is the result of scaling the original vector by
+     * the scalar.
+     */
+    friend Vector operator*(const Vector& vec, double scalar);
+    friend Vector operator*(double scalar, const Vector& vec);
+
+    /**
+     * @brief Overloads the stream insertion operator for printing the vector.
+     * @param os The output stream.
+     * @param vec The vector to output.
+     * @return The output stream with the vector representation.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& in, Vector& vec);
+
+    /**
      * @brief Computes the magnitude (length) of the vector.
      *
      * The magnitude of a vector is defined as the square root of the sum of the
@@ -221,26 +241,6 @@ class Vector {
      * zero magnitude.
      */
     Vector normalize() const;
-
-    /**
-     * @brief Multiplies each element of the vector by a scalar.
-     * @param vec The vector to be scaled.
-     * @param scalar The scalar value to multiply with each element of the
-     * vector.
-     * @return A new vector that is the result of scaling the original vector by
-     * the scalar.
-     */
-    friend Vector operator*(const Vector& vec, double scalar);
-    friend Vector operator*(double scalar, const Vector& vec);
-
-    /**
-     * @brief Overloads the stream insertion operator for printing the vector.
-     * @param os The output stream.
-     * @param vec The vector to output.
-     * @return The output stream with the vector representation.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
-    friend std::istream& operator>>(std::istream& in, Vector& vec);
 };
 
 /**

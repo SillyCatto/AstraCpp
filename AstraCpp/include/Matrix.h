@@ -154,6 +154,50 @@ class Matrix {
     bool operator!=(const Matrix& other) const;
 
     /**
+     * @brief Multiplies each element of the matrix by a scalar.
+     * @param mat The matrix to multiply.
+     * @param scalar The scalar value to multiply with each element of the
+     * matrix.
+     * @return A new matrix that is the result of multiplication of the original
+     * matrix by the scalar.
+     */
+    friend Matrix operator*(const Matrix& mat, double scalar);
+    friend Matrix operator*(double scalar, const Matrix& mat);
+
+    /**
+     * @brief Divides each element of the matrix by a scalar.
+     * @param mat The matrix to divide.
+     * @param scalar The scalar value to divide each element of the matrix by.
+     * @return A new matrix that is the result of division of the original
+     * matrix by the scalar.
+     * @throws astra::internals::exceptions::zero_division if scalar is zero.
+     */
+    friend Matrix operator/(const Matrix& mat, double scalar);
+
+    /**
+     * @brief Outputs the matrix to an output stream.
+     *
+     *
+     * @param os The output stream to which the matrix will be sent.
+     * @param mat The matrix to output.
+     * @return A reference to the output stream, allowing chaining of output
+     * operations.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
+
+    /**
+     * @brief Reads matrix values from an input stream.
+     *
+     *
+     * @param in The input stream from which to read matrix values.
+     * @param mat The matrix to populate with values from the input stream.
+     * @return A reference to the input stream, allowing chaining of input
+     * operations.
+     */
+    friend std::istream& operator>>(std::istream& in, Matrix& mat);
+
+
+    /**
      * @brief Returns the number of rows in the matrix.
      * @return The number of rows.
      */
@@ -475,28 +519,6 @@ class Matrix {
     Matrix nullspace() const;
 
     /**
-     * @brief Multiplies each element of the matrix by a scalar.
-     * @param mat The matrix to multiply.
-     * @param scalar The scalar value to multiply with each element of the
-     * matrix.
-     * @return A new matrix that is the result of multiplication of the original matrix 
-     * by the scalar.
-     */
-    friend Matrix operator*(const Matrix& mat, double scalar); 
-    friend Matrix operator*(double scalar, const Matrix& mat); 
-    
-
-    /**
-     * @brief Divides each element of the matrix by a scalar.
-     * @param mat The matrix to divide.
-     * @param scalar The scalar value to divide each element of the matrix by.
-     * @return A new matrix that is the result of division of the original
-     * matrix by the scalar.
-     * @throws astra::internals::exceptions::zero_division if scalar is zero.
-     */
-    friend Matrix operator/(const Matrix& mat, double scalar);
-
-    /**
      * @brief Prints the matrix to the standard output with specified column
      * width.
      *
@@ -504,28 +526,6 @@ class Matrix {
      * @param width The width allocated for each matrix element when printed. (optional)
      */
     void print(int width = 7) const;
-
-    /**
-     * @brief Outputs the matrix to an output stream.
-     *
-     *
-     * @param os The output stream to which the matrix will be sent.
-     * @param mat The matrix to output.
-     * @return A reference to the output stream, allowing chaining of output
-     * operations.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
-
-    /**
-     * @brief Reads matrix values from an input stream.
-     *
-     *
-     * @param in The input stream from which to read matrix values.
-     * @param mat The matrix to populate with values from the input stream.
-     * @return A reference to the input stream, allowing chaining of input
-     * operations.
-     */
-    friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra
 #endif // !__MATRIX_H__
