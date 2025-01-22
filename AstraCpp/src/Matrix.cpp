@@ -843,6 +843,15 @@ Matrix Matrix::nullspace() const {
         }
     }
 
+    // if no free cols, then nullspace is zero vector
+    if (free_count == 0) {
+        delete[] is_pivot_col;
+        delete[] free_cols;
+        return Matrix(n, 0);
+    }
+
+
+
     return Matrix(3, 3); // dummy return
 }
 
