@@ -516,6 +516,18 @@ class Matrix {
      */
     Matrix inv() const;
 
+    /**
+     * @brief Calculates the nullspace of a matrix from its RREF form
+     *
+     * @return A matrix containing the basis vectors of the nullspace. Each
+     * column of the returned matrix represents a basis vector of the nullspace.
+     *
+     * @throws astra::internals::exceptions::invalid_size if the matrix is
+     * invalid for RREF computation.
+     *
+     * @note If there are no free columns (i.e., the nullspace is trivial), the
+     * returned matrix will have zero columns.
+     */
     Matrix nullspace() const;
 
     /**
