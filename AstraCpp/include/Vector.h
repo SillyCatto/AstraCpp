@@ -4,10 +4,14 @@
  * operations for linear algebra.
  */
 
-#pragma once
+#ifndef __VECTOR_H__
+#define __VECTOR_H__
+
 #include <iostream>
 
 namespace astra {
+
+class Matrix;
 
 /**
  * @class Vector
@@ -45,6 +49,8 @@ class Vector {
      */
     Vector(const Vector& other);
 
+    Vector(std::initializer_list<double> values);
+
     /**
      * @brief Destructor to free dynamically allocated memory.
      */
@@ -81,7 +87,7 @@ class Vector {
      */
     double operator*(const Vector& other) const;
 
-     /**
+    /**
      * @brief Adds this vector to another vector.
      * @param other The vector to add.
      * @return A new vector resulting from the addition.
@@ -90,7 +96,7 @@ class Vector {
      */
     Vector operator+(const Vector& other) const;
 
-     /**
+    /**
      * @brief Subtracts another vector from this vector.
      * @param other The vector to subtract.
      * @return A new vector resulting from the subtraction.
@@ -114,10 +120,12 @@ class Vector {
      * @throws astra::internals::exceptions::index_out_of_range if index is out
      * of bounds.
      */
-    double operator[](int index) const;
+    double& operator[](int i);
+    const double& operator[](int i) const;
 
     /**
-     * @brief Calculates the cross product of a 3d vector with another 3d vector.
+     * @brief Calculates the cross product of a 3d vector with another 3d
+     * vector.
      * @param other The vector to calculate the cross product with.
      * @return A new vector as the cross product result.
      * @throws std::invalid_argument if either vector is not 3-dimensional.
@@ -146,6 +154,26 @@ class Vector {
     bool operator!=(const Vector& other) const;
 
     /**
+     * @brief Multiplies each element of the vector by a scalar.
+     * @param vec The vector to be scaled.
+     * @param scalar The scalar value to multiply with each element of the
+     * vector.
+     * @return A new vector that is the result of scaling the original vector by
+     * the scalar.
+     */
+    friend Vector operator*(const Vector& vec, double scalar);
+    friend Vector operator*(double scalar, const Vector& vec);
+
+    /**
+     * @brief Overloads the stream insertion operator for printing the vector.
+     * @param os The output stream.
+     * @param vec The vector to output.
+     * @return The output stream with the vector representation.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
+    friend std::istream& operator>>(std::istream& in, Vector& vec);
+
+    /**
      * @brief Computes the magnitude (length) of the vector.
      *
      * The magnitude of a vector is defined as the square root of the sum of the
@@ -156,7 +184,7 @@ class Vector {
      *
      * @return The magnitude (length) of the vector as a double.
      */
-    double magnitude() const;
+    double mag() const;
 
     /**
      * @brief Calculates the angle between two vectors in radians.
@@ -213,26 +241,18 @@ class Vector {
      * zero magnitude.
      */
     Vector normalize() const;
-
-
-
-    /**
-     * @brief Multiplies each element of the vector by a scalar.
-     * @param vec The vector to be scaled.
-     * @param scalar The scalar value to multiply with each element of the
-     * vector.
-     * @return A new vector that is the result of scaling the original vector by
-     * the scalar.
-     */
-    friend Vector operator*(const Vector& vec, double scalar);
-    friend Vector operator*(double scalar, const Vector& vec);
-
-    /**
-     * @brief Overloads the stream insertion operator for printing the vector.
-     * @param os The output stream.
-     * @param vec The vector to output.
-     * @return The output stream with the vector representation.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Vector& vec);
 };
-}
+
+/**
+ * @brief Multiplies a matrix with a vector.
+ *
+ * @param mat The matrix to multiply.
+ * @param vec The vector to multiply.
+ * @return A new vector resulting from the matrix-vector multiplication.
+ * @throws astra::internals::exceptions::matrix_size_mismatch if the number of
+ * columns in the matrix does not equal the size of the vector.
+ */
+Vector operator*(const Matrix& mat, const Vector& vec);
+
+} // namespace astra
+#endif // !__VECTOR_H__
