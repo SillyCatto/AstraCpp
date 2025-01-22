@@ -834,25 +834,51 @@ Matrix Matrix::nullspace() const {
     }
 
     // identify free cols
-    int* free_cols = new int[n]; // store index of free cols
+    int* free_col_index = new int[n]; // store index of free cols
     int free_count = 0;
 
     for (int c = 0; c < n; ++c) {
         if (!is_pivot_col[c]) {
-            free_cols[free_count++] = c;
+            free_col_index[free_count++] = c;
         }
     }
 
     // if no free cols, then nullspace is zero vector
     if (free_count == 0) {
         delete[] is_pivot_col;
-        delete[] free_cols;
+        delete[] free_col_index;
         return Matrix(n, 0);
     }
 
+    Matrix nullspace_mat(n, free_count);
+    
+    for (int j = 0; j < free_count; ++j) {
+        int current_free_col_pos = free_col_index[j];
 
+        double* basis_vector = new double[n](); // init zero array to hold a basis vector
+        basis_vector[current_free_col_pos] = 1.0;
 
-    return Matrix(3, 3); // dummy return
+        for (int r = 0; r < m; ++r) {
+            for (int c = 0; c < current_free_col_pos; ++c) {
+                if (is_pivot_col[c]) {
+                    basis_vector[c] = -rref_matrix(r, current_free_col_pos);
+                }
+            }
+        }
+
+        // add the basis vector as a column for nullspace matrix
+        for (int i = 0; i < n; ++i) {
+            nullspace_mat(i, j) = basis_vector[i];
+        }
+
+        delete[] basis_vector;
+
+    }
+
+    delete[] is_pivot_col;
+    delete[] free_col_index;
+
+    return nullspace_mat;
 }
 
 Matrix operator*(const Matrix& mat, double scalar) {
