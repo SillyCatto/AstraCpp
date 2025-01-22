@@ -823,12 +823,16 @@ Matrix Matrix::nullspace() const {
 
     // bool array to keep track of pivot cols
     bool* is_pivot_col = new bool[n](); // init to false
+    int* pivot_col_index = new int[n];   // store index of pivot cols
+    int pivot_count = 0;
+
     int r = 0; // current row index in rref
 
     // traverse through columns of each row and mark the pivot cols
     for (int c = 0; c < n; ++c) {
         if (r < m && internals::mathutils::abs(rref_matrix(r, c)) > 1e-6) {
             is_pivot_col[c] = true; // mark as a pivot column
+            pivot_col_index[pivot_count++] = c;
             ++r; // move to the next row
         }
     }
@@ -852,32 +856,25 @@ Matrix Matrix::nullspace() const {
 
     Matrix nullspace_mat(n, free_count);
     
+    // create the basis vectors one by one
     for (int j = 0; j < free_count; ++j) {
         int current_free_col_pos = free_col_index[j];
 
         double* basis_vector = new double[n](); // init zero array to hold a basis vector
-        basis_vector[current_free_col_pos] = 1.0;
+        basis_vector[current_free_col_pos] = 1.0; // mark the current free pos as '1'
 
-        for (int r = 0; r < m; ++r) {
-            int pivot_col_pos = -1;
-
-            for (int c = 0; c < n; ++c) {
-                // find the '1' in pivot col, if found
-                if (is_pivot_col[c] &&
-                    internals::mathutils::abs(rref_matrix(r, c) - 1.0) < 1e-6) {
-                    pivot_col_pos = c;
-                    break;
-                }
-            }
-
-            if (pivot_col_pos != -1) {
-                basis_vector[pivot_col_pos] =
+        // mark the pivot var positions as -rref(r, free_col_pos)
+        // pivot var = -free var
+        for (int r = 0, c = 0; r < m; ++r, ++c) {
+            if (c < pivot_count) {
+                basis_vector[pivot_col_index[c]] =
                     -rref_matrix(r, current_free_col_pos);
             }
         }
 
-        // add the basis vector as a column for nullspace matrix
+        // add the basis vector as a column for the nullspace matrix
         for (int i = 0; i < n; ++i) {
+            // stabilize near-zero values to just 0
             if (internals::mathutils::abs(basis_vector[i]) < 1e-6) {
                 basis_vector[i] = 0.0;
             }
@@ -889,6 +886,7 @@ Matrix Matrix::nullspace() const {
 
     }
 
+    // deallocate memory
     delete[] is_pivot_col;
     delete[] free_col_index;
 
