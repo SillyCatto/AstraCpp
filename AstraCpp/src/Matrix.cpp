@@ -859,15 +859,29 @@ Matrix Matrix::nullspace() const {
         basis_vector[current_free_col_pos] = 1.0;
 
         for (int r = 0; r < m; ++r) {
-            for (int c = 0; c < current_free_col_pos; ++c) {
-                if (is_pivot_col[c]) {
-                    basis_vector[c] = -rref_matrix(r, current_free_col_pos);
+            int pivot_col_pos = -1;
+
+            for (int c = 0; c < n; ++c) {
+                // find the '1' in pivot col, if found
+                if (is_pivot_col[c] &&
+                    internals::mathutils::abs(rref_matrix(r, c) - 1.0) < 1e-6) {
+                    pivot_col_pos = c;
+                    break;
                 }
+            }
+
+            if (pivot_col_pos != -1) {
+                basis_vector[pivot_col_pos] =
+                    -rref_matrix(r, current_free_col_pos);
             }
         }
 
         // add the basis vector as a column for nullspace matrix
         for (int i = 0; i < n; ++i) {
+            if (internals::mathutils::abs(basis_vector[i]) < 1e-6) {
+                basis_vector[i] = 0.0;
+            }
+
             nullspace_mat(i, j) = basis_vector[i];
         }
 

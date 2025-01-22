@@ -174,6 +174,10 @@ int main() {
         }
     );
 
+    std::cout << mat4.rref();
+
+    std::cout << "\n\n";
+
     std::cout << mat4.nullspace();
 
 
