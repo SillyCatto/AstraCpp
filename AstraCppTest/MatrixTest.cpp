@@ -405,6 +405,62 @@ TEST_F(MatrixTest, partial_row_swap_not_square_smaller) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, col_swap_square) {
+    Matrix mat(2, 2);
+    mat << 1 << 2 
+        << 3 << 4;
+
+    mat.col_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 2);
+    EXPECT_EQ(mat(0, 1), 1);
+    EXPECT_EQ(mat(1, 0), 4);
+    EXPECT_EQ(mat(1, 1), 3);
+    
+}
+
+TEST_F(MatrixTest, col_swap_not_square) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
+
+    mat.col_swap(0, 1);
+
+    EXPECT_EQ(mat(0, 0), 2);
+    EXPECT_EQ(mat(0, 1), 1);
+    EXPECT_EQ(mat(0, 2), 3);
+    EXPECT_EQ(mat(1, 0), 5);
+    EXPECT_EQ(mat(1, 1), 4);
+    EXPECT_EQ(mat(1, 2), 6);
+
+}
+
+TEST_F(MatrixTest, col_swap_not_square_greater) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.col_swap(3, 1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, col_swap_invalid_index) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 
+        << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.col_swap(1, 3),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, col_swap_negative_index) {
+    Matrix mat(2, 3);
+    mat << 1 << 2 << 3 << 4 << 5 << 6;
+
+    EXPECT_THROW(mat.col_swap(1, -1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
 TEST_F(MatrixTest, scalar_multiplication_matrix_times_scalar) {
     Matrix mat(2, 2);
     mat << 1.0, 2.0, 
@@ -885,16 +941,6 @@ TEST_F(MatrixTest, is_square_true) {
 TEST_F(MatrixTest, is_square_false) {
     Matrix mat(2, 1);
     EXPECT_FALSE(mat.is_square());
-}
-
-TEST_F(MatrixTest, is_rectangular_true) { 
-    Matrix mat(2, 1);
-    EXPECT_TRUE(mat.is_rectangular());
-}
-
-TEST_F(MatrixTest, is_rectangular_false) {
-    Matrix mat(2, 2);
-    EXPECT_FALSE(mat.is_rectangular());
 }
 
 TEST_F(MatrixTest, is_identity_true) {
@@ -1431,7 +1477,13 @@ TEST_F(MatrixTest, get_row) {
 }
 
 TEST_F(MatrixTest, get_col) {
-    Matrix mat(3, 3, {1, 2, 3, 4, 5, 6, 7, 8, 9});
+    Matrix mat(3, 3, 
+        {
+            1, 2, 3, 
+            4, 5, 6, 
+            7, 8, 9
+        }
+    );
 
     Vector row = mat.get_col(2);
     EXPECT_EQ(row.get_size(), 3);
@@ -1446,7 +1498,13 @@ TEST_F(MatrixTest, get_col) {
 }
 
 TEST_F(MatrixTest, is_pivot_col) {
-    Matrix mat(3, 3, {1, 2, 0, 0, 1, 3, 0, 0, 1});
+    Matrix mat(3, 3, 
+        {
+            1, 2, 0, 
+            0, 1, 3, 
+            0, 0, 1
+        }
+    );
     EXPECT_TRUE(mat.is_pivot_col(0));
     EXPECT_TRUE(mat.is_pivot_col(1));
     EXPECT_TRUE(mat.is_pivot_col(2));
@@ -1462,18 +1520,36 @@ TEST_F(MatrixTest, is_pivot_col) {
 
 TEST_F(MatrixTest, is_pivot_row) {
     // Full rank RREF matrix
-    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix mat1(3, 3, 
+        {
+            1, 0, 0, 
+            0, 1, 0, 
+            0, 0, 1
+        }
+    );
     EXPECT_TRUE(mat1.is_pivot_row(0)); // Row 0 contains a pivot
     EXPECT_TRUE(mat1.is_pivot_row(1)); // Row 1 contains a pivot
     EXPECT_TRUE(mat1.is_pivot_row(2)); // Row 2 contains a pivot
 
     // Zero row and non-pivot row
-    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 0, 0, 0});
+    Matrix mat2(3, 3, 
+        {
+            1, 2, 3, 
+            0, 0, 0, 
+            0, 0, 0
+        }
+    );
     EXPECT_FALSE(mat2.is_pivot_row(1)); // Row 1 is zero
     EXPECT_FALSE(mat2.is_pivot_row(2)); // Row 2 is zero
 
     // Partially reduced matrix
-    Matrix mat3(3, 3, {1, 0, 2, 0, 1, 0, 0, 0, 0});
+    Matrix mat3(3, 3, 
+        {
+            1, 0, 2, 
+            0, 1, 0, 
+            0, 0, 0
+        }
+    );
     EXPECT_TRUE(mat3.is_pivot_row(0));  // Row 0 has a valid pivot
     EXPECT_TRUE(mat3.is_pivot_row(1));  // Row 1 has a valid pivot
     EXPECT_FALSE(mat3.is_pivot_row(2)); // Row 2 is zero
@@ -1485,23 +1561,82 @@ TEST_F(MatrixTest, is_pivot_row) {
                  astra::internals::exceptions::index_out_of_range);
 }
 
+TEST_F(MatrixTest, is_zero_row_true) {
+    Matrix zero_row(1, 3, {0, 0, 0});
+
+    EXPECT_TRUE(zero_row.is_zero_row(0));
+
+}
+
+TEST_F(MatrixTest, is_zero_row_false) {
+    Matrix non_zero_row(1, 3, {0, 0, 1});
+
+    EXPECT_FALSE(non_zero_row.is_zero_row(0));
+}
+
+TEST_F(MatrixTest, is_zero_row_out_of_bounds) {
+    Matrix zero_row(1, 3, {0, 0, 0});
+
+    EXPECT_THROW(zero_row.is_zero_row(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(zero_row.is_zero_row(1),
+                 astra::internals::exceptions::index_out_of_range);
+}
+
+TEST_F(MatrixTest, is_zero_col_true) {
+    Matrix zero_col(3, 3, {0, 7, 20,
+                           0, 2, 3,
+                           0, 9, 4});
+
+    EXPECT_TRUE(zero_col.is_zero_col(0));
+}
+
+TEST_F(MatrixTest, is_zero_col_false) {
+    Matrix non_zero_col(3, 3, {0, 1, 6, 
+                               0, 2, 9, 
+                               0, 3, 4});
+
+    EXPECT_FALSE(non_zero_col.is_zero_col(1));
+}
+
+TEST_F(MatrixTest, is_zero_col_out_of_bounds) {
+    Matrix zero_col(3, 3, {0, 0, 0, 
+                           1, 2, 3, 
+                           6, 9, 4});
+
+    EXPECT_THROW(zero_col.is_zero_col(-1),
+                 astra::internals::exceptions::index_out_of_range);
+    EXPECT_THROW(zero_col.is_zero_col(3),
+                 astra::internals::exceptions::index_out_of_range);
+}
 TEST_F(MatrixTest, rank_full_rank_square_matrix) {
-    Matrix mat1(3, 3, {1, 0, 0, 0, 1, 0, 0, 0, 1});
+    Matrix mat1(3, 3, 
+        {
+            1, 0, 0, 
+            0, 1, 0, 
+            0, 0, 1
+        }
+    );
     EXPECT_EQ(mat1.rank(), 3); 
 }
 
 TEST_F(MatrixTest, rank_rectangular_matrix) {
-    Matrix mat2(3, 3, {1, 2, 3, 0, 0, 0, 4, 5, 6});
-    EXPECT_EQ(mat2.rank(), 1); 
+    Matrix mat2(3, 3, {1, 2, 3, 
+                       0, 0, 0, 
+                       4, 5, 6});
+    EXPECT_EQ(mat2.rank(), 2); 
 }
 
 TEST_F(MatrixTest, rank_zero_matrix) {
-    Matrix mat3(3, 3, {0, 0, 0, 0, 0, 0, 0, 0, 0});
+    Matrix mat3(3, 3, {0, 0, 0, 
+                       0, 0, 0,     
+                       0, 0, 0});
     EXPECT_EQ(mat3.rank(), 0); 
 }
 
 TEST_F(MatrixTest, rank_non_square_matrix) {
-    Matrix mat4(2, 3, {1, 2, 3, 4, 5, 6});
+    Matrix mat4(2, 3, {1, 2, 3, 
+                       4, 5, 6});
     EXPECT_EQ(mat4.rank(), 2); 
 }
 
@@ -1563,6 +1698,43 @@ TEST_F(MatrixTest, inverse_nonSquare) {
 
     EXPECT_THROW(mat.inv(),
                  astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, is_singular_square) {
+    Matrix singular(2, 2, {1, 2, 
+                           2, 4});
+
+    EXPECT_TRUE(singular.is_singular());
+}
+
+TEST_F(MatrixTest, is_singular_identity) {
+    Matrix identity(3, 3, {1, 0, 0, 
+                           0, 1, 0, 
+                           0, 0, 1});
+
+    EXPECT_FALSE(identity.is_singular());
+}
+
+TEST_F(MatrixTest, is_singular_zero) {
+    Matrix zero(2, 2);
+
+    EXPECT_TRUE(zero.is_singular());
+}
+
+TEST_F(MatrixTest, is_singular_non_square) {
+    Matrix non_square(2, 3, {1, 2, 3, 
+                             4, 5, 6});
+
+    EXPECT_THROW(non_square.is_singular(),
+                 astra::internals::exceptions::non_square_matrix);
+}
+
+TEST_F(MatrixTest, is_singular_3x3) {
+    Matrix singular(3, 3, {1, 2, 3, 
+                           4, 5, 6, 
+                           7, 8, 9});
+
+    EXPECT_TRUE(singular.is_singular());
 }
 
 TEST_F(MatrixTest, inverse_singular) {

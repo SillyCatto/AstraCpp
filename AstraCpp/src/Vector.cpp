@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Vector.h"
-#include "Matrix.h"
-#include "Exceptions.h"
-#include "MathUtils.h"
 
-#include <cmath>
+#include "../include/Vector.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../internals/MathUtils.h"
+
 #include <iostream>
 
 
@@ -190,7 +190,7 @@ bool Vector::operator==(const Vector& other) const {
 
 bool Vector::operator!=(const Vector& other) const { return !(*this == other); }
 
-double Vector::magnitude() const {
+double Vector::mag() const {
     double sum_of_squares = 0.0;
     for (int i = 0; i < size; ++i) {
         sum_of_squares += values[i] * values[i];
@@ -229,7 +229,7 @@ double Vector::max() const {
 }
 
 Vector Vector::normalize() const {
-    double mag = magnitude();
+    double mag = this->mag();
     if (mag == 0) {
         throw astra::internals::exceptions::zero_division();
     }
@@ -260,8 +260,8 @@ std::istream& operator>>(std::istream& in, Vector& v) {
     return in;
 }
 
-Vector operator*(const Matrix& mat, const Vector& v) {
-    if (mat.num_col() != v.get_size()) {
+Vector operator*(const Matrix& mat, const Vector& vec) {
+    if (mat.num_col() != vec.get_size()) {
         throw astra::internals::exceptions::matrix_size_mismatch();
     }
     Vector result(mat.num_row());
@@ -270,7 +270,7 @@ Vector operator*(const Matrix& mat, const Vector& v) {
         double sum = 0.0;
 
         for (int j = 0; j < mat.num_col(); ++j) {
-            sum += mat(i, j) * v[j];
+            sum += mat(i, j) * vec[j];
         }
         result[i] = sum;
     }
@@ -282,8 +282,8 @@ double Vector::angle(const Vector& v1, const Vector& v2) {
         throw astra::internals::exceptions::vector_size_mismatch();
     }
 
-    double mag_v1 = v1.magnitude();
-    double mag_v2 = v2.magnitude();
+    double mag_v1 = v1.mag();
+    double mag_v2 = v2.mag();
 
     if (mag_v1 == 0 || mag_v2 == 0) {
         throw astra::internals::exceptions::null_vector();

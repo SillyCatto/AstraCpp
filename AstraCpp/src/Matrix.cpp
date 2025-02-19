@@ -1,18 +1,19 @@
 #include "pch.h"
-#include "Vector.h"
-#include "Matrix.h"
-#include "Utils.h"
-#include "MathUtils.h"
-#include "Exceptions.h"
-#include "Decomposer.h"
+
+#include "../include/Vector.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../internals/Utils.h"
+#include "../include/Decomposer.h"
+#include "../internals/MathUtils.h"
 
 #include <iostream>
 #include <iomanip>
 
 namespace astra {
 
-Matrix::Matrix(int r, int c)
-    : rows(r), cols(c), current_index(0), values(nullptr) {
+Matrix::Matrix(int row, int col)
+    : rows(row), cols(col), current_index(0), values(nullptr) {
 
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -24,8 +25,8 @@ Matrix::Matrix(int r, int c)
     }
 }
 
-Matrix::Matrix(int r, int c, const double values[])
-    : rows(r), cols(c), current_index(0) {
+Matrix::Matrix(int row, int col, const double values[])
+    : rows(row), cols(col), current_index(0) {
 
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -37,16 +38,16 @@ Matrix::Matrix(int r, int c, const double values[])
     }
 }
 
-Matrix::Matrix(int r, int c, std::initializer_list<double> values)
-    : rows(r), cols(c), current_index(0), values(new double[r * c]) {
+Matrix::Matrix(int row, int col, std::initializer_list<double> values)
+    : rows(row), cols(col), current_index(0), values(new double[row * col]) {
 
-    if (values.size() != static_cast<size_t>(r * c)) {
+    if (values.size() != static_cast<size_t>(row * col)) {
         throw astra::internals::exceptions::invalid_size();
     }
 
     int i = 0;
     for (double val : values) {
-        if (i < r * c)
+        if (i < row * col)
             this->values[i++] = val;
     }
 }
@@ -251,8 +252,6 @@ double Matrix::max() const {
 
 bool Matrix::is_square() const { return rows == cols; }
 
-bool Matrix::is_rectangular() const { return rows != cols; }
-
 bool Matrix::is_identity() const {
     if (!is_square()) {
         return false;
@@ -421,6 +420,17 @@ void Matrix::partial_row_swap(int row1, int row2, int limit_col) {
     }
 }
 
+void Matrix::col_swap(int col1, int col2) {
+    if (col1 >= cols || col2 >= cols || col1 < 0 || col2 < 0) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+
+    for (int k = 0; k < rows; ++k) {
+        astra::internals::utils::swap(values[k * cols + col1],
+                                      values[k * cols + col2]);
+    }
+}
+
 void Matrix::clear() {
     for (int i = 0; i < rows * cols; ++i) {
         values[i] = 0.0;
@@ -519,43 +529,42 @@ Matrix Matrix::submatrix(int r1, int c1, int r2, int c2) const {
 
 Matrix Matrix::rref(double tol) const {
     int r = 0;
-    int pivot_row = 0;
-    int pivot_col = 0;
+    int pivot_row = -1;
+    int pivot_col = -1;
     double pivot_val = 0.0;
     double factor = 0.0;
-    bool pivot_found = false;
 
     Matrix rref(*this);
 
     for (int c = 0; c < cols; c++) {
-        pivot_found = false;
-        pivot_row = 0;
-        pivot_val = 0.0;
-        factor = 0.0;
+        pivot_row = -1;
 
         for (int i = r; i < rows; i++) {
             if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_row = i;
-                pivot_found = true;
                 break;
             }
         }
 
-        if (!pivot_found) {
+        // pivot not found
+        if (pivot_row == -1) {
             continue;
         }
 
         // swap rows to move selected pivot to current row
         for (int k = 0; k < cols; ++k) {
-            astra::internals::utils::swap(values[r * cols + k],
-                                          values[pivot_row * cols + k]);
+            astra::internals::utils::swap(rref.values[r * cols + k],
+                                          rref.values[pivot_row * cols + k]);
         }
 
         // normalize the pivot row
         pivot_val = rref(r, c);
-        for (int i = 0; i < cols; i++) {
-            rref(r, i) = rref(r, i) / pivot_val;
+        if (internals::mathutils::abs(pivot_val) > tol) {
+            for (int i = 0; i < cols; i++) {
+                rref(r, i) = rref(r, i) / pivot_val;
+            }
         }
+        
 
         // eliminate entries below pivot
         for (int i = r + 1; i < rows; i++) {
@@ -569,26 +578,23 @@ Matrix Matrix::rref(double tol) const {
     }
 
     // backward elimination
-    for (int i = r - 1; i > -1; i--) {
-        pivot_found = false;
-        pivot_col = 0.0;
-        pivot_val = 0.0;
-        factor = 0.0;
+    for (int i = r - 1; i >= 0; i--) {
+        pivot_col = -1;
 
         for (int c = 0; c < cols; c++) {
-            if (internals::mathutils::abs(rref(i, c) - 1) < tol) {
+            if (internals::mathutils::abs(rref(i, c)) > tol) {
                 pivot_col = c;
-                pivot_found = true;
                 break;
             }
         }
 
-        if (!pivot_found) {
+        // pivot not found
+        if (pivot_col == -1) {
             continue;
         }
 
         // eliminate entries above pivot
-        for (int j = i - 1; j > -1; j--) {
+        for (int j = i - 1; j >= 0; j--) {
             factor = rref(j, pivot_col);
             for (int k = 0; k < cols; k++) {
                 rref(j, k) = rref(j, k) - factor * rref(i, k);
@@ -596,7 +602,7 @@ Matrix Matrix::rref(double tol) const {
         }
     }
 
-    // stabilize the zero entry
+    // stabilize the near-zero entry to exactly zero
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if (internals::mathutils::abs(rref(i, j)) < tol) {
@@ -628,7 +634,7 @@ Vector Matrix::get_col(int j) const {
 
     Vector col(rows);
     for (int i = 0; i < rows; ++i) {
-        col[i] = (*this)(i, j);
+        col[i] = values[i * cols + j];
     }
     return col;
 }
@@ -639,10 +645,10 @@ bool Matrix::is_pivot_col(int j) const {
     }
     Matrix rref_matrix = this->rref();
     for (int i = 0; i < rows; ++i) {
-        if (rref_matrix(i, j) == 1) {
+        if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
             // Ensuring if it's the leading entry in this row
             for (int k = 0; k < j; ++k) {
-                if (rref_matrix(i, k) != 0) {
+                if (!internals::mathutils::nearly_equal(rref_matrix(i, k), 0.0)) {
                     return false;
                 }
             }
@@ -660,10 +666,11 @@ bool Matrix::is_pivot_row(int i) const {
 
     // Checking if this row contains a pivot
     for (int j = 0; j < cols; ++j) {
-        if (rref_matrix(i, j) == 1) {
+        if (internals::mathutils::nearly_equal(rref_matrix(i, j), 1.0)) {
             // Ensuring if it's the only non-zero value in its column
             for (int k = 0; k < rows; ++k) {
-                if (k != i && rref_matrix(k, j) != 0) {
+                if (k != i &&
+                    !internals::mathutils::nearly_equal(rref_matrix(k, j), 0.0)) {
                     return false; // Another row has a non-zero in this column
                 }
             }
@@ -671,6 +678,30 @@ bool Matrix::is_pivot_row(int i) const {
         }
     }
     return false; // No pivot in this row
+}
+
+bool Matrix::is_zero_row(int i) const {
+    if (i < 0 || i >= rows) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    for (int j = 0; j < cols; ++j) {
+        if (!internals::mathutils::nearly_equal(values[i * cols + j], 0.0)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Matrix::is_zero_col(int j) const { 
+    if (j < 0 || j >= cols) {
+        throw astra::internals::exceptions::index_out_of_range();
+    }
+    for (int i = 0; i < rows; ++i) {
+        if (!internals::mathutils::nearly_equal(values[i * cols + j], 0.0)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 int Matrix::rank() const {
@@ -712,6 +743,16 @@ double Matrix::det() const {
 
 bool Matrix::is_singular() const {
     return internals::mathutils::nearly_equal(det(), 0.0);
+}
+
+bool Matrix::is_invertible() const { 
+    if (!is_square()) {
+        return false;
+    }
+    if (is_singular()) {
+        return false;
+    }
+    return true;
 }
 
 Matrix Matrix::inv() const {
@@ -771,6 +812,85 @@ Matrix Matrix::inv() const {
     }
 
     return inverse;
+}
+
+Matrix Matrix::nullspace() const { 
+    // get the rref form
+    Matrix rref_matrix = this->rref();
+
+    int m = num_row();
+    int n = num_col();
+
+    // bool array to keep track of pivot cols
+    bool* is_pivot_col = new bool[n](); // init to false
+    int* pivot_col_index = new int[n];   // store index of pivot cols
+    int pivot_count = 0;
+
+    int r = 0; // current row index in rref
+
+    // traverse through columns of each row and mark the pivot cols
+    for (int c = 0; c < n; ++c) {
+        if (r < m && internals::mathutils::abs(rref_matrix(r, c)) > 1e-6) {
+            is_pivot_col[c] = true; // mark as a pivot column
+            pivot_col_index[pivot_count++] = c;
+            ++r; // move to the next row
+        }
+    }
+
+    // identify free cols
+    int* free_col_index = new int[n]; // store index of free cols
+    int free_count = 0;
+
+    for (int c = 0; c < n; ++c) {
+        if (!is_pivot_col[c]) {
+            free_col_index[free_count++] = c;
+        }
+    }
+
+    // if no free cols, then nullspace is zero vector
+    if (free_count == 0) {
+        delete[] is_pivot_col;
+        delete[] free_col_index;
+        return Matrix(n, 0);
+    }
+
+    Matrix nullspace_mat(n, free_count);
+    
+    // create the basis vectors one by one
+    for (int j = 0; j < free_count; ++j) {
+        int current_free_col_pos = free_col_index[j];
+
+        double* basis_vector = new double[n](); // init zero array to hold a basis vector
+        basis_vector[current_free_col_pos] = 1.0; // mark the current free pos as '1'
+
+        // mark the pivot var positions as -rref(r, free_col_pos)
+        // pivot var = -free var
+        for (int r = 0, c = 0; r < m; ++r, ++c) {
+            if (c < pivot_count) {
+                basis_vector[pivot_col_index[c]] =
+                    -rref_matrix(r, current_free_col_pos);
+            }
+        }
+
+        // add the basis vector as a column for the nullspace matrix
+        for (int i = 0; i < n; ++i) {
+            // stabilize near-zero values to just 0
+            if (internals::mathutils::abs(basis_vector[i]) < 1e-6) {
+                basis_vector[i] = 0.0;
+            }
+
+            nullspace_mat(i, j) = basis_vector[i];
+        }
+
+        delete[] basis_vector;
+
+    }
+
+    // deallocate memory
+    delete[] is_pivot_col;
+    delete[] free_col_index;
+
+    return nullspace_mat;
 }
 
 Matrix operator*(const Matrix& mat, double scalar) {

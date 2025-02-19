@@ -1,10 +1,10 @@
 #include "pch.h"
 
-#include "Vector.h"
-#include "Matrix.h"
-#include "Solver.h"
-#include "Exceptions.h"
-#include "Decomposer.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../include/Decomposer.h"
+#include "../include/Solver.h"
+#include "../include/Vector.h"
 
 namespace astra {
 
@@ -14,6 +14,9 @@ Vector Solver::forward_sub(Matrix L, Vector b) {
     if (L.num_col() != m) {
         throw astra::internals::exceptions::
             variable_and_value_number_mismatch();
+    }
+    else if (!L.is_lower_triangular()) {
+        throw astra::internals::exceptions::matrix_not_lower_triangular();
     }
 
     Vector x(m);
@@ -41,6 +44,9 @@ Vector astra::Solver::backward_sub(Matrix U, Vector b) {
         throw astra::internals::exceptions::
             variable_and_value_number_mismatch();
     }
+    else if (!U.is_upper_triangular()) {
+        throw astra::internals::exceptions::matrix_not_upper_triangular();
+    }
 
     Vector x(m);
 
@@ -63,6 +69,11 @@ Vector Solver::solve(Matrix A, Vector b) {
     if (!A.is_square()) {
         throw internals::exceptions::non_square_matrix();
     }
+    else if (A.num_col() != b.get_size()) {
+        throw internals::exceptions::variable_and_value_number_mismatch();
+    }
+
+
 
     int m = A.num_col();
     Vector y(m);

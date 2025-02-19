@@ -4,7 +4,9 @@
  * operations for linear algebra.
  */
 
-#pragma once
+#ifndef __MATRIX_H__
+#define __MATRIX_H__
+
 #include <iostream>
 
 namespace astra {
@@ -29,29 +31,29 @@ class Matrix {
     /**
      * @brief Constructs a matrix of a specified size, initializing all elements
      * to zero.
-     * @param r The number of rows in the matrix.
-     * @param c The number of columns in the matrix.
+     * @param row The number of rows in the matrix.
+     * @param col The number of columns in the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
-    Matrix(int r, int c);
+    Matrix(int row, int col);
 
     /**
      * @brief Constructs a matrix from an array of values.
-     * @param r The number of rows in the matrix.
-     * @param c The number of columns in the matrix.
+     * @param row The number of rows in the matrix.
+     * @param col The number of columns in the matrix.
      * @param values An array of values to initialize the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
-    Matrix(int r, int c, const double values[]);
+    Matrix(int row, int col, const double values[]);
 
     /**
      * @brief Constructs a matrix from an initializer list of values.
-     * @param r The number of rows in the matrix.
-     * @param c The number of columns in the matrix.
+     * @param row The number of rows in the matrix.
+     * @param col The number of columns in the matrix.
      * @param values An initializer list of values to initialize the matrix.
      * @throws astra::internals::exceptions::invalid_size if r or c is <= 0.
      */
-    Matrix(int r, int c, std::initializer_list<double> values);
+    Matrix(int row, int col, std::initializer_list<double> values);
 
     /**
      * @brief Copy constructor for deep copying another matrix.
@@ -102,20 +104,6 @@ class Matrix {
      */
     const double& operator()(int i, int j) const;
 
-
-    /**
-     * @brief Returns the number of rows in the matrix.
-     * @return The number of rows.
-     */
-    int num_row() const;
-
-    /**
-     * @brief Returns the number of columns in the matrix.
-     * @return The number of columns.
-     */
-    int num_col() const;
-
-
     /**
      * @brief Overloaded operator to add two matrices.
      * @param other The matrix to add.
@@ -145,7 +133,7 @@ class Matrix {
     Matrix operator*(const Matrix& other) const;
 
     /**
-     * @brif Assign another matrix to this matrix (deep copy).
+     * @brief Assign another matrix to this matrix (deep copy).
      * @param other The matrix to assign from.
      * @return Reference to this matrix after assignment.
      */
@@ -164,6 +152,62 @@ class Matrix {
      * @return True if the matrices are not equal, false otherwise.
      */
     bool operator!=(const Matrix& other) const;
+
+    /**
+     * @brief Multiplies each element of the matrix by a scalar.
+     * @param mat The matrix to multiply.
+     * @param scalar The scalar value to multiply with each element of the
+     * matrix.
+     * @return A new matrix that is the result of multiplication of the original
+     * matrix by the scalar.
+     */
+    friend Matrix operator*(const Matrix& mat, double scalar);
+    friend Matrix operator*(double scalar, const Matrix& mat);
+
+    /**
+     * @brief Divides each element of the matrix by a scalar.
+     * @param mat The matrix to divide.
+     * @param scalar The scalar value to divide each element of the matrix by.
+     * @return A new matrix that is the result of division of the original
+     * matrix by the scalar.
+     * @throws astra::internals::exceptions::zero_division if scalar is zero.
+     */
+    friend Matrix operator/(const Matrix& mat, double scalar);
+
+    /**
+     * @brief Outputs the matrix to an output stream.
+     *
+     *
+     * @param os The output stream to which the matrix will be sent.
+     * @param mat The matrix to output.
+     * @return A reference to the output stream, allowing chaining of output
+     * operations.
+     */
+    friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
+
+    /**
+     * @brief Reads matrix values from an input stream.
+     *
+     *
+     * @param in The input stream from which to read matrix values.
+     * @param mat The matrix to populate with values from the input stream.
+     * @return A reference to the input stream, allowing chaining of input
+     * operations.
+     */
+    friend std::istream& operator>>(std::istream& in, Matrix& mat);
+
+
+    /**
+     * @brief Returns the number of rows in the matrix.
+     * @return The number of rows.
+     */
+    int num_row() const;
+
+    /**
+     * @brief Returns the number of columns in the matrix.
+     * @return The number of columns.
+     */
+    int num_col() const;
 
     /**
      * @brief Replace all occurrences of a value with another value.
@@ -232,12 +276,6 @@ class Matrix {
     bool is_square() const;
 
     /**
-     * @brief Checks if this matrix is rectangular.
-     * @return True if the matrix is rectangular, false otherwise.
-     */
-    bool is_rectangular() const;
-
-    /**
      * @brief Checks if this matrix is identity matrix.
      * @return True if the matrix is identity matrix, false otherwise.
      */
@@ -279,6 +317,18 @@ class Matrix {
     */
     bool is_zero() const;
 
+    /**
+     * @brief Checks if the matrix is singular.
+     * @return True if the matrix is singular, false otherwise.
+     */
+    bool is_singular() const;
+
+    /**
+     * @brief Checks if the matrix is invertible.
+     * @return True if the matrix is invertible, false otherwise.
+     */
+    bool is_invertible() const;
+
 
     /**
      * @brief Creates an identity matrix of a specified size.
@@ -304,15 +354,31 @@ class Matrix {
     void row_swap(int row1, int row2);
 
     /**
-     * @breif Swaps two columns of the matrix until the specified column.
-     * @param col1 The index of the first column.
-     * @param col2 The index of the second column.
-     * @param limit_row The index of the row to stop swapping.
-     * @throws astra::internals::exceptions::index_out_of_range if i or j or limit_row
-     * is out of bounds.
+     * @brief Partially swaps two rows of the matrix up to a specified column
+     * index.
+     *
+     * This function swaps the elements of `row1` and `row2` for all columns
+     * from the beginning of the row up to (but not including) the specified
+     * `limit_col`. It is primarily used during PLU decomposition to update the
+     * L matrix when performing row swaps.
+     *
+     * @param row1 The index of the first row to be swapped.
+     * @param row2 The index of the second row to be swapped.
+     * @param limit_col The column index up to which the rows will be swapped.
+     * @throws astra::internals::exceptions::index_out_of_range if `row1`,
+     * `row2`, or `limit_col` are out of bounds.
      */
     void partial_row_swap(int row1, int row2, int limit_col);
 
+
+    /**
+     * @brief Swaps two columns of the matrix in place.
+     * @param col1 The index of the first column.
+     * @param col2 The index of the second column.
+     * @throws astra::internals::exceptions::index_out_of_range if i or j is
+     * out of bounds.
+     */
+    void col_swap(int col1, int col2);
 
     /**
      * @brief Makes all elements of the matrix zero.
@@ -361,16 +427,73 @@ class Matrix {
      */
     Matrix submatrix(int r1, int c1, int r2, int c2) const;
 
+
+    /**
+     * @brief Computes the row reduced echelon form of the matrix.
+     *
+     * @param tol (optional) The tolerance value for floating point comparison. Default is 1e-6.
+     * @return Matrix The row reduced echelon form of the matrix.
+     */
     Matrix rref(double tol = 1e-6) const;
 
+
+    /**
+     * @brief returns the ith row of the matrix in form of vector
+     * 
+     * @param i The index of the row to extract.
+     * @return Vector The ith row of the matrix.
+     * @throws astra::internals::exceptions::index_out_of_range if i is out of
+     * bounds.
+    */
     Vector get_row(int i) const;
 
+
+    /**
+     * @brief returns the jth column of the matrix in form of vector
+     *
+     * @param j The index of the column to extract.
+     * @return Vector The jth column of the matrix.
+     * @throws astra::internals::exceptions::index_out_of_range if j is out of
+     * bounds.
+     */
     Vector get_col(int j) const;
 
+    /**
+     * @brief Checks if the jth column is a pivot column.
+     * @param j The index of the column to check.
+     * @return True if the column is a pivot column, false otherwise.
+     */
     bool is_pivot_col(int j) const;
 
+    /**
+     * @brief Checks if the ith row is a pivot row.
+     * @param i The index of the row to check.
+     * @return True if the row is a pivot row, false otherwise.
+     */
     bool is_pivot_row(int i) const;
 
+    /**
+     * @brief Checks if the ith row has all zero elements.
+     * @param i The index of the row to check.
+     * @return True if the row has all zero elements, false otherwise.
+     * @throws astra::internals::exceptions::index_out_of_range if i is out of
+     * bounds.
+     */
+    bool is_zero_row(int i) const;
+
+    /**
+     * @brief Checks if the jth column has all zero elements.
+     * @param j The index of the column to check.
+     * @return True if the column has all zero elements, false otherwise.
+     * @throws astra::internals::exceptions::index_out_of_range if j is out of
+     * bounds.
+     */
+    bool is_zero_col(int j) const;
+
+    /**
+     * @brief Computes the rank of the matrix from its rref.
+     * @return The rank of the matrix.
+     */
     int rank() const;
 
     /**
@@ -383,31 +506,29 @@ class Matrix {
      */
     double det() const;
 
-    bool is_singular() const;
-    
+    /**
+     * @brief Computes the inverse of the matrix by Gauss-Jordan method.
+     * @return Matrix The inverse of the matrix.
+     * @throws astra::internals::exceptions::non_sqauare_matrix if the matrix is
+     * not square.
+     * @throws astra::internals::exceptions::singular_matrix if the matrix is
+     * singular.
+     */
     Matrix inv() const;
 
     /**
-     * @brief Multiplies each element of the matrix by a scalar.
-     * @param mat The matrix to multiply.
-     * @param scalar The scalar value to multiply with each element of the
-     * matrix.
-     * @return A new matrix that is the result of multiplication of the original matrix 
-     * by the scalar.
+     * @brief Calculates the nullspace of a matrix from its RREF form
+     *
+     * @return A matrix containing the basis vectors of the nullspace. Each
+     * column of the returned matrix represents a basis vector of the nullspace.
+     *
+     * @throws astra::internals::exceptions::invalid_size if the matrix is
+     * invalid for RREF computation.
+     *
+     * @note If there are no free columns (i.e., the nullspace is trivial), the
+     * returned matrix will have zero columns.
      */
-    friend Matrix operator*(const Matrix& mat, double scalar); 
-    friend Matrix operator*(double scalar, const Matrix& mat); 
-    
-
-    /**
-     * @brief Divides each element of the matrix by a scalar.
-     * @param mat The matrix to divide.
-     * @param scalar The scalar value to divide each element of the matrix by.
-     * @return A new matrix that is the result of division of the original
-     * matrix by the scalar.
-     * @throws astra::internals::exceptions::zero_division if scalar is zero.
-     */
-    friend Matrix operator/(const Matrix& mat, double scalar);
+    Matrix nullspace() const;
 
     /**
      * @brief Prints the matrix to the standard output with specified column
@@ -417,27 +538,6 @@ class Matrix {
      * @param width The width allocated for each matrix element when printed. (optional)
      */
     void print(int width = 7) const;
-
-    /**
-     * @brief Outputs the matrix to an output stream.
-     *
-     *
-     * @param os The output stream to which the matrix will be sent.
-     * @param mat The matrix to output.
-     * @return A reference to the output stream, allowing chaining of output
-     * operations.
-     */
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& mat);
-
-    /**
-     * @brief Reads matrix values from an input stream.
-     *
-     *
-     * @param in The input stream from which to read matrix values.
-     * @param mat The matrix to populate with values from the input stream.
-     * @return A reference to the input stream, allowing chaining of input
-     * operations.
-     */
-    friend std::istream& operator>>(std::istream& in, Matrix& mat);
 };
 } // namespace astra
+#endif // !__MATRIX_H__
