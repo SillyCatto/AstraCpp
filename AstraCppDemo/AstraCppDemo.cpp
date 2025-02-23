@@ -166,7 +166,7 @@ int main() {
         }
     );*/
 
-    astra::Matrix mat4(4, 7, 
+   /* astra::Matrix mat4(4, 7, 
         {
             1, 5, 0, 2, -2, -14, 0,
             0, 0, 1, -3, -6, 2, 0,
@@ -179,7 +179,7 @@ int main() {
 
     std::cout << "\n\n";
 
-    std::cout << mat4.nullspace();
+    std::cout << mat4.nullspace();*/
 
 
 
@@ -195,6 +195,14 @@ int main() {
     std::cout << plu_res.L * plu_res.U;*/
 
     
+    astra::Matrix mat(3, 3, {1, 0, 0, 2, 5, 0, 4, 5, 6});
+
+    auto result = astra::Decomposer::palu(mat);
+
+    std::cout << "P:\n" << result.P << std::endl;
+    std::cout << "L\n" << result.L << std::endl;
+    std::cout << "U\n" << result.U << std::endl;
+
 
     /*auto res2 = mat2.rref();
     std::cout << res2;*/
