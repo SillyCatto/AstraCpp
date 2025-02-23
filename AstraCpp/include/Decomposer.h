@@ -25,10 +25,10 @@ class Decomposer {
      * upper triangular matrix (U), and the number of row swaps (swaps).
      */
     struct PLUResult {
-        Matrix P;
-        Matrix L;
-        Matrix U;
-        int swaps;
+        Matrix P;  ///< Permutation matrix.
+        Matrix L;  ///< Lower triangular matrix.
+        Matrix U;  ///< Upper triangular matrix.
+        int swaps; ///< Number of row swaps performed.
 
         /**
          * @brief Constructs an empty PLUResult with identity matrices.

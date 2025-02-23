@@ -1,18 +1,19 @@
 #include "pch.h"
-#include "Vector.h"
-#include "Matrix.h"
-#include "Utils.h"
-#include "MathUtils.h"
-#include "Exceptions.h"
-#include "Decomposer.h"
+
+#include "../include/Vector.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../internals/Utils.h"
+#include "../include/Decomposer.h"
+#include "../internals/MathUtils.h"
 
 #include <iostream>
 #include <iomanip>
 
 namespace astra {
 
-Matrix::Matrix(int r, int c)
-    : rows(r), cols(c), current_index(0), values(nullptr) {
+Matrix::Matrix(int row, int col)
+    : rows(row), cols(col), current_index(0), values(nullptr) {
 
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -24,8 +25,8 @@ Matrix::Matrix(int r, int c)
     }
 }
 
-Matrix::Matrix(int r, int c, const double values[])
-    : rows(r), cols(c), current_index(0) {
+Matrix::Matrix(int row, int col, const double values[])
+    : rows(row), cols(col), current_index(0) {
 
     if (rows <= 0 || cols <= 0) {
         throw astra::internals::exceptions::invalid_size();
@@ -37,16 +38,16 @@ Matrix::Matrix(int r, int c, const double values[])
     }
 }
 
-Matrix::Matrix(int r, int c, std::initializer_list<double> values)
-    : rows(r), cols(c), current_index(0), values(new double[r * c]) {
+Matrix::Matrix(int row, int col, std::initializer_list<double> values)
+    : rows(row), cols(col), current_index(0), values(new double[row * col]) {
 
-    if (values.size() != static_cast<size_t>(r * c)) {
+    if (values.size() != static_cast<size_t>(row * col)) {
         throw astra::internals::exceptions::invalid_size();
     }
 
     int i = 0;
     for (double val : values) {
-        if (i < r * c)
+        if (i < row * col)
             this->values[i++] = val;
     }
 }
@@ -811,6 +812,85 @@ Matrix Matrix::inv() const {
     }
 
     return inverse;
+}
+
+Matrix Matrix::nullspace() const { 
+    // get the rref form
+    Matrix rref_matrix = this->rref();
+
+    int m = num_row();
+    int n = num_col();
+
+    // bool array to keep track of pivot cols
+    bool* is_pivot_col = new bool[n](); // init to false
+    int* pivot_col_index = new int[n];   // store index of pivot cols
+    int pivot_count = 0;
+
+    int r = 0; // current row index in rref
+
+    // traverse through columns of each row and mark the pivot cols
+    for (int c = 0; c < n; ++c) {
+        if (r < m && internals::mathutils::abs(rref_matrix(r, c)) > 1e-6) {
+            is_pivot_col[c] = true; // mark as a pivot column
+            pivot_col_index[pivot_count++] = c;
+            ++r; // move to the next row
+        }
+    }
+
+    // identify free cols
+    int* free_col_index = new int[n]; // store index of free cols
+    int free_count = 0;
+
+    for (int c = 0; c < n; ++c) {
+        if (!is_pivot_col[c]) {
+            free_col_index[free_count++] = c;
+        }
+    }
+
+    // if no free cols, then nullspace is zero vector
+    if (free_count == 0) {
+        delete[] is_pivot_col;
+        delete[] free_col_index;
+        return Matrix(n, 0);
+    }
+
+    Matrix nullspace_mat(n, free_count);
+    
+    // create the basis vectors one by one
+    for (int j = 0; j < free_count; ++j) {
+        int current_free_col_pos = free_col_index[j];
+
+        double* basis_vector = new double[n](); // init zero array to hold a basis vector
+        basis_vector[current_free_col_pos] = 1.0; // mark the current free pos as '1'
+
+        // mark the pivot var positions as -rref(r, free_col_pos)
+        // pivot var = -free var
+        for (int r = 0, c = 0; r < m; ++r, ++c) {
+            if (c < pivot_count) {
+                basis_vector[pivot_col_index[c]] =
+                    -rref_matrix(r, current_free_col_pos);
+            }
+        }
+
+        // add the basis vector as a column for the nullspace matrix
+        for (int i = 0; i < n; ++i) {
+            // stabilize near-zero values to just 0
+            if (internals::mathutils::abs(basis_vector[i]) < 1e-6) {
+                basis_vector[i] = 0.0;
+            }
+
+            nullspace_mat(i, j) = basis_vector[i];
+        }
+
+        delete[] basis_vector;
+
+    }
+
+    // deallocate memory
+    delete[] is_pivot_col;
+    delete[] free_col_index;
+
+    return nullspace_mat;
 }
 
 Matrix operator*(const Matrix& mat, double scalar) {

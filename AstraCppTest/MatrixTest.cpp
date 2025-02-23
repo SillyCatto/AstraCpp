@@ -1842,4 +1842,38 @@ TEST_F(MatrixTest, reverse_indices_submatrix) {
     EXPECT_THROW(mat.submatrix(2, 2, 1, 1), astra::internals::exceptions::invalid_argument);
 }
 
+TEST_F(MatrixTest, nullspace_zero_matrix) {
+    Matrix zeroMat(3, 3, {0, 0, 0, 
+                          0, 0, 0, 
+                          0, 0, 0}); // 3x3 zero matrix
+    Matrix nullspace = zeroMat.nullspace();
+
+    // Nullspace should have 3 basis vectors, each a unit vector
+    EXPECT_EQ(nullspace.num_col(), 3);
+    EXPECT_EQ(nullspace.num_row(), 3);
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (i == j) {
+                EXPECT_DOUBLE_EQ(nullspace(i, j), 1.0);
+            }
+            else {
+                EXPECT_DOUBLE_EQ(nullspace(i, j), 0.0);
+            }
+        }
+    }
+}
+
+TEST_F(MatrixTest, nullspace_singular_matrix) {
+    Matrix A(3, 3, {2, 4, 8, 
+                    1, 2, 4, 
+                    0, 0, 0});
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should contain one basis vector
+    EXPECT_EQ(nullspace.num_col(), 1);
+    EXPECT_EQ(nullspace.num_row(), 3);
+}
+
+
 } // namespace astra

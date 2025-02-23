@@ -1,10 +1,10 @@
 #include "pch.h"
 
-#include "Vector.h"
-#include "Matrix.h"
-#include "Solver.h"
-#include "Exceptions.h"
-#include "Decomposer.h"
+#include "../include/Matrix.h"
+#include "../internals/Exceptions.h"
+#include "../include/Decomposer.h"
+#include "../include/Solver.h"
+#include "../include/Vector.h"
 
 namespace astra {
 
