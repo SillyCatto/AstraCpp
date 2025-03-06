@@ -250,5 +250,15 @@ TEST_F(SolverTest, eqn_solve_test_nearly_singular) {
     EXPECT_EQ(actual_ans, expected_ans);
 }
 
+TEST_F(SolverTest, eqn_solve_test_zero_diagonal) {
+    Matrix coeff_mat(3, 3, {0, 1, 2, 1, 0, 3, 4, 5, 6});
+
+    Vector constants{5, 6, 7};
+    Vector actual_ans = Solver::solve(coeff_mat, constants);
+    Vector expected_ans{-1.875, -.25, 2.625};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
 
 } // namespace astra
