@@ -66,8 +66,83 @@ TEST_F(DecomposerTest, identity_matrix) {
     EXPECT_EQ(result.L, Matrix::identity(4));
     EXPECT_EQ(result.U, Matrix::identity(4));
     EXPECT_EQ(result.swaps, 0);
+    EXPECT_TRUE(result.L.is_lower_triangular());
+    EXPECT_TRUE(result.U.is_upper_triangular());
         
 }
+
+TEST_F(DecomposerTest, singleton_matrix) {
+
+    Matrix mat(1, 1, {1});
+
+    auto result = Decomposer::palu(mat);
+
+    EXPECT_EQ(result.P, Matrix::identity(1));
+    EXPECT_EQ(result.L, Matrix::identity(1));
+    EXPECT_EQ(result.U, mat);
+    EXPECT_EQ(result.swaps, 0);
+    EXPECT_TRUE(result.L.is_lower_triangular());
+    EXPECT_TRUE(result.U.is_upper_triangular());
+}
+
+TEST_F(DecomposerTest, zero_matrix) {
+
+    Matrix mat(3, 3, {0, 0, 0, 
+                      0, 0, 0, 
+                      0, 0, 0});
+
+    auto result = Decomposer::palu(mat);
+
+    EXPECT_EQ(result.P, Matrix::identity(3));
+    EXPECT_EQ(result.L, Matrix::identity(3));
+    EXPECT_EQ(result.U, mat);
+    EXPECT_EQ(result.swaps, 0);
+    EXPECT_TRUE(result.L.is_lower_triangular());
+    EXPECT_TRUE(result.U.is_upper_triangular());
+}
+
+TEST_F(DecomposerTest, non_square_matrix) {
+
+    Matrix mat(2, 3, {1, 2, 3, 
+                      4, 5, 6});
+
+    EXPECT_THROW(Decomposer::palu(mat),
+                 internals::exceptions::non_square_matrix);
+}
+
+TEST_F(DecomposerTest, upper_triangular_matrix) {
+
+    Matrix mat(3, 3, {1, 2, 3, 
+                      0, 4, 5,
+                      0, 0, 6});
+
+    auto result = Decomposer::palu(mat);
+
+    EXPECT_EQ(result.P, Matrix::identity(3));
+    EXPECT_EQ(result.L, Matrix::identity(3));
+    EXPECT_EQ(result.U, mat);
+    EXPECT_EQ(result.swaps, 0);
+    EXPECT_TRUE(result.L.is_lower_triangular());
+    EXPECT_TRUE(result.U.is_upper_triangular());
+}
+
+TEST_F(DecomposerTest, lower_triangular_matrix) {
+
+    Matrix mat(3, 3, {1, 0, 0, 
+                      2, 5, 0, 
+                      4, 5, 6});
+
+    auto result = Decomposer::palu(mat);
+
+    Matrix ans = result.P * result.L * result.U;
+
+    EXPECT_EQ(ans, mat);
+    EXPECT_TRUE(result.L.is_lower_triangular());
+    EXPECT_TRUE(result.U.is_upper_triangular());
+}
+
+
+
 
 
 

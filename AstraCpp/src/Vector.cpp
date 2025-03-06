@@ -244,7 +244,7 @@ std::ostream& operator<<(std::ostream& ost, const Vector& v) {
             ost << ", ";
         }
     }
-    ost << "]";
+    ost << "]\n";
     return ost;
 }
 

@@ -851,7 +851,7 @@ Matrix Matrix::nullspace() const {
     if (free_count == 0) {
         delete[] is_pivot_col;
         delete[] free_col_index;
-        return Matrix(n, 0);
+        return Matrix(n, 1);
     }
 
     Matrix nullspace_mat(n, free_count);
