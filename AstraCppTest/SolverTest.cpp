@@ -240,8 +240,15 @@ TEST_F(SolverTest, eqn_solve_test_backward_sub_5_notUpper) {
                  internals::exceptions::matrix_not_upper_triangular);
 }
 
+TEST_F(SolverTest, eqn_solve_test_nearly_singular) {
+    Matrix coeff_mat(3, 3, {1, 1, 1, 2, 2.0001, 2, 3, 3, 3.0001});
 
+    Vector constants{3, 6, 9};
+    Vector actual_ans = Solver::solve(coeff_mat, constants);
+    Vector expected_ans{3, 0, 0};
 
+    EXPECT_EQ(actual_ans, expected_ans);
+}
 
 
 } // namespace astra
