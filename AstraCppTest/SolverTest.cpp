@@ -247,4 +247,14 @@ TEST_F(SolverTest, eqn_solve_test_infinite_solutions) {
                  internals::exceptions::infinite_solutions);
 }
 
+TEST_F(SolverTest, eqn_solve_test_no_solution) {
+    Matrix coeff_mat(2, 2, {1, 2, 2, 4});
+
+    Vector constants{5, 11}; 
+    EXPECT_THROW(Solver::solve(coeff_mat, constants),
+                 internals::exceptions::no_solution);
+}
+
+
+
 } // namespace astra
