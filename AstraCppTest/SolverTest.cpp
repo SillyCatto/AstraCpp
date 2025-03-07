@@ -255,6 +255,14 @@ TEST_F(SolverTest, eqn_solve_test_no_solution) {
                  internals::exceptions::no_solution);
 }
 
+TEST_F(SolverTest, eqn_solve_test_fractional) {
+    Matrix coeff_mat(3, 3, {0.5, 1.5, 2.5, 1.2, 3.1, -1.4, -2.2, 4.6, 1.1});
 
+    Vector constants{4.2, -3.3, 2.7};
+    Vector actual_ans = Solver::solve(coeff_mat, constants);
+    Vector expected_ans{-0.461538461538462,-0.067239359625146, 1.81265130808278};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
 
 } // namespace astra
