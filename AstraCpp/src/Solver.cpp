@@ -66,24 +66,45 @@ Vector astra::Solver::backward_sub(Matrix U, Vector b) {
 }
 
 Vector Solver::solve(Matrix A, Vector b) {
-    if (!A.is_square()) {
-        throw internals::exceptions::non_square_matrix();
-    }
-    else if (A.num_col() != b.get_size()) {
+    // Unique Solution    : rank(A) = rank([A | b]) = n 
+    // Infinite Solutions : rank(A) = rank([A | b]) < n 
+    // No Solution        : rank(A) < rank([A | b])
+
+    if (A.num_col() != b.get_size()) {
         throw internals::exceptions::variable_and_value_number_mismatch();
     }
 
+    // make the vector a single col matrix
+    Matrix b_mat(b.get_size(), 1);
+    for (int i = 0; i < b.get_size(); i++) {
+        b_mat(i, 0) = b[i];
+    }
 
+    // create A|b
+    Matrix A_aug_b = A;
+    A_aug_b.join(b_mat);
 
-    int m = A.num_col();
-    Vector y(m);
-    Vector x(m);
+    // get the ranks and var no.
+    int rank_A = A.rank();
+    int rank_A_aug_b = A_aug_b.rank();
+    int num_variables = A.num_col();
 
+    // check for no solution
+    if (rank_A < rank_A_aug_b) {
+        throw internals::exceptions::no_solution();
+    }
+
+    // check for infinite solutions
+    if (rank_A == rank_A_aug_b && rank_A < num_variables) {
+        throw internals::exceptions::infinite_solutions();
+    }
+
+    // unique soln
     auto plu_res = Decomposer::palu(A);
     b = plu_res.P * b;
 
-    y = forward_sub(plu_res.L, b);
-    x = backward_sub(plu_res.U, y);
+    Vector y = forward_sub(plu_res.L, b);
+    Vector x = backward_sub(plu_res.U, y);
     return x;
 }
 } // namespace astra

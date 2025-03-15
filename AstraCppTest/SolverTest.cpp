@@ -72,15 +72,6 @@ TEST_F(SolverTest, eqn_solve_test_4) {
     EXPECT_EQ(actual_ans, expected_ans);
 }
 
-TEST_F(SolverTest, eqn_solve_test_5_invalid) {
-    Matrix coeff_mat(2, 3, {1, 2, 3, 
-                            4, 9, 11}
-    );
-
-    Vector constants{5, 9};
-    EXPECT_THROW(Solver::solve(coeff_mat, constants),
-                 internals::exceptions::non_square_matrix);
-}
 
 TEST_F(SolverTest, eqn_solve_test_6_invalid) {
     Matrix coeff_mat(3, 3, {1, 2, 3, 
@@ -103,18 +94,6 @@ TEST_F(SolverTest, eqn_solve_test_7_singleton) {
     EXPECT_EQ(actual_ans, expected_ans);
 }
 
-TEST_F(SolverTest, eqn_solve_test_8_zero) {
-    Matrix coeff_mat(3, 3, {0, 0, 0, 
-                            0, 0, 0, 
-                            0, 0, 0}
-    );
-
-    Vector constants{0, 0, 0};
-    Vector actual_ans = Solver::solve(coeff_mat, constants);
-    Vector expected_ans{0, 0, 0};
-
-    EXPECT_EQ(actual_ans, expected_ans);
-}
 
 TEST_F(SolverTest, eqn_solve_test_forward_sub_1) {
     Matrix L(3, 3, {1, 0, 0, 
@@ -240,8 +219,50 @@ TEST_F(SolverTest, eqn_solve_test_backward_sub_5_notUpper) {
                  internals::exceptions::matrix_not_upper_triangular);
 }
 
+TEST_F(SolverTest, eqn_solve_test_nearly_singular) {
+    Matrix coeff_mat(3, 3, {1, 1, 1, 2, 2.0001, 2, 3, 3, 3.0001});
 
+    Vector constants{3, 6, 9};
+    Vector actual_ans = Solver::solve(coeff_mat, constants);
+    Vector expected_ans{3, 0, 0};
 
+    EXPECT_EQ(actual_ans, expected_ans);
+}
 
+TEST_F(SolverTest, eqn_solve_test_zero_diagonal) {
+    Matrix coeff_mat(3, 3, {0, 1, 2, 1, 0, 3, 4, 5, 6});
+
+    Vector constants{5, 6, 7};
+    Vector actual_ans = Solver::solve(coeff_mat, constants);
+    Vector expected_ans{-1.875, -.25, 2.625};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
+
+TEST_F(SolverTest, eqn_solve_test_infinite_solutions) {
+    Matrix coeff_mat(2, 2, {1, 2, 2, 4});
+
+    Vector constants{5, 10};
+    EXPECT_THROW(Solver::solve(coeff_mat, constants),
+                 internals::exceptions::infinite_solutions);
+}
+
+TEST_F(SolverTest, eqn_solve_test_no_solution) {
+    Matrix coeff_mat(2, 2, {1, 2, 2, 4});
+
+    Vector constants{5, 11}; 
+    EXPECT_THROW(Solver::solve(coeff_mat, constants),
+                 internals::exceptions::no_solution);
+}
+
+TEST_F(SolverTest, eqn_solve_test_fractional) {
+    Matrix coeff_mat(3, 3, {0.5, 1.5, 2.5, 1.2, 3.1, -1.4, -2.2, 4.6, 1.1});
+
+    Vector constants{4.2, -3.3, 2.7};
+    Vector actual_ans = Solver::solve(coeff_mat, constants);
+    Vector expected_ans{-0.461538461538462,-0.067239359625146, 1.81265130808278};
+
+    EXPECT_EQ(actual_ans, expected_ans);
+}
 
 } // namespace astra

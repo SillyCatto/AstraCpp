@@ -1842,4 +1842,139 @@ TEST_F(MatrixTest, reverse_indices_submatrix) {
     EXPECT_THROW(mat.submatrix(2, 2, 1, 1), astra::internals::exceptions::invalid_argument);
 }
 
+TEST_F(MatrixTest, nullspace_zero_matrix) {
+    Matrix zeroMat(3, 3, {0, 0, 0, 
+                          0, 0, 0, 
+                          0, 0, 0}); // 3x3 zero matrix
+    Matrix nullspace = zeroMat.nullspace();
+
+    // Nullspace should have 3 basis vectors, each a unit vector
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 3);
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (i == j) {
+                EXPECT_DOUBLE_EQ(nullspace(i, j), 1.0);
+            }
+            else {
+                EXPECT_DOUBLE_EQ(nullspace(i, j), 0.0);
+            }
+        }
+    }
+}
+
+TEST_F(MatrixTest, nullspace_singular_matrix) {
+    Matrix A(3, 3, {2, 4, 8, 
+                    1, 2, 4, 
+                    0, 0, 0});
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should contain one basis vector
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 2);
+}
+
+TEST_F(MatrixTest, nullspace_identity_matrix) {
+    Matrix identity(3, 3, {1, 0, 0, 
+                           0, 1, 0, 
+                           0, 0, 1});
+    Matrix nullspace = identity.nullspace();
+
+    // The nullspace should be a 3x1 matrix
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 1);
+    EXPECT_TRUE(nullspace.is_zero());
+}
+
+TEST_F(MatrixTest, nullspace_2x2) {
+    Matrix A(2, 2, {1, 2, 
+                    2, 4});
+
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should contain one basis vector
+    EXPECT_EQ(nullspace.num_row(), 2);
+    EXPECT_EQ(nullspace.num_col(), 1);
+}
+
+TEST_F(MatrixTest, nullspace_3x3) {
+    Matrix A(3, 3, {1, 2, 3, 
+                    4, 5, 6, 
+                    7, 8, 9});
+
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should contain one basis vector
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 1);
+}
+
+TEST_F(MatrixTest, nullspace_singleton) {
+    Matrix singleton(1, 1, {5});
+    Matrix nullspace = singleton.nullspace();
+
+    // The nullspace should be a 1x1 matrix
+    EXPECT_EQ(nullspace.num_row(), 1);
+    EXPECT_EQ(nullspace.num_col(), 1);
+    EXPECT_TRUE(nullspace.is_zero());
+}
+
+TEST_F(MatrixTest, nullspace_non_square) {
+    Matrix A(2, 3, {1, 2, 3, 
+                    4, 5, 6});
+
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should contain one basis vector
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 1);
+
+}
+
+TEST_F(MatrixTest, nullspace_linearly_dependent) {
+    Matrix A(3, 3, {1, 2, 3, 
+                    2, 4, 6, 
+                    3, 6, 9});
+
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should contain one basis vector
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 2);
+
+
+}
+
+TEST_F(MatrixTest, nullspace_full_rank) {
+    Matrix A(3, 2, {1, 0, 
+                    0, 1, 
+                    0, 0});
+
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should be a 2x1 matrix
+    EXPECT_EQ(nullspace.num_row(), 2);
+    EXPECT_EQ(nullspace.num_col(), 1);
+    EXPECT_TRUE(nullspace.is_zero());
+}
+
+TEST_F(MatrixTest, nullspace_hilbert_matrix) {
+    Matrix A(3, 3,
+             {1      , 1.0 / 2, 1.0 / 3, 
+              1.0 / 2, 1.0 / 3, 1.0 / 4, 
+              1.0 / 3, 1.0 / 4, 1.0 / 5});
+
+    Matrix nullspace = A.nullspace();
+
+    // The nullspace should be a 3x1 matrix
+    EXPECT_EQ(nullspace.num_row(), 3);
+    EXPECT_EQ(nullspace.num_col(), 1);
+    EXPECT_TRUE(nullspace.is_zero());
+}
+
+
+
+
+
 } // namespace astra

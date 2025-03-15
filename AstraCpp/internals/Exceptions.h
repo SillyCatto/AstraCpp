@@ -115,4 +115,18 @@ class matrix_not_upper_triangular : public std::exception {
     }
 };
 
+class no_solution : public std::exception {
+  public:
+    const char* what() const noexcept override {
+        return "[ASTRA]  The system of linear equations has no solution";
+    }
+};
+
+class infinite_solutions : public std::exception {
+  public:
+    const char* what() const noexcept override {
+        return "[ASTRA]  The system of linear equations has infinite solutions";
+    }
+};
+
 }  // namespace astra::internals::exceptions
